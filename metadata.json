@@ -1,0 +1,6 @@
+{
+  "name": "DevSys Terminal Portfolio",
+  "description": "Interactive developer portfolio and system terminal console featuring live CLI commands, project status monitor, streaming experience logs, YAML resume viewer, and SSH contact interface.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
