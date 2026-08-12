@@ -6,7 +6,8 @@ import {
   FolderGit2, 
   Layers, 
   Briefcase, 
-  FileCode2, 
+  FileCode2,
+  Mail, 
   Terminal, 
   Settings, 
   Power
@@ -34,9 +35,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const navItems: { path: NavPath; label: string; icon: React.ReactNode }[] = [
     { path: '~/home', label: '~/home', icon: <Home className="w-4 h-4" /> },
     { path: '~/projects', label: '~/projects', icon: <FolderGit2 className="w-4 h-4" /> },
-    { path: '~/stack', label: '~/stack', icon: <Layers className="w-4 h-4" /> },
+    { path: '~/skills', label: '~/skills', icon: <Layers className="w-4 h-4" /> },
     { path: '~/experience', label: '~/experience', icon: <Briefcase className="w-4 h-4" /> },
     { path: '~/resume', label: '~/resume', icon: <FileCode2 className="w-4 h-4" /> },
+    { path: '~/contact', label: '~/contact', icon: <Mail className="w-4 h-4" /> },
   ];
 
   const handleSelect = (path: NavPath) => {
@@ -60,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div>
               <div className="font-bold text-emerald-400 tracking-wider text-xs uppercase flex items-center gap-1.5">
-                ROOT@HIMANSHU
+                ROOT@IAMHIMANSHU108
               </div>
               <div className="text-[10px] text-slate-400 uppercase tracking-tight">
                 STATUS: {statusOnline ? 'ONLINE' : 'MAINTENANCE'}
@@ -108,19 +110,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Bottom Footer Action Area */}
       <div className="p-3 border-t border-slate-800/80 bg-[#060911] space-y-2">
-        {/* SSH Connection Button */}
-        <button
-          id="btn-ssh-connect"
-          onClick={() => {
-            sound.playSshConnect();
-            onOpenSsh();
-          }}
-          className="w-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 hover:border-emerald-400 py-2 px-3 rounded text-xs font-mono font-bold flex items-center justify-center space-x-2 transition-all shadow-[0_0_10px_rgba(16,185,129,0.1)] group"
-        >
-          <Terminal className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
-          <span>ssh contact@dev.local</span>
-        </button>
-
         {/* Action Controls */}
         <div className="flex items-center justify-between pt-1 text-slate-400">
           <button

@@ -21,7 +21,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
   currentPath,
   onNavigate,
   onOpenSsh,
-  promptUser = 'root@Himanshu:~$'
+  promptUser = 'root@iamhimanshu108:~$'
 }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<CommandLog[]>([]);
@@ -85,7 +85,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-emerald-400 font-mono text-xs">
           <div>drwxr-xr-x ~/home</div>
           <div>drwxr-xr-x ~/projects</div>
-          <div>drwxr-xr-x ~/stack</div>
+          <div>drwxr-xr-x ~/skills</div>
           <div>drwxr-xr-x ~/experience</div>
           <div>drwxr-xr-x ~/resume</div>
           <div>drwxr-xr-x ~/contact</div>
@@ -97,6 +97,9 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
     } else if (mainCmd === 'projects' || trimmed === 'cd ~/projects') {
       onNavigate('~/projects');
       outputNode = <span className="text-emerald-400">Navigated to ~/projects</span>;
+    } else if (mainCmd === 'skills' || mainCmd === 'stack' || trimmed === 'cd ~/skills' || trimmed === 'cd ~/stack') {
+      onNavigate('~/skills');
+      outputNode = <span className="text-emerald-400">Navigated to ~/skills</span>;
     } else if (mainCmd === 'experience' || mainCmd === 'logs' || trimmed === 'cd ~/experience' || trimmed === 'cd ~/logs') {
       onNavigate('~/experience');
       outputNode = <span className="text-emerald-400">Navigated to ~/experience</span>;
@@ -110,7 +113,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
       onOpenSsh();
       outputNode = <span className="text-emerald-400">Opening SSH connection session to contact@dev.local...</span>;
     } else if (mainCmd === 'whoami') {
-      outputNode = <span className="text-emerald-400">root@Himanshu [Himanshu Yadav - Full Stack Web Developer & Automation Specialist v2026.8.12]</span>;
+      outputNode = <span className="text-emerald-400">root@iamhimanshu108 [Himanshu Yadav - Full Stack Web Developer & Automation Specialist v2026.8.12]</span>;
     } else if (mainCmd === 'ping') {
       outputNode = (
         <div className="text-slate-300 space-y-0.5">
@@ -121,7 +124,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
         </div>
       );
     } else if (mainCmd === 'uptime') {
-      outputNode = <span className="text-emerald-400">UPTIME: 99.999% | KERNEL: v2026.8.12 DEVSYS root@Himanshu | LOAD: 0.08, 0.04, 0.01</span>;
+      outputNode = <span className="text-emerald-400">UPTIME: 99.999% | KERNEL: v2026.8.12 DEVSYS root@iamhimanshu108 | LOAD: 0.08, 0.04, 0.01</span>;
     } else if (mainCmd === 'cat') {
       if (args.includes('resume')) {
         onNavigate('~/resume');
@@ -129,9 +132,9 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
       } else if (args.includes('log') || args.includes('experience')) {
         onNavigate('~/logs');
         outputNode = <span className="text-emerald-400">Displaying ~/logs/experience.log</span>;
-      } else if (args.includes('stack')) {
-        onNavigate('~/stack');
-        outputNode = <span className="text-emerald-400">Displaying ~/stack/stack.json</span>;
+      } else if (args.includes('skill') || args.includes('stack')) {
+        onNavigate('~/skills');
+        outputNode = <span className="text-emerald-400">Displaying ~/skills/skills.json</span>;
       } else {
         outputNode = <span className="text-amber-400">cat: {args || 'file'}: No such file. Try 'cat resume.yml' or 'ls'</span>;
       }

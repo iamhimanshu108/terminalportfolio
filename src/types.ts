@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type NavPath = '~/home' | '~/projects' | '~/stack' | '~/experience' | '~/resume';
+export type NavPath = '~/home' | '~/projects' | '~/skills' | '~/experience' | '~/resume' | '~/contact';
 
 export type HeaderTab = 'SESSION' | 'EXECUTE' | 'DEBUG';
 

@@ -21,11 +21,18 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [crtEnabled, setCrtEnabled] = useState(false);
-  const [theme, setTheme] = useState('jetbrains');
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('terminal_theme') || 'jetbrains';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('terminal_theme', theme);
+  }, [theme]);
 
   const [isSshOpen, setIsSshOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isRebooting, setIsRebooting] = useState(false);
+  const [isRebooting, setIsRebooting] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Execute Mode Quick Command State
@@ -60,16 +67,16 @@ export default function App() {
       setExecCmd('');
       return;
     } else if (trimmed === 'help') {
-      output = 'AVAILABLE COMMANDS: projects, stack, experience, resume, contact, clear, status, ssh';
+      output = 'AVAILABLE COMMANDS: projects, skills, experience, resume, contact, clear, status, ssh';
     } else if (trimmed === 'experience') {
       setCurrentPath('~/experience');
       output = 'Navigated to ~/experience. Professional experience timeline loaded.';
     } else if (trimmed === 'projects') {
       setCurrentPath('~/projects');
       output = 'Navigated to ~/projects. 7 Microservices active.';
-    } else if (trimmed === 'stack') {
-      setCurrentPath('~/stack');
-      output = 'Navigated to ~/stack. Java Spring Boot + React + Gemini AI stack loaded.';
+    } else if (trimmed === 'skills' || trimmed === 'stack') {
+      setCurrentPath('~/skills');
+      output = 'Navigated to ~/skills. Technical skills & backend architecture modules loaded.';
     } else if (trimmed === 'contact') {
       setCurrentPath('~/contact');
       output = 'Navigated to ~/contact. Direct dispatch pipeline ready.';
@@ -241,6 +248,8 @@ export default function App() {
                 onNavigate={(path) => setCurrentPath(path)}
                 onOpenSsh={() => setIsSshOpen(true)}
                 onSelectProject={(p) => setSelectedProject(p)}
+                searchQuery={searchQuery}
+                onSearchChange={(q) => setSearchQuery(q)}
               />
             )}
 
@@ -252,7 +261,7 @@ export default function App() {
               />
             )}
 
-            {currentPath === '~/stack' && (
+            {currentPath === '~/skills' && (
               <StackView
                 onNavigate={(path) => setCurrentPath(path)}
                 onOpenSsh={() => setIsSshOpen(true)}
@@ -266,28 +275,30 @@ export default function App() {
               />
             )}
 
-            {currentPath === '~/resume' && <ResumeView />}
+            {currentPath === '~/resume' && <ResumeView onOpenSsh={() => setIsSshOpen(true)} />}
 
             {currentPath === '~/contact' && (
               <ContactView onOpenSsh={() => setIsSshOpen(true)} />
             )}
           </main>
 
-          {/* Bottom Terminal Status Footer matching screenshots */}
+          {/* Bottom Terminal Status Footer */}
           <footer className="h-7 bg-[#060911] border-t border-slate-800/80 px-4 flex items-center justify-between text-[11px] text-slate-500 font-mono select-none shrink-0">
             <div className="flex items-center space-x-3">
-              <span className="text-cyan-400 font-bold hidden sm:inline">(C) 2026 root@Himanshu</span>
+              <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                ONLINE
+              </span>
               <span className="text-slate-600">//</span>
-              <span className="text-emerald-400 font-bold">v2026.8.12</span>
+              <span className="text-slate-300 font-bold">root@iamhimanshu108</span>
+              <span className="text-slate-600">//</span>
+              <span className="text-cyan-400 font-bold">v2026.8.12</span>
             </div>
 
             <div className="flex items-center space-x-4">
-              <span className="hidden md:inline">UTF-8</span>
-              <span className="hidden md:inline text-emerald-400 font-bold">main*</span>
-              <span>Ln 1, Col 1</span>
-              <span className="text-slate-400 hidden sm:inline">UPTIME: 99.9%</span>
+              <span className="hidden md:inline text-slate-400">UTF-8</span>
+              <span className="text-slate-400 hidden sm:inline">UPTIME: 99.99%</span>
               <span className="text-emerald-400 font-bold">LATENCY: 24ms</span>
-              <span className="text-slate-400 hidden lg:inline">LOC: 45.8k</span>
             </div>
           </footer>
         </div>
@@ -321,6 +332,8 @@ export default function App() {
         theme={theme}
         onChangeTheme={(t) => setTheme(t)}
       />
+
+      {crtEnabled && <div className="crt-overlay" />}
     </div>
   );
 }

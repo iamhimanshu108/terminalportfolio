@@ -42,14 +42,6 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
       icon: <Twitter className="w-5 h-5 text-sky-400" />,
       badge: 'Tech Updates & Dev Logs',
       color: 'border-sky-500/40 bg-sky-950/20 hover:border-sky-400'
-    },
-    {
-      name: 'Official Portfolio',
-      handle: 'iamhimanshu.in',
-      url: 'https://www.iamhimanshu.in',
-      icon: <Globe className="w-5 h-5 text-amber-400" />,
-      badge: 'Personal Website',
-      color: 'border-amber-500/40 bg-amber-950/20 hover:border-amber-400'
     }
   ];
 
@@ -100,7 +92,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
       </div>
 
       {/* Social Network Channels Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {socialChannels.map((c) => (
           <a
             key={c.name}
