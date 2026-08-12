@@ -3,6 +3,8 @@ import { SYSTEM_INFO, RAW_RESUME_YAML, RESUME_PARSED } from '../../data/portfoli
 import { Download, Copy, Check, FileText, Terminal } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import { Typewriter } from '../Typewriter';
+import resumePdf from '../../assets/Himanshu_Resume-CbhZoejc.pdf';
+
 
 interface ResumeViewProps {
   onOpenSsh: () => void;
@@ -137,14 +139,16 @@ export const ResumeView: React.FC<ResumeViewProps> = ({ onOpenSsh }) => {
               <span>{copied ? 'COPIED!' : 'COPY'}</span>
             </button>
 
-            <button
+            <a
               id="btn-curl-resume"
-              onClick={handleDownloadPdf}
+              href={resumePdf}
+              download="Himanshu_Resume.pdf"
+              onClick={() => sound.playExecute()}
               className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded text-xs font-bold flex items-center space-x-2 transition-all shadow-[0_0_10px_rgba(16,185,129,0.1)]"
             >
               <Download className="w-3.5 h-3.5 text-emerald-400" />
               <span>$ curl -O resume.pdf</span>
-            </button>
+            </a>
           </div>
         </div>
 

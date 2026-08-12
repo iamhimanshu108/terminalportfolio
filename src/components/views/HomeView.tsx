@@ -252,7 +252,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 >
                   <div className="h-28 overflow-hidden relative border-b border-slate-900">
                     <img
-                      src={p.image}
+                      src={p.imageUrl}
                       alt={p.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 contrast-95"
                     />
