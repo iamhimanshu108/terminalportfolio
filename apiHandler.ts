@@ -324,7 +324,11 @@ Specializing in high-performance web applications, Java Spring Boot microservice
   return false;
 }
 
-function parseBody(req: IncomingMessage): Promise<any> {
+function parseBody(req: any): Promise<any> {
+  if (req.body !== undefined) {
+    // If running in Express or Vercel Serverless environment, the body is already parsed.
+    return Promise.resolve(req.body);
+  }
   return new Promise((resolve) => {
     let data = '';
     req.on('data', (chunk) => { data += chunk; });
