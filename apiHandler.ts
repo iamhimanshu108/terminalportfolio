@@ -41,53 +41,72 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
   }
 
   if (pathname === '/api/contact' && req.method === 'POST') {
-    const body = await parseBody(req);
-    const { name, email, message, subject } = body;
-    console.log(`[CONTACT_DISPATCH] From: ${name} <${email}> | Subject: ${subject || "General"}\nMessage: ${message}`);
-
-    const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
-    let mailForwarded = false;
-
-    if (accessKey) {
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            access_key: accessKey,
-            from_name: `${name} (Portfolio Contact)`,
-            name: name,
-            email: email,
-            subject: subject || 'New Portfolio Contact Message',
-            message: `Message Details:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`
-          })
-        });
-        const resData = await response.json();
-        if (resData.success) {
-          console.log('[CONTACT_MAIL] Message successfully forwarded to email via Web3Forms.');
-          mailForwarded = true;
-        } else {
-          console.error('[CONTACT_MAIL] Web3Forms returned failure:', resData);
-        }
-      } catch (err: any) {
-        console.error('[CONTACT_MAIL] Error forwarding message to Web3Forms:', err.message);
+    try {
+      const body = await parseBody(req);
+      const { name, email, message, subject } = body;
+      
+      if (!name || !email || !message) {
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'Missing required fields: name, email, message' }));
+        return true;
       }
-    }
 
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({
-      success: true,
-      status: "200_OK",
-      message: mailForwarded
-        ? "Message successfully dispatched and forwarded to your email inbox."
-        : "Message logged to system terminal queue.",
-      packetId: `PKT-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
-      timestamp: new Date().toISOString()
-    }));
-    return true;
+      console.log(`[CONTACT_DISPATCH] From: ${name} <${email}> | Subject: ${subject || "General"}\nMessage: ${message}`);
+
+      const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
+      let mailForwarded = false;
+
+      if (accessKey) {
+        try {
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              access_key: accessKey,
+              from_name: `${name} (Portfolio Contact)`,
+              name: name,
+              email: email,
+              subject: subject || 'New Portfolio Contact Message',
+              message: `Message Details:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`
+            })
+          });
+          const resData = await response.json();
+          if (resData.success) {
+            console.log('[CONTACT_MAIL] Message successfully forwarded to email via Web3Forms.');
+            mailForwarded = true;
+          } else {
+            console.error('[CONTACT_MAIL] Web3Forms returned failure:', resData);
+          }
+        } catch (err: any) {
+          console.error('[CONTACT_MAIL] Error forwarding message to Web3Forms:', err.message);
+        }
+      } else {
+        console.warn('[CONTACT_MAIL] WEB3FORMS_ACCESS_KEY not configured');
+      }
+
+      res.setHeader('Content-Type', 'application/json');
+      res.statusCode = 200;
+      res.end(JSON.stringify({
+        success: true,
+        status: "200_OK",
+        message: mailForwarded
+          ? "Message successfully dispatched and forwarded to your email inbox."
+          : "Message logged to system terminal queue.",
+        packetId: `PKT-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
+        timestamp: new Date().toISOString()
+      }));
+      return true;
+    } catch (err: any) {
+      console.error('[CONTACT_ERROR]', err);
+      res.setHeader('Content-Type', 'application/json');
+      res.statusCode = 500;
+      res.end(JSON.stringify({ success: false, error: err.message || 'Internal server error' }));
+      return true;
+    }
   }
 
   if (pathname === '/api/ai' && req.method === 'POST') {
@@ -327,6 +346,14 @@ Specializing in high-performance web applications, Java Spring Boot microservice
 function parseBody(req: any): Promise<any> {
   if (req.body !== undefined) {
     // If running in Express or Vercel Serverless environment, the body is already parsed.
+    if (typeof req.body === 'string') {
+      try {
+        return Promise.resolve(JSON.parse(req.body));
+      } catch (err) {
+        console.error('[PARSE_ERROR] Failed to parse body string:', err);
+        return Promise.resolve({});
+      }
+    }
     return Promise.resolve(req.body);
   }
   return new Promise((resolve) => {
@@ -335,7 +362,8 @@ function parseBody(req: any): Promise<any> {
     req.on('end', () => {
       try {
         resolve(data ? JSON.parse(data) : {});
-      } catch {
+      } catch (err) {
+        console.error('[PARSE_ERROR] Failed to parse streamed data:', err);
         resolve({});
       }
     });
