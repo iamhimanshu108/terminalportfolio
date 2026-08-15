@@ -116,36 +116,56 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
       console.log(`[CONTACT_DISPATCH] From: ${name} <${email}> | Subject: ${subject || "General"}\nMessage: ${message}`);
 
       const accessKey = process.env.WEB3FORMS_ACCESS_KEY || process.env.WEB3FORM;
-      let mailForwarded = false;
+      if (!accessKey) {
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 500;
+        res.end(JSON.stringify({
+          success: false,
+          error: "Mail forwarding service is not configured (missing WEB3FORMS_ACCESS_KEY / WEB3FORM environment variables)."
+        }));
+        return true;
+      }
 
-      if (accessKey) {
-        try {
-          const response = await httpsRequest('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          }, JSON.stringify({
-            access_key: accessKey,
-            from_name: `${name} (Portfolio Contact)`,
-            name: name,
-            email: email,
-            subject: subject || 'New Portfolio Contact Message',
-            message: `Message Details:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`
-          }));
-          const resData = await response.json();
-          if (resData.success) {
-            console.log('[CONTACT_MAIL] Message successfully forwarded to email via Web3Forms.');
-            mailForwarded = true;
-          } else {
-            console.error('[CONTACT_MAIL] Web3Forms returned failure:', resData);
+      let mailForwarded = false;
+      let forwardError = "";
+
+      try {
+        const response = await httpsRequest('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
           }
-        } catch (err: any) {
-          console.error('[CONTACT_MAIL] Error forwarding message to Web3Forms:', err.message);
+        }, JSON.stringify({
+          access_key: accessKey,
+          from_name: `${name} (Portfolio Contact)`,
+          name: name,
+          email: email,
+          subject: subject || 'New Portfolio Contact Message',
+          message: `Message Details:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`
+        }));
+        const resData = await response.json();
+        if (resData.success) {
+          console.log('[CONTACT_MAIL] Message successfully forwarded to email via Web3Forms.');
+          mailForwarded = true;
+        } else {
+          console.error('[CONTACT_MAIL] Web3Forms returned failure:', resData);
+          forwardError = resData.message || JSON.stringify(resData);
         }
-      } else {
-        console.warn('[CONTACT_MAIL] WEB3FORMS_ACCESS_KEY not configured');
+      } catch (err: any) {
+        console.error('[CONTACT_MAIL] Error forwarding message to Web3Forms:', err.message);
+        forwardError = err.message;
+      }
+
+      if (!mailForwarded) {
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 500;
+        res.end(JSON.stringify({
+          success: false,
+          error: "Failed to forward message via Web3Forms.",
+          message: forwardError
+        }));
+        return true;
       }
 
       res.setHeader('Content-Type', 'application/json');
@@ -153,10 +173,8 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
       res.end(JSON.stringify({
         success: true,
         status: "200_OK",
-        message: mailForwarded
-          ? "Message successfully dispatched and forwarded to your email inbox."
-          : "Message logged to system terminal queue.",
-        packetId: `PKT-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
+        message: "Message successfully sent and forwarded to your email inbox.",
+        packetId: `MSG-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
         timestamp: new Date().toISOString()
       }));
       return true;

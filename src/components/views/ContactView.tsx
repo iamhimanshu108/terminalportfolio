@@ -16,6 +16,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
   });
 
   const [status, setStatus] = useState<'IDLE' | 'SENDING' | 'SUCCESS' | 'ERROR'>('IDLE');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [packetDetails, setPacketDetails] = useState<{ packetId?: string; timestamp?: string }>({});
 
   const socialChannels = [
@@ -63,6 +64,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
 
     sound.playExecute();
     setStatus('SENDING');
+    setErrorMessage(null);
 
     try {
       const res = await fetch('/api/contact', {
@@ -78,17 +80,11 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
         setStatus('ERROR');
+        setErrorMessage(data.message || data.error || 'Failed to submit form.');
       }
-    } catch {
-      // Fallback
-      setTimeout(() => {
-        setStatus('SUCCESS');
-        setPacketDetails({
-          packetId: `MSG-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
-          timestamp: new Date().toISOString()
-        });
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      }, 800);
+    } catch (err: any) {
+      setStatus('ERROR');
+      setErrorMessage(err.message || 'Network error occurred.');
     }
   };
 
@@ -178,7 +174,16 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
           )}
 
           {status !== 'SUCCESS' && (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-4">
+              {status === 'ERROR' && errorMessage && (
+                <div className="bg-rose-950/60 border border-rose-500/50 p-3.5 rounded-lg text-rose-400 font-bold space-y-1 animate-fadeIn">
+                  <p>[500 Internal Server Error] Submission Failed</p>
+                  <p className="text-slate-300 font-normal text-[11px] leading-relaxed">
+                    {errorMessage}
+                  </p>
+                </div>
+              )}
+              <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-slate-400 text-[11px] font-bold block">
@@ -268,7 +273,8 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
                 </button>
               </div>
             </form>
-          )}
+          </div>
+        )}
         </div>
       </div>
     </div>
