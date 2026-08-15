@@ -67,20 +67,33 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
     setErrorMessage(null);
 
     try {
-      const res = await fetch('/api/contact', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: "6d3f5b1b-bb2c-4881-ae17-6a252fb38a3a",
+          from_name: `${formData.name} (Portfolio Contact)`,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || 'New Portfolio Contact Message',
+          message: formData.message
+        })
       });
-      const data = await res.json();
+      const data = await response.json();
 
       if (data.success) {
         setStatus('SUCCESS');
-        setPacketDetails({ packetId: data.packetId, timestamp: data.timestamp });
+        setPacketDetails({
+          packetId: `MSG-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
+          timestamp: new Date().toISOString()
+        });
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
         setStatus('ERROR');
-        setErrorMessage(data.message || data.error || 'Failed to submit form.');
+        setErrorMessage(data.message || 'Failed to submit form via Web3Forms.');
       }
     } catch (err: any) {
       setStatus('ERROR');
