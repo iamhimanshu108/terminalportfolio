@@ -272,8 +272,15 @@ Specializing in high-performance web applications, Java Spring Boot microservice
       let totalContributions = 0;
       let fullYearDays: Array<{ id: string; date: string; level: number; count: number; text: string }> = [];
 
+      const currentYear = new Date().getUTCFullYear().toString();
+      const isCurrentYear = (year === currentYear);
+
       try {
-        const ghUrl = `https://github.com/users/${encodeURIComponent(username)}/contributions?from=${year}-01-01&to=${year}-12-31`;
+        let ghUrl = `https://github.com/users/${encodeURIComponent(username)}/contributions`;
+        if (!isCurrentYear) {
+          ghUrl += `?from=${year}-01-01&to=${year}-12-31`;
+        }
+
         const response = await httpsRequest(ghUrl, {
           headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -328,32 +335,58 @@ Specializing in high-performance web applications, Java Spring Boot microservice
 
         const daysArr = Array.from(dayMap.values()).sort((a, b) => a.date.localeCompare(b.date));
 
-        const targetYearNum = parseInt(year) || 2026;
-        const isLeap = (targetYearNum % 4 === 0 && targetYearNum % 100 !== 0) || (targetYearNum % 400 === 0);
-        const totalYearDays = isLeap ? 366 : 365;
-
         const dayByDateMap = new Map<string, typeof daysArr[0]>();
         for (const d of daysArr) {
           dayByDateMap.set(d.date, d);
         }
 
-        const yearStart = new Date(Date.UTC(targetYearNum, 0, 1));
+        if (isCurrentYear) {
+          // Rolling last 365 days ending today
+          const endDate = new Date();
+          const startDate = new Date();
+          startDate.setUTCDate(endDate.getUTCDate() - 365);
 
-        for (let i = 0; i < totalYearDays; i++) {
-          const d = new Date(yearStart);
-          d.setUTCDate(yearStart.getUTCDate() + i);
-          const dateStr = d.toISOString().split("T")[0];
+          for (let i = 0; i <= 365; i++) {
+            const curDate = new Date(startDate);
+            curDate.setUTCDate(startDate.getUTCDate() + i);
+            const dateStr = curDate.toISOString().split("T")[0];
 
-          if (dayByDateMap.has(dateStr)) {
-            fullYearDays.push(dayByDateMap.get(dateStr)!);
-          } else {
-            fullYearDays.push({
-              id: `gen-${dateStr}`,
-              date: dateStr,
-              level: 0,
-              count: 0,
-              text: `0 contributions on ${dateStr}`
-            });
+            if (dayByDateMap.has(dateStr)) {
+              fullYearDays.push(dayByDateMap.get(dateStr)!);
+            } else {
+              fullYearDays.push({
+                id: `gen-${dateStr}`,
+                date: dateStr,
+                level: 0,
+                count: 0,
+                text: `0 contributions on ${dateStr}`
+              });
+            }
+          }
+        } else {
+          // Full calendar year
+          const targetYearNum = parseInt(year) || 2026;
+          const isLeap = (targetYearNum % 4 === 0 && targetYearNum % 100 !== 0) || (targetYearNum % 400 === 0);
+          const totalYearDays = isLeap ? 366 : 365;
+
+          const yearStart = new Date(Date.UTC(targetYearNum, 0, 1));
+
+          for (let i = 0; i < totalYearDays; i++) {
+            const d = new Date(yearStart);
+            d.setUTCDate(yearStart.getUTCDate() + i);
+            const dateStr = d.toISOString().split("T")[0];
+
+            if (dayByDateMap.has(dateStr)) {
+              fullYearDays.push(dayByDateMap.get(dateStr)!);
+            } else {
+              fullYearDays.push({
+                id: `gen-${dateStr}`,
+                date: dateStr,
+                level: 0,
+                count: 0,
+                text: `0 contributions on ${dateStr}`
+              });
+            }
           }
         }
       } catch (err: any) {
@@ -368,44 +401,90 @@ Specializing in high-performance web applications, Java Spring Boot microservice
           contributions: Array<{ date: string; count: number; level: number }>;
         };
 
-        const yearContributions = data.contributions.filter(c => c.date.startsWith(`${year}-`));
+        let yearContributions: typeof data.contributions = [];
+        if (isCurrentYear) {
+          // Last 365 days
+          const todayStr = new Date().toISOString().split("T")[0];
+          const oneYearAgoDate = new Date();
+          oneYearAgoDate.setUTCDate(oneYearAgoDate.getUTCDate() - 365);
+          const oneYearAgoStr = oneYearAgoDate.toISOString().split("T")[0];
+
+          yearContributions = data.contributions.filter(c => c.date >= oneYearAgoStr && c.date <= todayStr);
+        } else {
+          yearContributions = data.contributions.filter(c => c.date.startsWith(`${year}-`));
+        }
+
         const dayByDateMap = new Map<string, { date: string; count: number; level: number }>();
         for (const c of yearContributions) {
           dayByDateMap.set(c.date, c);
         }
 
-        const targetYearNum = parseInt(year) || 2026;
-        const isLeap = (targetYearNum % 4 === 0 && targetYearNum % 100 !== 0) || (targetYearNum % 400 === 0);
-        const totalYearDays = isLeap ? 366 : 365;
+        if (isCurrentYear) {
+          const endDate = new Date();
+          const startDate = new Date();
+          startDate.setUTCDate(endDate.getUTCDate() - 365);
 
-        const yearStart = new Date(Date.UTC(targetYearNum, 0, 1));
+          for (let i = 0; i <= 365; i++) {
+            const curDate = new Date(startDate);
+            curDate.setUTCDate(startDate.getUTCDate() + i);
+            const dateStr = curDate.toISOString().split("T")[0];
 
-        for (let i = 0; i < totalYearDays; i++) {
-          const d = new Date(yearStart);
-          d.setUTCDate(yearStart.getUTCDate() + i);
-          const dateStr = d.toISOString().split("T")[0];
-
-          if (dayByDateMap.has(dateStr)) {
-            const matchDay = dayByDateMap.get(dateStr)!;
-            fullYearDays.push({
-              id: `gen-${dateStr}`,
-              date: dateStr,
-              level: matchDay.level,
-              count: matchDay.count,
-              text: `${matchDay.count} contributions on ${dateStr}`
-            });
-          } else {
-            fullYearDays.push({
-              id: `gen-${dateStr}`,
-              date: dateStr,
-              level: 0,
-              count: 0,
-              text: `0 contributions on ${dateStr}`
-            });
+            if (dayByDateMap.has(dateStr)) {
+              const matchDay = dayByDateMap.get(dateStr)!;
+              fullYearDays.push({
+                id: `gen-${dateStr}`,
+                date: dateStr,
+                level: matchDay.level,
+                count: matchDay.count,
+                text: `${matchDay.count} contributions on ${dateStr}`
+              });
+            } else {
+              fullYearDays.push({
+                id: `gen-${dateStr}`,
+                date: dateStr,
+                level: 0,
+                count: 0,
+                text: `0 contributions on ${dateStr}`
+              });
+            }
           }
-        }
 
-        totalContributions = data.total[year] !== undefined ? data.total[year] : yearContributions.reduce((sum, c) => sum + c.count, 0);
+          // Sum contributions for the rolling 365 days
+          totalContributions = yearContributions.reduce((sum, c) => sum + c.count, 0);
+        } else {
+          const targetYearNum = parseInt(year) || 2026;
+          const isLeap = (targetYearNum % 4 === 0 && targetYearNum % 100 !== 0) || (targetYearNum % 400 === 0);
+          const totalYearDays = isLeap ? 366 : 365;
+
+          const yearStart = new Date(Date.UTC(targetYearNum, 0, 1));
+
+          for (let i = 0; i < totalYearDays; i++) {
+            const d = new Date(yearStart);
+            d.setUTCDate(yearStart.getUTCDate() + i);
+            const dateStr = d.toISOString().split("T")[0];
+
+            if (dayByDateMap.has(dateStr)) {
+              const matchDay = dayByDateMap.get(dateStr)!;
+              fullYearDays.push({
+                id: `gen-${dateStr}`,
+                date: dateStr,
+                level: matchDay.level,
+                count: matchDay.count,
+                text: `${matchDay.count} contributions on ${dateStr}`
+              });
+            } else {
+              fullYearDays.push({
+                id: `gen-${dateStr}`,
+                date: dateStr,
+                level: 0,
+                count: 0,
+                text: `0 contributions on ${dateStr}`
+              });
+            }
+          }
+
+          totalContributions = data.total[year] !== undefined ? data.total[year] : yearContributions.reduce((sum, c) => sum + c.count, 0);
+        }
       }
 
       let currentStreak = 0;
