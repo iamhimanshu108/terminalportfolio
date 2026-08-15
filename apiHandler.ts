@@ -12,9 +12,12 @@ function httpsRequest(
   return new Promise((resolve, reject) => {
     try {
       const urlObj = new URL(url);
-      const reqHeaders: Record<string, string | number> = { ...(options.headers || {}) };
+      const reqHeaders: Record<string, string | number> = { 
+        'Accept-Encoding': 'identity',
+        ...(options.headers || {}) 
+      };
       if (body) {
-        reqHeaders['Content-Length'] = Buffer.byteLength(body);
+        reqHeaders['Content-Length'] = new TextEncoder().encode(body).length;
       }
 
       const reqOptions = {
@@ -159,7 +162,11 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
       console.error('[CONTACT_ERROR]', err);
       res.setHeader('Content-Type', 'application/json');
       res.statusCode = 500;
-      res.end(JSON.stringify({ success: false, error: err.message || 'Internal server error' }));
+      res.end(JSON.stringify({ 
+        success: false, 
+        error: err.message || 'Internal server error',
+        stack: err.stack
+      }));
       return true;
     }
   }
@@ -443,6 +450,8 @@ Specializing in high-performance web applications, Java Spring Boot microservice
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({
         error: "Failed to fetch live GitHub contributions",
+        message: err.message || String(err),
+        stack: err.stack,
         username,
         year
       }));
