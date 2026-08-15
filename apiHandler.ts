@@ -1,8 +1,64 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
+import https from 'https';
 
 dotenv.config();
+
+function httpsRequest(
+  url: string,
+  options: { method?: string; headers?: Record<string, string | number> } = {},
+  body?: string
+): Promise<{ ok: boolean; status: number; text: () => Promise<string>; json: () => Promise<any> }> {
+  return new Promise((resolve, reject) => {
+    try {
+      const urlObj = new URL(url);
+      const reqHeaders: Record<string, string | number> = { ...(options.headers || {}) };
+      if (body) {
+        reqHeaders['Content-Length'] = Buffer.byteLength(body);
+      }
+
+      const reqOptions = {
+        hostname: urlObj.hostname,
+        port: urlObj.port || 443,
+        path: urlObj.pathname + urlObj.search,
+        method: options.method || 'GET',
+        headers: reqHeaders,
+      };
+
+      const req = https.request(reqOptions, (res) => {
+        let data = '';
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        res.on('end', () => {
+          resolve({
+            ok: (res.statusCode || 200) >= 200 && (res.statusCode || 200) < 300,
+            status: res.statusCode || 200,
+            text: () => Promise.resolve(data),
+            json: () => {
+              try {
+                return Promise.resolve(JSON.parse(data));
+              } catch (e) {
+                return Promise.reject(e);
+              }
+            }
+          });
+        });
+      });
+
+      req.on('error', (err) => {
+        reject(err);
+      });
+
+      if (body) {
+        req.write(body);
+      }
+      req.end();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
 
 export async function handleApiRequest(req: IncomingMessage, res: ServerResponse): Promise<boolean> {
   const urlObj = new URL(req.url || '', 'http://localhost');
@@ -59,21 +115,20 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
 
       if (accessKey) {
         try {
-          const response = await fetch('https://api.web3forms.com/submit', {
+          const response = await httpsRequest('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-              access_key: accessKey,
-              from_name: `${name} (Portfolio Contact)`,
-              name: name,
-              email: email,
-              subject: subject || 'New Portfolio Contact Message',
-              message: `Message Details:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`
-            })
-          });
+            }
+          }, JSON.stringify({
+            access_key: accessKey,
+            from_name: `${name} (Portfolio Contact)`,
+            name: name,
+            email: email,
+            subject: subject || 'New Portfolio Contact Message',
+            message: `Message Details:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`
+          }));
           const resData = await response.json();
           if (resData.success) {
             console.log('[CONTACT_MAIL] Message successfully forwarded to email via Web3Forms.');
@@ -117,6 +172,7 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
     let reply = "";
     if (apiKey) {
       try {
+        const { GoogleGenAI } = await import('@google/genai');
         const ai = new GoogleGenAI({ apiKey });
         const systemInstruction = `You are ROOT_AI, an embedded developer system terminal assistant on Himanshu Yadav's official portfolio system (root@iamhimanshu108 v2026.8.12).
 Provide concise, technical, terminal-formatted CLI responses. Use code blocks, clean ascii, or short bullet points.
@@ -210,7 +266,7 @@ Specializing in high-performance web applications, Java Spring Boot microservice
 
       try {
         const ghUrl = `https://github.com/users/${encodeURIComponent(username)}/contributions?from=${year}-01-01&to=${year}-12-31`;
-        const response = await fetch(ghUrl, {
+        const response = await httpsRequest(ghUrl, {
           headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Accept": "text/html"
@@ -295,7 +351,7 @@ Specializing in high-performance web applications, Java Spring Boot microservice
       } catch (err: any) {
         console.warn(`Direct GitHub scraping failed (${err.message}). Attempting fallback to public API...`);
         const fallbackUrl = `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}`;
-        const response = await fetch(fallbackUrl);
+        const response = await httpsRequest(fallbackUrl);
         if (!response.ok) {
           throw new Error(`Fallback API responded with status ${response.status}`);
         }
