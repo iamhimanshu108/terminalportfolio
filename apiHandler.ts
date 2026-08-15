@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 import https from 'https';
 
@@ -180,7 +181,6 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
     let reply = "";
     if (apiKey) {
       try {
-        const { GoogleGenAI } = await import('@google/genai');
         const ai = new GoogleGenAI({ apiKey });
         const systemInstruction = `You are ROOT_AI, an embedded developer system terminal assistant on Himanshu Yadav's official portfolio system (root@iamhimanshu108 v2026.8.12).
 Provide concise, technical, terminal-formatted CLI responses. Use code blocks, clean ascii, or short bullet points.
