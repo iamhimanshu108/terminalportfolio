@@ -54,7 +54,7 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
 
       console.log(`[CONTACT_DISPATCH] From: ${name} <${email}> | Subject: ${subject || "General"}\nMessage: ${message}`);
 
-      const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
+      const accessKey = process.env.WEB3FORMS_ACCESS_KEY || process.env.WEB3FORM;
       let mailForwarded = false;
 
       if (accessKey) {
@@ -205,89 +205,143 @@ Specializing in high-performance web applications, Java Spring Boot microservice
     const username = urlObj.searchParams.get('username') || "iamhimanshu108";
     const year = urlObj.searchParams.get('year') || "2026";
     try {
-      const ghUrl = `https://github.com/users/${encodeURIComponent(username)}/contributions?from=${year}-01-01&to=${year}-12-31`;
-      const response = await fetch(ghUrl, {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-          "Accept": "text/html"
-        }
-      });
+      let totalContributions = 0;
+      let fullYearDays: Array<{ id: string; date: string; level: number; count: number; text: string }> = [];
 
-      if (!response.ok) {
-        throw new Error(`GitHub responded with status ${response.status}`);
-      }
-
-      const html = await response.text();
-
-      // Parse Total Count
-      const totalMatch = html.match(/([0-9,]+)\s+contributions/i);
-      const totalContributions = totalMatch ? parseInt(totalMatch[1].replace(/,/g, "")) : 0;
-
-      // Map day IDs to day objects
-      const dayMap = new Map<string, { id: string; date: string; level: number; count: number; text: string }>();
-      const tdMatches = html.match(/<td[^>]*class="ContributionCalendar-day"[^>]*>/g) || [];
-
-      for (const td of tdMatches) {
-        const dateM = td.match(/data-date="([^"]+)"/);
-        const levelM = td.match(/data-level="([^"]+)"/);
-        const idM = td.match(/id="([^"]+)"/);
-        if (dateM && levelM && idM) {
-          dayMap.set(idM[1], {
-            id: idM[1],
-            date: dateM[1],
-            level: parseInt(levelM[1]),
-            count: 0,
-            text: `0 contributions on ${dateM[1]}`
-          });
-        }
-      }
-
-      const tooltipRegex = /<tool-tip[^>]*for="([^"]+)"[^>]*>(.*?)<\/tool-tip>/gi;
-      let match;
-      while ((match = tooltipRegex.exec(html)) !== null) {
-        const id = match[1];
-        const text = match[2];
-        if (dayMap.has(id)) {
-          let count = 0;
-          const countMatch = text.match(/([0-9,]+)\s+contribution/i);
-          if (countMatch) {
-            count = parseInt(countMatch[1].replace(/,/g, ""));
+      try {
+        const ghUrl = `https://github.com/users/${encodeURIComponent(username)}/contributions?from=${year}-01-01&to=${year}-12-31`;
+        const response = await fetch(ghUrl, {
+          headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html"
           }
-          dayMap.get(id)!.count = count;
-          dayMap.get(id)!.text = text.replace(/<\/?[^>]+(>|$)/g, "");
+        });
+
+        if (!response.ok) {
+          throw new Error(`GitHub responded with status ${response.status}`);
         }
-      }
 
-      const daysArr = Array.from(dayMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+        const html = await response.text();
 
-      const targetYearNum = parseInt(year) || 2026;
-      const isLeap = (targetYearNum % 4 === 0 && targetYearNum % 100 !== 0) || (targetYearNum % 400 === 0);
-      const totalYearDays = isLeap ? 366 : 365;
+        // Parse Total Count
+        const totalMatch = html.match(/([0-9,]+)\s+contributions/i);
+        totalContributions = totalMatch ? parseInt(totalMatch[1].replace(/,/g, "")) : 0;
 
-      const dayByDateMap = new Map<string, typeof daysArr[0]>();
-      for (const d of daysArr) {
-        dayByDateMap.set(d.date, d);
-      }
+        // Map day IDs to day objects
+        const dayMap = new Map<string, { id: string; date: string; level: number; count: number; text: string }>();
+        const tdMatches = html.match(/<td[^>]*class="ContributionCalendar-day"[^>]*>/g) || [];
 
-      const fullYearDays: typeof daysArr = [];
-      const yearStart = new Date(Date.UTC(targetYearNum, 0, 1));
-
-      for (let i = 0; i < totalYearDays; i++) {
-        const d = new Date(yearStart);
-        d.setUTCDate(yearStart.getUTCDate() + i);
-        const dateStr = d.toISOString().split("T")[0];
-
-        if (dayByDateMap.has(dateStr)) {
-          fullYearDays.push(dayByDateMap.get(dateStr)!);
-        } else {
-          fullYearDays.push({
-            id: `gen-${dateStr}`,
-            date: dateStr,
-            level: 0,
-            count: 0,
-            text: `0 contributions on ${dateStr}`
-          });
+        for (const td of tdMatches) {
+          const dateM = td.match(/data-date="([^"]+)"/);
+          const levelM = td.match(/data-level="([^"]+)"/);
+          const idM = td.match(/id="([^"]+)"/);
+          if (dateM && levelM && idM) {
+            dayMap.set(idM[1], {
+              id: idM[1],
+              date: dateM[1],
+              level: parseInt(levelM[1]),
+              count: 0,
+              text: `0 contributions on ${dateM[1]}`
+            });
+          }
         }
+
+        const tooltipRegex = /<tool-tip[^>]*for="([^"]+)"[^>]*>(.*?)<\/tool-tip>/gi;
+        let match;
+        while ((match = tooltipRegex.exec(html)) !== null) {
+          const id = match[1];
+          const text = match[2];
+          if (dayMap.has(id)) {
+            let count = 0;
+            const countMatch = text.match(/([0-9,]+)\s+contribution/i);
+            if (countMatch) {
+              count = parseInt(countMatch[1].replace(/,/g, ""));
+            }
+            dayMap.get(id)!.count = count;
+            dayMap.get(id)!.text = text.replace(/<\/?[^>]+(>|$)/g, "");
+          }
+        }
+
+        const daysArr = Array.from(dayMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+
+        const targetYearNum = parseInt(year) || 2026;
+        const isLeap = (targetYearNum % 4 === 0 && targetYearNum % 100 !== 0) || (targetYearNum % 400 === 0);
+        const totalYearDays = isLeap ? 366 : 365;
+
+        const dayByDateMap = new Map<string, typeof daysArr[0]>();
+        for (const d of daysArr) {
+          dayByDateMap.set(d.date, d);
+        }
+
+        const yearStart = new Date(Date.UTC(targetYearNum, 0, 1));
+
+        for (let i = 0; i < totalYearDays; i++) {
+          const d = new Date(yearStart);
+          d.setUTCDate(yearStart.getUTCDate() + i);
+          const dateStr = d.toISOString().split("T")[0];
+
+          if (dayByDateMap.has(dateStr)) {
+            fullYearDays.push(dayByDateMap.get(dateStr)!);
+          } else {
+            fullYearDays.push({
+              id: `gen-${dateStr}`,
+              date: dateStr,
+              level: 0,
+              count: 0,
+              text: `0 contributions on ${dateStr}`
+            });
+          }
+        }
+      } catch (err: any) {
+        console.warn(`Direct GitHub scraping failed (${err.message}). Attempting fallback to public API...`);
+        const fallbackUrl = `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}`;
+        const response = await fetch(fallbackUrl);
+        if (!response.ok) {
+          throw new Error(`Fallback API responded with status ${response.status}`);
+        }
+        const data = await response.json() as {
+          total: Record<string, number>;
+          contributions: Array<{ date: string; count: number; level: number }>;
+        };
+
+        const yearContributions = data.contributions.filter(c => c.date.startsWith(`${year}-`));
+        const dayByDateMap = new Map<string, { date: string; count: number; level: number }>();
+        for (const c of yearContributions) {
+          dayByDateMap.set(c.date, c);
+        }
+
+        const targetYearNum = parseInt(year) || 2026;
+        const isLeap = (targetYearNum % 4 === 0 && targetYearNum % 100 !== 0) || (targetYearNum % 400 === 0);
+        const totalYearDays = isLeap ? 366 : 365;
+
+        const yearStart = new Date(Date.UTC(targetYearNum, 0, 1));
+
+        for (let i = 0; i < totalYearDays; i++) {
+          const d = new Date(yearStart);
+          d.setUTCDate(yearStart.getUTCDate() + i);
+          const dateStr = d.toISOString().split("T")[0];
+
+          if (dayByDateMap.has(dateStr)) {
+            const matchDay = dayByDateMap.get(dateStr)!;
+            fullYearDays.push({
+              id: `gen-${dateStr}`,
+              date: dateStr,
+              level: matchDay.level,
+              count: matchDay.count,
+              text: `${matchDay.count} contributions on ${dateStr}`
+            });
+          } else {
+            fullYearDays.push({
+              id: `gen-${dateStr}`,
+              date: dateStr,
+              level: 0,
+              count: 0,
+              text: `0 contributions on ${dateStr}`
+            });
+          }
+        }
+
+        totalContributions = data.total[year] !== undefined ? data.total[year] : yearContributions.reduce((sum, c) => sum + c.count, 0);
       }
 
       let currentStreak = 0;
