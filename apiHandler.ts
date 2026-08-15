@@ -95,6 +95,7 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
       uptime: "99.999%",
       latency: "24ms",
       timestamp: d.toISOString(),
+      patch: "v2-native-http"
     }));
     return true;
   }
