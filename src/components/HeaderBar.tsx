@@ -38,8 +38,8 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
       {/* Left Title & Tabs */}
       <div className="flex items-center space-x-6">
         <div className="flex items-center space-x-2">
-          <span className="font-bold text-emerald-400 tracking-widest text-xs uppercase flex items-center gap-1.5">
-            ROOT@IAMHIMANSHU108
+          <span className="font-bold text-emerald-400 tracking-widest text-xs lowercase flex items-center gap-1.5">
+            root@iamhimanshu108
             <span className="text-[10px] text-cyan-400 font-mono bg-cyan-950/60 border border-cyan-500/30 px-1.5 py-0.5 rounded">
               {SYSTEM_INFO.version}
             </span>

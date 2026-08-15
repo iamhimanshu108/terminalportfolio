@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Send, Terminal, ShieldCheck, CheckCircle2, Loader2, Sparkles, Linkedin, Github, Twitter, Globe, ExternalLink } from 'lucide-react';
+import { Mail, Send, Terminal, ShieldCheck, CheckCircle2, Loader2, Sparkles, Linkedin, Github, Globe, ExternalLink } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import { Typewriter } from '../Typewriter';
 
@@ -36,12 +36,24 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
       color: 'border-emerald-500/40 bg-emerald-950/20 hover:border-emerald-400'
     },
     {
-      name: 'X (Twitter)',
+      name: 'X',
       handle: '@iamhimanshu108',
       url: 'https://x.com/iamhimanshu108',
-      icon: <Twitter className="w-5 h-5 text-sky-400" />,
+      icon: (
+        <svg className="w-5 h-5 text-slate-300 fill-current" viewBox="0 0 24 24">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      ),
       badge: 'Tech Updates & Dev Logs',
       color: 'border-sky-500/40 bg-sky-950/20 hover:border-sky-400'
+    },
+    {
+      name: 'Email',
+      handle: 'hiyadav2022@gmail.com',
+      url: 'mailto:hiyadav2022@gmail.com',
+      icon: <Mail className="w-5 h-5 text-emerald-400" />,
+      badge: 'Direct Correspondence',
+      color: 'border-emerald-500/40 bg-emerald-950/20 hover:border-emerald-400'
     }
   ];
 
@@ -72,7 +84,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
       setTimeout(() => {
         setStatus('SUCCESS');
         setPacketDetails({
-          packetId: `PKT-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
+          packetId: `MSG-${Math.random().toString(36).substring(2, 9).toUpperCase()}`,
           timestamp: new Date().toISOString()
         });
         setFormData({ name: '', email: '', subject: '', message: '' });
@@ -88,11 +100,11 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
           <span>visitor@local:~$</span>
           <Typewriter text="./contact.sh" className="text-slate-100 font-semibold" speed={35} />
         </div>
-        <span className="text-[10px] text-slate-500">DISPATCH_PORT: 443 (TLS_1.3)</span>
+        <span className="text-[10px] text-slate-500">INBOX_PORT: 443 (TLS_1.3)</span>
       </div>
 
       {/* Social Network Channels Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {socialChannels.map((c) => (
           <a
             key={c.name}
@@ -139,10 +151,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
         <div className="p-5 space-y-6">
           <div className="space-y-1">
             <p className="text-emerald-400 font-bold text-sm">
-              # Dispatch secure message packet to Himanshu Yadav
-            </p>
-            <p className="text-slate-400 text-xs">
-              Direct inbox queue router: <span className="text-cyan-400">hiyadav2022@gmail.com</span>
+              # Send a message to Himanshu Yadav
             </p>
           </div>
 
@@ -150,14 +159,14 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
             <div className="bg-emerald-950/60 border border-emerald-500/50 p-4 rounded-lg space-y-2 animate-fadeIn">
               <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
                 <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span>[200 OK] Message Packet Dispatched Successfully!</span>
+                <span>[200 OK] Message Sent Successfully!</span>
               </div>
               <p className="text-slate-300 text-xs">
-                Your transmission has been queued in Himanshu's primary inbox.
+                Your message has been sent to Himanshu's primary inbox.
               </p>
               <div className="text-[11px] text-slate-400 space-y-0.5 pt-1 border-t border-emerald-900/50">
-                <p>PACKET_ID: <span className="text-cyan-400 font-bold">{packetDetails.packetId}</span></p>
-                <p>TIMESTAMP: <span className="text-slate-300">{packetDetails.timestamp}</span></p>
+                <p>MESSAGE_ID: <span className="text-cyan-400 font-bold">{packetDetails.packetId}</span></p>
+                <p>SENT_AT: <span className="text-slate-300">{packetDetails.timestamp}</span></p>
               </div>
               <button
                 onClick={() => setStatus('IDLE')}
@@ -222,7 +231,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
                   rows={5}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Enter transmission payload details..."
+                  placeholder="Enter your message details..."
                   className="w-full bg-[#090E1A] border border-slate-800 rounded p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs resize-none"
                 />
               </div>
@@ -248,12 +257,12 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
                   {status === 'SENDING' ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin text-black" />
-                      <span>DISPATCHING...</span>
+                      <span>SENDING...</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4 text-black" />
-                      <span>EXECUTE DISPATCH</span>
+                      <span>SEND MESSAGE</span>
                     </>
                   )}
                 </button>

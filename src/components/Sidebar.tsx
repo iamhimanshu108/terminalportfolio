@@ -61,8 +61,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border border-black ${statusOnline ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
             </div>
             <div>
-              <div className="font-bold text-emerald-400 tracking-wider text-xs uppercase flex items-center gap-1.5">
-                ROOT@IAMHIMANSHU108
+              <div className="font-bold text-emerald-400 tracking-wider text-xs lowercase flex items-center gap-1.5">
+                root@iamhimanshu108
               </div>
               <div className="text-[10px] text-slate-400 uppercase tracking-tight">
                 STATUS: {statusOnline ? 'ONLINE' : 'MAINTENANCE'}

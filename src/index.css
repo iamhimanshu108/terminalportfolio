@@ -58,6 +58,48 @@
   --secondary-accent: #FCD34D;
 }
 
+[data-theme="gruvbox"] {
+  --bg-primary: #1d2021;
+  --bg-sidebar: #151718;
+  --bg-header: #17191a;
+  --bg-card: #282828;
+  --bg-inner: #151718;
+  --border-main: rgba(168, 153, 132, 0.4);
+  --border-accent: rgba(215, 153, 33, 0.6);
+  --text-accent: #fabd2f;
+  --text-accent-hover: #fe8019;
+  --bg-accent-tag: rgba(215, 153, 33, 0.15);
+  --secondary-accent: #b8bb26;
+}
+
+[data-theme="monokai"] {
+  --bg-primary: #272822;
+  --bg-sidebar: #1e1f1c;
+  --bg-header: #22231e;
+  --bg-card: #3e3d32;
+  --bg-inner: #1e1f1c;
+  --border-main: rgba(117, 113, 94, 0.4);
+  --border-accent: rgba(249, 38, 114, 0.6);
+  --text-accent: #F92672;
+  --text-accent-hover: #A6E22E;
+  --bg-accent-tag: rgba(249, 38, 114, 0.15);
+  --secondary-accent: #66D9EF;
+}
+
+[data-theme="rose-pine"] {
+  --bg-primary: #1f1d2e;
+  --bg-sidebar: #191724;
+  --bg-header: #1f1d2e;
+  --bg-card: #26233a;
+  --bg-inner: #191724;
+  --border-main: rgba(110, 106, 134, 0.4);
+  --border-accent: rgba(235, 188, 186, 0.6);
+  --text-accent: #ebbcba;
+  --text-accent-hover: #f6c177;
+  --bg-accent-tag: rgba(235, 188, 186, 0.15);
+  --secondary-accent: #9ccfd8;
+}
+
 [data-theme="dracula"] {
   --bg-primary: #0F0E17;
   --bg-sidebar: #0A0912;
@@ -137,7 +179,10 @@
 [data-theme="cyber"] .text-emerald-400,
 [data-theme="amber"] .text-emerald-400,
 [data-theme="dracula"] .text-emerald-400,
-[data-theme="nord"] .text-emerald-400 {
+[data-theme="nord"] .text-emerald-400,
+[data-theme="gruvbox"] .text-emerald-400,
+[data-theme="monokai"] .text-emerald-400,
+[data-theme="rose-pine"] .text-emerald-400 {
   color: var(--text-accent) !important;
 }
 
@@ -145,7 +190,10 @@
 [data-theme="cyber"] .border-emerald-500\/60,
 [data-theme="amber"] .border-emerald-500\/60,
 [data-theme="dracula"] .border-emerald-500\/60,
-[data-theme="nord"] .border-emerald-500\/60 {
+[data-theme="nord"] .border-emerald-500\/60,
+[data-theme="gruvbox"] .border-emerald-500\/60,
+[data-theme="monokai"] .border-emerald-500\/60,
+[data-theme="rose-pine"] .border-emerald-500\/60 {
   border-color: var(--border-accent) !important;
 }
 
@@ -153,7 +201,10 @@
 [data-theme="cyber"] .bg-\[\#10B981\],
 [data-theme="amber"] .bg-\[\#10B981\],
 [data-theme="dracula"] .bg-\[\#10B981\],
-[data-theme="nord"] .bg-\[\#10B981\] {
+[data-theme="nord"] .bg-\[\#10B981\],
+[data-theme="gruvbox"] .bg-\[\#10B981\],
+[data-theme="monokai"] .bg-\[\#10B981\],
+[data-theme="rose-pine"] .bg-\[\#10B981\] {
   background-color: var(--text-accent) !important;
 }
 

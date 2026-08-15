@@ -38,9 +38,8 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
     scrollToBottom();
   }, [history, isAiLoading]);
 
-  const handleCommandSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = input.trim();
+  const runCommand = async (cmdText: string) => {
+    const trimmed = cmdText.trim();
     if (!trimmed) return;
 
     sound.playExecute();
@@ -203,7 +202,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
     } else {
       outputNode = (
         <span className="text-rose-400 font-mono">
-          zsh: command not found: {mainCmd}. Type <button onClick={() => setInput('help')} className="underline text-emerald-400">help</button> for available commands.
+          zsh: command not found: {mainCmd}. Type <button onClick={() => runCommand('help')} className="underline text-emerald-400">help</button> for available commands.
         </span>
       );
     }
@@ -217,6 +216,11 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
         timestamp: timeStr
       }
     ]);
+  };
+
+  const handleCommandSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await runCommand(input);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -257,6 +261,21 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
           <div ref={bottomRef} />
         </div>
       )}
+
+      {/* Quick Interactive Command Shortcuts */}
+      <div className="flex flex-wrap items-center gap-1.5 pt-1.5 border-t border-slate-900 select-none">
+        <span className="text-[9px] text-slate-500 font-bold mr-1">QUICK_RUN:</span>
+        {['help', 'ls', 'projects', 'ssh', 'ai who is Himanshu?', 'clear'].map((cmd) => (
+          <button
+            key={cmd}
+            type="button"
+            onClick={() => runCommand(cmd)}
+            className="px-2 py-0.5 rounded text-[10px] bg-[#0A0F1D] border border-slate-800/60 text-slate-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all font-mono active:scale-95"
+          >
+            {cmd}
+          </button>
+        ))}
+      </div>
 
       {/* Interactive Input Line */}
       <form onSubmit={handleCommandSubmit} className="flex items-center space-x-2 bg-[#090E1A] p-2 rounded border border-slate-800/80 focus-within:border-emerald-500/50 transition-colors">

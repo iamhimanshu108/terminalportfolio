@@ -4,7 +4,7 @@ import { NavPath, Project } from '../../types';
 import { InteractiveTerminal } from '../InteractiveTerminal';
 import { GitHubHeatmap } from '../GitHubHeatmap';
 import { Typewriter } from '../Typewriter';
-import { ArrowRight, Server, Terminal, Linkedin, Github, Twitter, Database, Cpu, Bot, ExternalLink, Play } from 'lucide-react';
+import { ArrowRight, Server, Terminal, Linkedin, Github, Database, Cpu, Bot, ExternalLink, Play, Code2, ShieldCheck, Boxes, Workflow, Sparkles, Layers, Zap } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import myAvatar from '../../assets/My.png';
 
@@ -28,33 +28,165 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const socialButtons = [
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/iamhimanshu108', icon: <Linkedin className="w-3.5 h-3.5 text-cyan-400" /> },
     { name: 'GitHub', url: 'https://github.com/iamhimanshu108', icon: <Github className="w-3.5 h-3.5 text-emerald-400" /> },
-    { name: 'X / Twitter', url: 'https://x.com/iamhimanshu108', icon: <Twitter className="w-3.5 h-3.5 text-sky-400" /> },
+    { name: 'X', url: 'https://x.com/iamhimanshu108', icon: (
+      <svg className="w-3.5 h-3.5 text-slate-300 fill-current" viewBox="0 0 24 24">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ) },
   ];
 
   const techStackCategories = [
     {
       title: 'Backend Core & Microservices',
       icon: <Server className="w-4 h-4 text-emerald-400" />,
-      items: ['Java Spring Boot', 'Spring Security & JWT', 'Node.js & Express', 'FastAPI & Python', 'REST Microservices'],
-      color: 'border-emerald-500/30 bg-emerald-950/10'
+      borderColor: 'border-emerald-500/30 hover:border-emerald-400',
+      pills: [
+        {
+          name: 'Java Spring Boot',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#E76F00] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 19h16v2H4zm12-4H8c-2.21 0-4-1.79-4-4V5h16v6c0 2.21-1.79 4-4 4zm2-8H6v4c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z" />
+            </svg>
+          )
+        },
+        {
+          name: 'Spring Security & JWT',
+          icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+        },
+        {
+          name: 'Node.js & Express',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#339933] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7.5v9L12 22l10-5.5v-9L12 2zm0 2.3l7.5 4.1v7.2L12 19.7l-7.5-4.1V8.4L12 4.3z" />
+            </svg>
+          )
+        },
+        {
+          name: 'FastAPI & Python',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#009688] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L3 13h7v9l9-11h-7V2z" />
+            </svg>
+          )
+        },
+        {
+          name: 'REST Microservices',
+          icon: <Boxes className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+        }
+      ]
     },
     {
       title: 'Databases & Caching Layer',
       icon: <Database className="w-4 h-4 text-cyan-400" />,
-      items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis'],
-      color: 'border-cyan-500/30 bg-cyan-950/10'
+      borderColor: 'border-cyan-500/30 hover:border-cyan-400',
+      pills: [
+        {
+          name: 'PostgreSQL',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#336791] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+            </svg>
+          )
+        },
+        {
+          name: 'MySQL',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#00758F] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3c-4.97 0-9 1.79-9 4v10c0 2.21 4.03 4 9 4s9-1.79 9-4V7c0-2.21-4.03-4-9-4zm0 2c3.87 0 7 1.34 7 2s-3.13 2-7 2-7-1.34-7-2 3.13-2 7-2zm0 14c-3.87 0-7-1.34-7-2v-2.15c1.78 1.09 4.26 1.65 7 1.65s5.22-.56 7-1.65V17c0 .66-3.13 2-7 2z" />
+            </svg>
+          )
+        },
+        {
+          name: 'MongoDB',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#47A248] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.5h-2V13h2v3.5zm0-5.5h-2V7h2v4z" />
+            </svg>
+          )
+        },
+        {
+          name: 'Redis',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#DC382D] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zm-10 8l10 5 10-5M2 15l10 5 10-5" />
+            </svg>
+          )
+        }
+      ]
     },
     {
       title: 'DevOps & Infrastructure',
       icon: <Cpu className="w-4 h-4 text-amber-400" />,
-      items: ['Docker Containers', 'Linux & POSIX Bash', 'Git & GitHub', 'Maven', 'Postman', 'CI/CD Pipelines'],
-      color: 'border-amber-500/30 bg-amber-950/10'
+      borderColor: 'border-amber-500/30 hover:border-amber-400',
+      pills: [
+        {
+          name: 'Docker Containers',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#2496ED] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M13.98 11.08h1.89v1.9h-1.89zm-2.38 0h1.89v1.9h-1.89zm-2.38 0h1.89v1.9H9.22zm-2.38 0h1.89v1.9H6.84zm7.14-2.38h1.89v1.9h-1.89zm-2.38 0h1.89v1.9h-1.89zm-2.38 0h1.89v1.9H9.22zm7.14-2.38h1.89v1.9h-1.89z" />
+            </svg>
+          )
+        },
+        {
+          name: 'Linux & POSIX Bash',
+          icon: <Code2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+        },
+        {
+          name: 'Git & GitHub',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#F05032] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+            </svg>
+          )
+        },
+        {
+          name: 'Maven',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#C71A36] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          )
+        },
+        {
+          name: 'Postman',
+          icon: (
+            <svg className="w-3.5 h-3.5 text-[#FF6C37] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+            </svg>
+          )
+        },
+        {
+          name: 'CI/CD Pipelines',
+          icon: <Workflow className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+        }
+      ]
     },
     {
       title: 'AI & Multi-Channel Automation',
       icon: <Bot className="w-4 h-4 text-purple-400" />,
-      items: ['Gemini AI API', 'LLMs & Prompt Eng.', 'Google Apps Script', 'AppSheet', 'WhatsApp & Telegram Bots'],
-      color: 'border-purple-500/30 bg-purple-950/10'
+      borderColor: 'border-purple-500/30 hover:border-purple-400',
+      pills: [
+        {
+          name: 'Gemini AI API',
+          icon: <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+        },
+        {
+          name: 'LLMs & Prompt Eng.',
+          icon: <Cpu className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+        },
+        {
+          name: 'Google Apps Script',
+          icon: <Code2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+        },
+        {
+          name: 'AppSheet',
+          icon: <Layers className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+        },
+        {
+          name: 'WhatsApp & Telegram Bots',
+          icon: <Bot className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+        }
+      ]
     }
   ];
 
@@ -67,7 +199,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
   const filteredCategories = techStackCategories.filter(cat =>
     cat.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    cat.items.some(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
+    cat.pills.some(pill => pill.name.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
@@ -183,19 +315,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
         {filteredCategories.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredCategories.map((cat) => (
-              <div key={cat.title} className={`p-4 rounded-lg border ${cat.color} space-y-2.5`}>
-                <div className="flex items-center space-x-2 text-slate-100 font-bold text-xs">
+              <div key={cat.title} className={`p-4 rounded-lg border ${cat.borderColor} bg-[#080C16] space-y-3.5 shadow-lg`}>
+                <div className="flex items-center space-x-2 border-b border-slate-800/80 pb-2.5 text-slate-100 font-bold text-xs">
                   {cat.icon}
                   <span>{cat.title}</span>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {cat.items.map((item) => (
-                    <span
-                      key={item}
-                      className="bg-[#050810]/80 border border-slate-800/80 text-slate-300 text-[10px] px-2 py-0.5 rounded font-mono"
+                <div className="flex flex-wrap gap-2 pt-0.5">
+                  {cat.pills.map((pill) => (
+                    <div
+                      key={pill.name}
+                      className="flex items-center space-x-2 px-2.5 py-1 rounded-lg bg-[#050810] border border-slate-800 hover:border-slate-700 hover:bg-[#0A0E1A] transition-all cursor-default select-none shadow-sm group"
                     >
-                      {item}
-                    </span>
+                      <div className="shrink-0 group-hover:scale-110 transition-transform">
+                        {pill.icon}
+                      </div>
+                      <span className="text-[10px] font-semibold text-slate-200 group-hover:text-white font-sans tracking-tight">
+                        {pill.name}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -207,20 +344,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         )}
       </div>
-
-      {/* Interactive Microservices Terminal Block */}
-      <div className="space-y-2.5">
-        <div className="flex items-center space-x-2">
-          <Terminal className="w-4 h-4 text-emerald-400" />
-          <span className="font-bold text-slate-200 text-sm tracking-wide">INTERACTIVE_TERMINAL_SESSION</span>
-        </div>
-        <InteractiveTerminal
-          currentPath="~/home"
-          onNavigate={onNavigate}
-          onOpenSsh={onOpenSsh}
-        />
-      </div>
-
       {/* Featured Projects Grid */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -340,6 +463,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* GitHub Contributions Matrix Component */}
       <GitHubHeatmap />
+
+      {/* Interactive Microservices Terminal Block */}
+      <div className="space-y-2.5">
+        <div className="flex items-center space-x-2">
+          <Terminal className="w-4 h-4 text-emerald-400" />
+          <span className="font-bold text-slate-200 text-sm tracking-wide">INTERACTIVE_TERMINAL_SESSION</span>
+        </div>
+        <InteractiveTerminal
+          currentPath="~/home"
+          onNavigate={onNavigate}
+          onOpenSsh={onOpenSsh}
+        />
+      </div>
     </div>
   );
 };

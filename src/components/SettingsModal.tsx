@@ -31,7 +31,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     { id: 'cyber', name: 'Cyber Neon Cyan', preview: 'bg-[#050D1A] border-cyan-400' },
     { id: 'amber', name: 'Amber Vintage Monospaced', preview: 'bg-[#140A00] border-amber-500' },
     { id: 'dracula', name: 'Dracula Purple & Pink', preview: 'bg-[#0F0E17] border-purple-400' },
-    { id: 'nord', name: 'Nordic Polar Ice', preview: 'bg-[#0E141D] border-sky-400' }
+    { id: 'nord', name: 'Nordic Polar Ice', preview: 'bg-[#0E141D] border-sky-400' },
+    { id: 'gruvbox', name: 'Gruvbox Retro Gold', preview: 'bg-[#1d2021] border-[#fabd2f]' },
+    { id: 'monokai', name: 'Monokai Vibrant Pink', preview: 'bg-[#272822] border-[#F92672]' },
+    { id: 'rose-pine', name: 'Rose Pine Rosy Dusk', preview: 'bg-[#1f1d2e] border-[#ebbcba]' }
   ];
 
   return (
@@ -97,7 +100,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <Palette className="w-3.5 h-3.5 text-amber-400" />
               <span>TERMINAL PALETTE</span>
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-800">
               {themes.map((t) => (
                 <button
                   key={t.id}

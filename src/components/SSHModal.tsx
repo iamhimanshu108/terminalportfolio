@@ -35,8 +35,7 @@ export const SSHModal: React.FC<SSHModalProps> = ({ isOpen, onClose }) => {
           ...prev,
           'Authenticated to Himanshu Yadav (root@Himanshu v2026.8.12).',
           'Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-101-generic x86_64)',
-          'Last login: ' + new Date().toUTCString(),
-          'Type "email", "status", "whoami", or "exit".'
+          'Last login: ' + new Date().toUTCString()
         ]);
         setConnecting(false);
         setConnected(true);
@@ -132,7 +131,7 @@ export const SSHModal: React.FC<SSHModalProps> = ({ isOpen, onClose }) => {
               type="text"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
-              placeholder="type 'email', 'status', 'exit'..."
+              placeholder=""
               className="flex-1 bg-transparent text-slate-100 focus:outline-none font-mono text-xs"
             />
             <button type="submit" className="text-emerald-400 hover:text-emerald-300 p-1">

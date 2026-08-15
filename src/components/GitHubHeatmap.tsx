@@ -49,49 +49,15 @@ export const GitHubHeatmap: React.FC = () => {
     fetchGithubData(selectedYear);
   }, [selectedYear]);
 
-  // Generate 52-53 Week Columns for the full year
+  // Generate 52-53 Week Columns from the rolling days list
   const getWeekColumns = (): DayContribution[][] => {
     if (!data || !data.days) return [];
-
-    const yearNum = parseInt(selectedYear, 10);
-    const isLeap = (yearNum % 4 === 0 && yearNum % 100 !== 0) || (yearNum % 400 === 0);
-    const totalYearDays = isLeap ? 366 : 365;
-
-    // Day lookup map
-    const dayByDate = new Map<string, DayContribution>();
-    for (const d of data.days) {
-      if (d.date) {
-        dayByDate.set(d.date, d);
-      }
-    }
-
-    // Full year list
-    const fullYearList: DayContribution[] = [];
-    const yearStart = new Date(Date.UTC(yearNum, 0, 1));
-
-    for (let i = 0; i < totalYearDays; i++) {
-      const cur = new Date(yearStart);
-      cur.setUTCDate(yearStart.getUTCDate() + i);
-      const dateStr = cur.toISOString().split('T')[0];
-
-      if (dayByDate.has(dateStr)) {
-        fullYearList.push(dayByDate.get(dateStr)!);
-      } else {
-        fullYearList.push({
-          id: `pad-${dateStr}`,
-          date: dateStr,
-          count: 0,
-          level: 0,
-          text: `0 contributions on ${dateStr}`
-        });
-      }
-    }
 
     // Group into 7-day week columns (Sunday = 0)
     const weeks: DayContribution[][] = [];
     let currentWeek: DayContribution[] = [];
 
-    const firstDateParts = fullYearList[0].date.split('-').map(Number);
+    const firstDateParts = data.days[0].date.split('-').map(Number);
     const firstDateUTC = new Date(Date.UTC(firstDateParts[0], firstDateParts[1] - 1, firstDateParts[2]));
     const leadingEmptyDays = firstDateUTC.getUTCDay(); // 0 = Sun, 6 = Sat
 
@@ -105,7 +71,7 @@ export const GitHubHeatmap: React.FC = () => {
       });
     }
 
-    for (const day of fullYearList) {
+    for (const day of data.days) {
       currentWeek.push(day);
       if (currentWeek.length === 7) {
         weeks.push(currentWeek);
@@ -188,8 +154,23 @@ export const GitHubHeatmap: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#080C16] border border-slate-800/90 p-4 sm:p-5 rounded-xl space-y-3 shadow-xl font-mono text-xs">
+    <div className="bg-[#080C16] border border-slate-800/90 p-4 sm:p-5 rounded-xl space-y-4 shadow-xl font-mono text-xs">
 
+      {/* Heatmap Header Metrics */}
+      <div className="grid grid-cols-3 gap-3 pb-2 border-b border-slate-800/60 text-center sm:text-left">
+        <div className="bg-[#03060E] border border-slate-800/80 p-2.5 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <span className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Total Commits</span>
+          <span className="text-xs font-extrabold text-emerald-400">{data?.totalContributions || 0}</span>
+        </div>
+        <div className="bg-[#03060E] border border-slate-800/80 p-2.5 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <span className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Current Streak</span>
+          <span className="text-xs font-extrabold text-cyan-400">{data?.currentStreak || 0} days</span>
+        </div>
+        <div className="bg-[#03060E] border border-slate-800/80 p-2.5 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <span className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Max Streak</span>
+          <span className="text-xs font-extrabold text-amber-400">{data?.longestStreak || 0} days</span>
+        </div>
+      </div>
 
       {/* Main Heatmap Canvas */}
       <div className="bg-[#03060E] border border-slate-800/90 p-4 rounded-xl overflow-x-auto scrollbar-thin relative min-h-[170px] flex flex-col justify-between">
