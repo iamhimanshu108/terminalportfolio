@@ -5,6 +5,11 @@ import https from 'https';
 
 dotenv.config();
 
+const getTodayVersion = (): string => {
+  const d = new Date();
+  return `v${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+};
+
 function httpsRequest(
   url: string,
   options: { method?: string; headers?: Record<string, string | number> } = {},
@@ -200,12 +205,13 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
     if (apiKey) {
       try {
         const ai = new GoogleGenAI({ apiKey });
-        const systemInstruction = `You are ROOT_AI, an embedded developer system terminal assistant on Himanshu Yadav's official portfolio system (root@iamhimanshu108 v2026.8.12).
+        const systemVersion = getTodayVersion();
+        const systemInstruction = `You are ROOT_AI, an embedded developer system terminal assistant on Himanshu Yadav's official portfolio system (root@iamhimanshu108 ${systemVersion}).
 Provide concise, technical, terminal-formatted CLI responses. Use code blocks, clean ascii, or short bullet points.
 Profile details (from https://www.iamhimanshu.in):
 - Name: Himanshu Yadav
 - Hostname: root@iamhimanshu108
-- System Version: v2026.8.12
+- System Version: ${systemVersion}
 - Role: Full Stack Web Developer & Automation Specialist // Backend AI & DevOps Architect
 - Official Portfolio: https://www.iamhimanshu.in
 - Email: hiyadav2022@gmail.com | GitHub: @iamhimanshu108

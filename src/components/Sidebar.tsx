@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 import myAvatar from '../assets/My.png';
+import { SYSTEM_INFO } from '../data/portfolioData';
 
 interface SidebarProps {
   currentPath: NavPath;
@@ -70,7 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
           <div className="text-[11px] text-slate-500 font-mono flex items-center justify-between pt-1">
-            <span className="text-emerald-400 font-bold">v2026.8.12</span>
+            <span className="text-emerald-400 font-bold">{SYSTEM_INFO.version}</span>
             <span className="text-slate-400">iamhimanshu.in</span>
           </div>
         </div>
@@ -129,7 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               sound.playExecute();
               onTriggerReboot();
             }}
-            title="Reboot System v2026.8.12"
+            title={`Reboot System ${SYSTEM_INFO.version}`}
             className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 rounded transition-colors flex items-center space-x-1"
           >
             <Power className="w-3.5 h-3.5 text-rose-400" />

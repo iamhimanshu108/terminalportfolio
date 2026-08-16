@@ -13,6 +13,7 @@ import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { SettingsModal } from './components/SettingsModal';
 import { RebootAnimationModal } from './components/RebootAnimationModal';
 import { sound } from './lib/sound';
+import { SYSTEM_INFO } from './data/portfolioData';
 import { Terminal, Bug, Activity, Cpu, Play, CheckCircle2, X, RefreshCw, Send } from 'lucide-react';
 
 export default function App() {
@@ -292,7 +293,7 @@ export default function App() {
               <span className="text-slate-600">//</span>
               <span className="text-slate-300 font-bold">root@iamhimanshu108</span>
               <span className="text-slate-600">//</span>
-              <span className="text-cyan-400 font-bold">v2026.8.12</span>
+              <span className="text-cyan-400 font-bold">{SYSTEM_INFO.version}</span>
             </div>
 
             <div className="flex items-center space-x-4">
@@ -311,7 +312,7 @@ export default function App() {
           setIsRebooting(false);
           setCurrentPath('~/home');
           setActiveTab('SESSION');
-          setExecLogs(['EXECUTE_ENGINE: System reloaded successfully.', 'Kernel version v2026.8.12 online.']);
+          setExecLogs(['EXECUTE_ENGINE: System reloaded successfully.', `Kernel version ${SYSTEM_INFO.version} online.`]);
         }}
       />
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Terminal, CheckCircle2, Copy, Check, Send } from 'lucide-react';
 import { sound } from '../lib/sound';
+import { SYSTEM_INFO } from '../data/portfolioData';
 
 interface SSHModalProps {
   isOpen: boolean;
@@ -33,7 +34,7 @@ export const SSHModal: React.FC<SSHModalProps> = ({ isOpen, onClose }) => {
       const timer3 = setTimeout(() => {
         setSshLogs((prev) => [
           ...prev,
-          'Authenticated to Himanshu Yadav (root@Himanshu v2026.8.12).',
+          `Authenticated to Himanshu Yadav (root@Himanshu ${SYSTEM_INFO.version}).`,
           'Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-101-generic x86_64)',
           'Last login: ' + new Date().toUTCString()
         ]);

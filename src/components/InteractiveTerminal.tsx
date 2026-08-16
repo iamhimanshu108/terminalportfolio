@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { sound } from '../lib/sound';
 import { Terminal as TerminalIcon, Send, Sparkles, Loader2 } from 'lucide-react';
 import { NavPath } from '../types';
+import { SYSTEM_INFO } from '../data/portfolioData';
 
 interface InteractiveTerminalProps {
   currentPath: NavPath;
@@ -112,7 +113,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
       onOpenSsh();
       outputNode = <span className="text-emerald-400">Opening SSH connection session to contact@dev.local...</span>;
     } else if (mainCmd === 'whoami') {
-      outputNode = <span className="text-emerald-400">root@iamhimanshu108 [Himanshu Yadav - Full Stack Web Developer & Automation Specialist v2026.8.12]</span>;
+      outputNode = <span className="text-emerald-400">root@iamhimanshu108 [Himanshu Yadav - Full Stack Web Developer & Automation Specialist {SYSTEM_INFO.version}]</span>;
     } else if (mainCmd === 'ping') {
       outputNode = (
         <div className="text-slate-300 space-y-0.5">
@@ -123,7 +124,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
         </div>
       );
     } else if (mainCmd === 'uptime') {
-      outputNode = <span className="text-emerald-400">UPTIME: 99.999% | KERNEL: v2026.8.12 DEVSYS root@iamhimanshu108 | LOAD: 0.08, 0.04, 0.01</span>;
+      outputNode = <span className="text-emerald-400">UPTIME: 99.999% | KERNEL: {SYSTEM_INFO.version} DEVSYS root@iamhimanshu108 | LOAD: 0.08, 0.04, 0.01</span>;
     } else if (mainCmd === 'cat') {
       if (args.includes('resume')) {
         onNavigate('~/resume');
