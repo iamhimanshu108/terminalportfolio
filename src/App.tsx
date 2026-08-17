@@ -15,6 +15,7 @@ import { RebootAnimationModal } from './components/RebootAnimationModal';
 import { sound } from './lib/sound';
 import { SYSTEM_INFO } from './data/portfolioData';
 import { Terminal, Bug, Activity, Cpu, Play, CheckCircle2, X, RefreshCw, Send } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState<NavPath>('~/home');
@@ -335,7 +336,7 @@ export default function App() {
       />
 
       {crtEnabled && <div className="crt-overlay" />}
+      <SpeedInsights />
     </div>
   );
 }
-
