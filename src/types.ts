@@ -56,6 +56,9 @@ export interface ResumeData {
     company: string;
     duration: string;
     highlights: string[];
+    type?: string;
+    status?: string;
+    bullets?: string[];
   }>;
   education: Array<{
     degree: string;

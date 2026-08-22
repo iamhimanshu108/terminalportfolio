@@ -10,7 +10,8 @@ import {
   Mail, 
   Terminal, 
   Settings, 
-  Power
+  Power,
+  X
 } from 'lucide-react';
 
 import myAvatar from '../assets/My.png';
@@ -23,6 +24,8 @@ interface SidebarProps {
   onOpenSettings: () => void;
   onTriggerReboot: () => void;
   statusOnline: boolean;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -31,7 +34,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenSsh,
   onOpenSettings,
   onTriggerReboot,
-  statusOnline
+  statusOnline,
+  isOpen,
+  onClose
 }) => {
   const navItems: { path: NavPath; label: string; icon: React.ReactNode }[] = [
     { path: '~/home', label: '~/home', icon: <Home className="w-4 h-4" /> },
@@ -48,33 +53,55 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <aside className="w-64 min-w-64 bg-[#080C16] border-r border-slate-800/80 flex flex-col justify-between select-none font-mono text-sm z-20">
-      <div>
-        {/* Header Branding */}
-        <div className="p-4 border-b border-slate-800/80 bg-[#060911]">
-          <div className="flex items-center space-x-3 mb-2">
-            <div className="relative">
-              <img
-                src={myAvatar}
-                alt="Himanshu Yadav"
-                className="w-9 h-9 rounded-lg border-2 border-emerald-500/60 object-cover shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-              />
-              <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border border-black ${statusOnline ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
-            </div>
-            <div>
-              <div className="font-bold text-emerald-400 tracking-wider text-xs lowercase flex items-center gap-1.5">
-                root@iamhimanshu108
+    <>
+      {/* Mobile/Tablet Backdrop Overlay */}
+      {isOpen && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-30 lg:hidden transition-opacity duration-300"
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 w-64 bg-[#080C16] border-r border-slate-800/80 flex flex-col justify-between select-none font-mono text-sm z-40 transition-transform duration-300 transform lg:translate-x-0 lg:static lg:flex ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div>
+          {/* Header Branding */}
+          <div className="p-4 border-b border-slate-800/80 bg-[#060911] flex items-start justify-between gap-2">
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <img
+                  src={myAvatar}
+                  alt="Himanshu Yadav"
+                  className="w-9 h-9 rounded-lg border-2 border-emerald-500/60 object-cover shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                />
+                <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border border-black ${statusOnline ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
               </div>
-              <div className="text-[10px] text-slate-400 uppercase tracking-tight">
-                STATUS: {statusOnline ? 'ONLINE' : 'MAINTENANCE'}
+              <div>
+                <div className="font-bold text-emerald-400 tracking-wider text-xs lowercase flex items-center gap-1.5">
+                  root@iamhimanshu108
+                </div>
+                <div className="text-[10px] text-slate-400 uppercase tracking-tight">
+                  STATUS: {statusOnline ? 'ONLINE' : 'MAINTENANCE'}
+                </div>
               </div>
             </div>
+            
+            {/* Close button for mobile menu */}
+            <button
+              onClick={onClose}
+              className="lg:hidden p-1 text-slate-400 hover:text-white rounded hover:bg-slate-800 transition-colors shrink-0"
+              title="Close Menu"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
-          <div className="text-[11px] text-slate-500 font-mono flex items-center justify-between pt-1">
+          <div className="p-4 pt-1 pb-2 border-b border-slate-800/80 bg-[#060911]/50 text-[11px] text-slate-500 font-mono flex items-center justify-between">
             <span className="text-emerald-400 font-bold">{SYSTEM_INFO.version}</span>
             <span className="text-slate-400">iamhimanshu.in</span>
           </div>
-        </div>
 
         {/* Directory Navigation List */}
         <nav className="p-3 space-y-1">
@@ -139,5 +166,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
     </aside>
+    </>
   );
 };

@@ -252,7 +252,10 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
           {history.map((item) => (
             <div key={item.id} className="space-y-1">
               <div className="flex items-center space-x-2 text-slate-400">
-                <span className="text-emerald-400 font-bold">{promptUser}</span>
+                <span className="text-emerald-400 font-bold">
+                  <span className="hidden sm:inline">{promptUser}</span>
+                  <span className="sm:hidden">~$</span>
+                </span>
                 <span className="text-slate-100 font-semibold">{item.command}</span>
                 <span className="text-[10px] text-slate-600 ml-auto">{item.timestamp}</span>
               </div>
@@ -280,7 +283,10 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
 
       {/* Interactive Input Line */}
       <form onSubmit={handleCommandSubmit} className="flex items-center space-x-2 bg-[#090E1A] p-2 rounded border border-slate-800/80 focus-within:border-emerald-500/50 transition-colors">
-        <span className="text-emerald-400 font-bold shrink-0">{promptUser}</span>
+        <span className="text-emerald-400 font-bold shrink-0">
+          <span className="hidden sm:inline">{promptUser}</span>
+          <span className="sm:hidden">~$</span>
+        </span>
         <input
           type="text"
           value={input}

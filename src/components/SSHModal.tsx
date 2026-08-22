@@ -127,7 +127,10 @@ export const SSHModal: React.FC<SSHModalProps> = ({ isOpen, onClose }) => {
         {/* Input area */}
         {connected && (
           <form onSubmit={handleSshSubmit} className="p-3 bg-[#080C16] border-t border-slate-800 flex items-center space-x-2">
-            <span className="text-emerald-400 font-bold">contact@dev.local:~$</span>
+            <span className="text-emerald-400 font-bold shrink-0">
+              <span className="hidden sm:inline">contact@dev.local:~$</span>
+              <span className="sm:hidden">~$</span>
+            </span>
             <input
               type="text"
               value={inputVal}

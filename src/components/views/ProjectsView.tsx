@@ -95,7 +95,8 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
       {/* Command prompt header with Typewriter effect */}
       <div className="flex items-center justify-between border-b border-slate-800 pb-2">
         <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span>root@portfolio:~$</span>
+          <span className="hidden sm:inline">root@portfolio:~$</span>
+          <span className="sm:hidden">~$</span>
           <Typewriter text="ls -la ~/projects" className="text-slate-100 font-semibold" speed={35} />
         </div>
         <span className="text-[10px] text-slate-500">TOTAL: {filteredProjects.length} MICROSERVICES</span>

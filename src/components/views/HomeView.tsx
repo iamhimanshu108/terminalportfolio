@@ -207,7 +207,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* Primary Terminal Prompt Line */}
       <div className="flex items-center justify-between border-b border-slate-800 pb-2">
         <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span>root@iamhimanshu108:~$</span>
+          <span className="hidden sm:inline">root@iamhimanshu108:~$</span>
+          <span className="sm:hidden">~$</span>
           <Typewriter text="cat ~/profile.md" className="text-slate-300 font-semibold" speed={35} />
         </div>
         <div className="flex items-center space-x-2">
@@ -435,9 +436,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                           <Terminal className="w-3 h-3" />
                           <span>Console Info</span>
                         </button>
-                        {p.demoUrl && (
+                        {p.liveUrl && (
                           <a
-                            href={p.demoUrl}
+                            href={p.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => sound.playKeypress()}

@@ -35,6 +35,7 @@ export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isRebooting, setIsRebooting] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Execute Mode Quick Command State
   const [execCmd, setExecCmd] = useState('');
@@ -112,11 +113,25 @@ export default function App() {
         {/* Left Terminal Sidebar */}
         <Sidebar
           currentPath={currentPath}
-          onNavigate={(path) => setCurrentPath(path)}
-          onOpenSsh={() => setIsSshOpen(true)}
-          onOpenSettings={() => setIsSettingsOpen(true)}
-          onTriggerReboot={() => setIsRebooting(true)}
+          onNavigate={(path) => {
+            setCurrentPath(path);
+            setIsSidebarOpen(false); // Close sidebar on navigate (for mobile)
+          }}
+          onOpenSsh={() => {
+            setIsSshOpen(true);
+            setIsSidebarOpen(false);
+          }}
+          onOpenSettings={() => {
+            setIsSettingsOpen(true);
+            setIsSidebarOpen(false);
+          }}
+          onTriggerReboot={() => {
+            setIsRebooting(true);
+            setIsSidebarOpen(false);
+          }}
           statusOnline={true}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
         />
 
         {/* Right Main Terminal Canvas */}
@@ -134,6 +149,7 @@ export default function App() {
             onToggleCrt={() => setCrtEnabled(!crtEnabled)}
             onOpenSettings={() => setIsSettingsOpen(true)}
             onTriggerReboot={() => setIsRebooting(true)}
+            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           />
 
           {/* Active Mode Banner for EXECUTE Tab */}

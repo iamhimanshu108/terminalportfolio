@@ -50,7 +50,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
         {/* Content Body */}
         <div className="p-5 space-y-5 overflow-y-auto">
           {/* Quick Action Links */}
-          <div className="flex items-center space-x-3">
+          <div className="flex flex-wrap items-center gap-2.5">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}

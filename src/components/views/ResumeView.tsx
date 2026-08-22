@@ -79,7 +79,8 @@ export const ResumeView: React.FC<ResumeViewProps> = ({ onOpenSsh }) => {
       {/* Top Header Command */}
       <div className="flex items-center justify-between border-b border-slate-800 pb-2">
         <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span>root@iamhimanshu108:~$</span>
+          <span className="hidden sm:inline">root@iamhimanshu108:~$</span>
+          <span className="sm:hidden">~$</span>
           <Typewriter text="cat ~/resume.yml" className="text-slate-100 font-semibold" speed={35} />
         </div>
         <div className="flex items-center space-x-2">
