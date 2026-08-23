@@ -38,11 +38,29 @@ export const CertView: React.FC<CertViewProps> = ({
 
   const categories: { id: CertCategory | 'ALL'; label: string }[] = [
     { id: 'ALL', label: 'ALL CREDENTIALS' },
-    { id: 'BACKEND_JAVA', label: 'BACKEND & JAVA' },
+    { id: 'BACKEND_NODEJS', label: 'BACKEND NODE.JS' },
+    { id: 'BACKEND_JAVA', label: 'BACKEND JAVA' },
     { id: 'CLOUD_DEVOPS', label: 'CLOUD & DEVOPS' },
     { id: 'AI_AUTOMATION', label: 'AI & AUTOMATION' },
     { id: 'FULL_STACK', label: 'FULL STACK' },
   ];
+
+  const getCategoryBadgeLabel = (cat: CertCategory) => {
+    switch (cat) {
+      case 'BACKEND_NODEJS':
+        return 'BACKEND NODE.JS';
+      case 'BACKEND_JAVA':
+        return 'BACKEND JAVA';
+      case 'CLOUD_DEVOPS':
+        return 'CLOUD & DEVOPS';
+      case 'AI_AUTOMATION':
+        return 'AI & AUTOMATION';
+      case 'FULL_STACK':
+        return 'FULL STACK';
+      default:
+        return (cat as string).replace('_', ' ');
+    }
+  };
 
   const filteredCerts = CERTIFICATES_DATA.filter((cert) => {
     // Category match
@@ -79,6 +97,26 @@ export const CertView: React.FC<CertViewProps> = ({
         </div>
       </div>
 
+      {/* Category Filter Chips */}
+      <div className="flex flex-wrap gap-1.5 pb-1">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => {
+              sound.playKeypress();
+              setSelectedCategory(cat.id);
+            }}
+            className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-all border ${
+              selectedCategory === cat.id
+                ? 'bg-emerald-500 text-black border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+                : 'bg-[#060A14] text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200'
+            }`}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
       {/* Certificates Grid */}
       {filteredCerts.length === 0 ? (
         <div className="bg-[#070C18] border border-slate-800 rounded-xl p-8 text-center space-y-3">
@@ -104,7 +142,7 @@ export const CertView: React.FC<CertViewProps> = ({
                     </h2>
 
                     <span className="px-2 py-0.5 bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 text-[10px] font-bold rounded shrink-0">
-                      {cert.category.replace('_', ' ')}
+                      {getCategoryBadgeLabel(cert.category)}
                     </span>
                   </div>
 

@@ -107,7 +107,7 @@ export const RebootAnimationModal: React.FC<RebootAnimationModalProps> = ({
         <div className="space-y-2 px-6">
           <div className="flex items-center justify-center space-x-2 text-emerald-400 font-bold text-xs">
             <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-400" />
-            <span className="tracking-widest uppercase text-[11px]">LOGGING IN...</span>
+            <span className="tracking-widest uppercase text-[11px]">SIGNING IN...</span>
           </div>
 
           <div className="w-full bg-slate-900/80 h-1.5 rounded-full overflow-hidden border border-slate-800/80 shadow-inner">

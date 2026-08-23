@@ -37,12 +37,6 @@ export const EducationView: React.FC<EducationViewProps> = ({
           <span className="sm:hidden">~$</span>
           <Typewriter text="cat ~/education.json" className="text-slate-100 font-semibold" speed={35} />
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-bold text-[10px] flex items-center gap-1">
-            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-            [ ACADEMIC_ACTIVE ]
-          </span>
-        </div>
       </div>
 
       {/* Main Education Grid / Cards */}
@@ -90,13 +84,6 @@ export const EducationView: React.FC<EducationViewProps> = ({
                     </span>
                   </div>
                 </div>
-
-                {item.grade && (
-                  <div className="bg-[#050811] px-3 py-1.5 rounded-lg border border-slate-800 text-right shrink-0">
-                    <span className="text-[10px] text-slate-500 uppercase font-bold block">GRADE / PERFORMANCE</span>
-                    <span className="text-xs font-bold text-cyan-400">{item.grade}</span>
-                  </div>
-                )}
               </div>
 
               {/* Highlights Box matching classic terminal aesthetic */}
