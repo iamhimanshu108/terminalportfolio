@@ -62,23 +62,25 @@ export const CertView: React.FC<CertViewProps> = ({
     }
   };
 
-  const filteredCerts = CERTIFICATES_DATA.filter((cert) => {
-    // Category match
-    const matchesCategory = selectedCategory === 'ALL' || cert.category === selectedCategory;
-    
-    // Search match
-    const query = activeSearch.toLowerCase().trim();
-    if (!query) return matchesCategory;
+  const filteredCerts = [...CERTIFICATES_DATA]
+    .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    .filter((cert) => {
+      // Category match
+      const matchesCategory = selectedCategory === 'ALL' || cert.category === selectedCategory;
+      
+      // Search match
+      const query = activeSearch.toLowerCase().trim();
+      if (!query) return matchesCategory;
 
-    const matchesQuery = 
-      cert.title.toLowerCase().includes(query) ||
-      cert.issuer.toLowerCase().includes(query) ||
-      cert.description.toLowerCase().includes(query) ||
-      cert.skills.some((s) => s.toLowerCase().includes(query)) ||
-      (cert.credentialId && cert.credentialId.toLowerCase().includes(query));
+      const matchesQuery = 
+        cert.title.toLowerCase().includes(query) ||
+        cert.issuer.toLowerCase().includes(query) ||
+        cert.description.toLowerCase().includes(query) ||
+        cert.skills.some((s) => s.toLowerCase().includes(query)) ||
+        (cert.credentialId && cert.credentialId.toLowerCase().includes(query));
 
-    return matchesCategory && matchesQuery;
-  });
+      return matchesCategory && matchesQuery;
+    });
 
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200 animate-fadeIn">

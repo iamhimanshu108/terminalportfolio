@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Terminal, CheckCircle2, Copy, Check, Send } from 'lucide-react';
+import { Terminal, CheckCircle2, Copy, Check, Send } from 'lucide-react';
 import { sound } from '../lib/sound';
 import { SYSTEM_INFO } from '../data/portfolioData';
 
@@ -54,6 +54,16 @@ export const SSHModal: React.FC<SSHModalProps> = ({ isOpen, onClose }) => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [sshLogs]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSshSubmit = (e: React.FormEvent) => {
@@ -62,20 +72,20 @@ export const SSHModal: React.FC<SSHModalProps> = ({ isOpen, onClose }) => {
 
     sound.playExecute();
     const cmd = inputVal.trim();
+    setSshLogs((prev) => [...prev, `contact@dev.local:~$ ${cmd}`]);
     setInputVal('');
 
-    setSshLogs((prev) => [...prev, `contact@dev.local:~$ ${cmd}`]);
-
-    if (cmd.toLowerCase() === 'exit') {
-      onClose();
-    } else if (cmd.toLowerCase() === 'email') {
+    if (cmd.toLowerCase() === 'help') {
       setSshLogs((prev) => [
         ...prev,
-        'Direct email endpoint: hiyadav2022@gmail.com',
-        'Status: ACTIVE_LISTENER'
+        'Available terminal commands: whoami, status, clear, exit, motd, sysinfo'
       ]);
+    } else if (cmd.toLowerCase() === 'clear') {
+      setSshLogs([]);
+    } else if (cmd.toLowerCase() === 'exit') {
+      onClose();
     } else if (cmd.toLowerCase() === 'whoami') {
-      setSshLogs((prev) => [...prev, 'Himanshu Yadav - Lead Infrastructure & Systems Engineer']);
+      setSshLogs((prev) => [...prev, 'Himanshu Yadav - Full Stack Web Developer & Automation Specialist']);
     } else if (cmd.toLowerCase() === 'status') {
       setSshLogs((prev) => [...prev, 'SYSTEM_STATUS: 100% ONLINE | ALL MICROSERVICES HEALTHY']);
     } else {
@@ -87,20 +97,28 @@ export const SSHModal: React.FC<SSHModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 font-mono text-xs">
-      <div className="bg-[#050810] border border-emerald-500/50 rounded-lg w-full max-w-2xl overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.2)] flex flex-col max-h-[85vh]">
-        {/* Modal Window Header */}
-        <div className="bg-[#080C16] border-b border-slate-800 p-3 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Terminal className="w-4 h-4 text-emerald-400" />
-            <span className="font-bold text-emerald-400">ssh contact@dev.local</span>
+    <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-50 font-mono text-xs animate-fadeIn">
+      <div className="bg-[#050810] border border-emerald-500/40 rounded-xl w-full max-w-2xl overflow-hidden shadow-[0_0_35px_rgba(16,185,129,0.18)] flex flex-col max-h-[85vh]">
+        {/* Terminal Header Bar with Mac / Linux style buttons */}
+        <div className="bg-[#040711] border-b border-slate-800 px-4 py-3 flex items-center justify-between select-none">
+          <div className="flex items-center space-x-2.5 min-w-0">
+            <div className="flex items-center space-x-1.5">
+              <button 
+                onClick={() => { sound.playKeypress(); onClose(); }}
+                className="w-3 h-3 rounded-full bg-rose-500 hover:bg-rose-600 transition-colors cursor-pointer block"
+                title="Close (Esc)"
+              />
+              <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+              <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+            </div>
+
+            <div className="h-4 w-[1px] bg-slate-800 mx-1" />
+
+            <div className="flex items-center space-x-2">
+              <Terminal className="w-4 h-4 text-emerald-400" />
+              <span className="font-bold text-emerald-400">ssh contact@dev.local</span>
+            </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1 text-slate-400 hover:text-slate-100 hover:bg-slate-800 rounded transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
         </div>
 
         {/* SSH Output Log Buffer */}

@@ -93,52 +93,11 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
           </div>
 
           <div className="space-y-2">
-            <span className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">MICROSERVICE DESCRIPTION</span>
-            <p className="text-slate-200 text-xs leading-relaxed bg-[#080C16] p-3 rounded border border-slate-800">
+            <span className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">PROJECT DESCRIPTION</span>
+            <p className="text-slate-200 text-xs leading-relaxed bg-[#080C16] p-4 rounded-lg border border-slate-800">
               {project.description}
             </p>
           </div>
-
-          {project.architecture && (
-            <div className="space-y-2">
-              <span className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">ARCHITECTURE LAYOUT</span>
-              <div className="bg-[#080C16] p-3 rounded border border-slate-800 text-cyan-300 font-bold">
-                {project.architecture}
-              </div>
-            </div>
-          )}
-
-          {project.metrics && (
-            <div className="grid grid-cols-3 gap-3">
-              <div className="bg-[#080C16] p-3 rounded border border-slate-800 space-y-1">
-                <span className="text-slate-500 text-[10px] block">LATENCY</span>
-                <span className="text-emerald-400 font-bold">{project.metrics.latency}</span>
-              </div>
-              <div className="bg-[#080C16] p-3 rounded border border-slate-800 space-y-1">
-                <span className="text-slate-500 text-[10px] block">THROUGHPUT</span>
-                <span className="text-cyan-400 font-bold">{project.metrics.throughput}</span>
-              </div>
-              <div className="bg-[#080C16] p-3 rounded border border-slate-800 space-y-1">
-                <span className="text-slate-500 text-[10px] block">UPTIME</span>
-                <span className="text-amber-400 font-bold">{project.metrics.uptime}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Logs */}
-          {project.logs && project.logs.length > 0 && (
-            <div className="space-y-2">
-              <span className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">EXECUTION & TELEMETRY LOGS</span>
-              <div className="bg-[#03050A] p-3 rounded border border-slate-800 text-[11px] font-mono space-y-1 text-slate-300">
-                {project.logs.map((log, i) => (
-                  <div key={i} className="flex items-center space-x-2">
-                    <span className="text-emerald-500">&gt;</span>
-                    <span>{log}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Tech tags */}
           <div className="space-y-2">

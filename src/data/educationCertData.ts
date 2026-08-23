@@ -2,6 +2,7 @@
 
 export interface EducationItem {
   id: string;
+  order?: number;
   degree: string;
   institution: string;
   institutionUrl?: string;
@@ -17,6 +18,7 @@ export type CertCategory = 'CLOUD_DEVOPS' | 'BACKEND_NODEJS' | 'BACKEND_JAVA' | 
 
 export interface CertificateItem {
   id: string;
+  order?: number;
   title: string;
   issuer: string;
   issueDate: string;
@@ -31,6 +33,7 @@ export interface CertificateItem {
 export const EDUCATION_DATA: EducationItem[] = [
   {
     id: 'edu-mca',
+    order: 1,
     degree: 'Master of Computer Applications (MCA)',
     institution: 'Sikkim Manipal University',
     institutionUrl: 'https://smu.edu.in',
@@ -45,6 +48,7 @@ export const EDUCATION_DATA: EducationItem[] = [
   },
   {
     id: 'edu-bca',
+    order: 2,
     degree: 'Bachelor of Computer Applications (BCA)',
     institution: 'IGNOU',
     institutionUrl: 'https://www.ignou.ac.in',
@@ -62,6 +66,7 @@ export const EDUCATION_DATA: EducationItem[] = [
 export const CERTIFICATES_DATA: CertificateItem[] = [
   {
     id: 'cert-upgrad-genai',
+    order: 1,
     title: 'Generative AI Foundations Certificate',
     issuer: 'upGrad & Microsoft',
     issueDate: 'May 2026',
@@ -73,19 +78,19 @@ export const CERTIFICATES_DATA: CertificateItem[] = [
   },
   {
     id: 'cert-udemy-nodejs',
+    order: 2,
     title: 'Node.js - Beginner to Advance Course with Projects',
     issuer: 'Udemy (Hitesh Choudhary & Piyush Garg)',
     issueDate: 'Aug 2026',
     credentialId: 'UC-ac4fdbfa-c4ce-481f-be51-7590b95e82e6',
-    category: 'BACKEND_JAVA',
+    category: 'BACKEND_NODEJS',
     skills: ['Node.js', 'JavaScript', 'Express.js', 'REST APIs', 'Backend Architecture', 'Async I/O'],
     description: '36.5 hours of comprehensive hands-on backend training covering Node.js from beginner to advanced concepts, server architecture, asynchronous programming, and RESTful web API development.',
     drivePdfUrl: 'https://drive.google.com/file/d/1SKglyrBwLD-HCOJpBUmqpHK_8Re2PuZ-/view?usp=sharing'
   },
-
-
   {
     id: 'cert-pw-fullstack-2.0',
+    order: 3,
     title: 'Full Stack Web Development 2.0',
     issuer: 'Physics Wallah (PW Skills)',
     issueDate: 'May 2025',
@@ -97,6 +102,7 @@ export const CERTIFICATES_DATA: CertificateItem[] = [
   },
   {
     id: 'cert-spark-java-fullstack',
+    order: 4,
     title: 'Spark 2.0 : Job Ready Java Full Stack LIVE Course',
     issuer: 'Physics Wallah / PW Skills (Ashwani Kumar)',
     issueDate: 'Nov 2024',
@@ -105,5 +111,4 @@ export const CERTIFICATES_DATA: CertificateItem[] = [
     description: 'Completed the intensive live Spark 2.0 Job Ready Java Full Stack engineering course taught by Senior Software Engineer Ashwani Kumar, covering Core & Advanced Java, Spring Boot microservices, database architecture, and REST API development.',
     drivePdfUrl: 'https://drive.google.com/file/d/1QyBQZ4YuPL7Fv8IkoHqmYhLSxc66uO9b/view?usp=sharing'
   }
-
 ];

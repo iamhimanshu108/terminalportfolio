@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, Sliders, Volume2, Tv, Palette, RefreshCw } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Sliders, Volume2, Tv, Palette, RefreshCw } from 'lucide-react';
 import { sound } from '../lib/sound';
 
 interface SettingsModalProps {
@@ -23,6 +23,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   theme,
   onChangeTheme
 }) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const themes = [
@@ -38,17 +48,28 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 font-mono text-xs">
-      <div className="bg-[#050810] border border-slate-700 rounded-lg w-full max-w-md overflow-hidden shadow-2xl space-y-4">
-        {/* Header */}
-        <div className="bg-[#080C16] border-b border-slate-800 p-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2 text-emerald-400 font-bold">
-            <Sliders className="w-4 h-4" />
-            <span>TERMINAL_SETTINGS</span>
+    <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-50 font-mono text-xs animate-fadeIn">
+      <div className="bg-[#050810] border border-emerald-500/40 rounded-xl w-full max-w-md overflow-hidden shadow-[0_0_35px_rgba(16,185,129,0.18)]">
+        {/* Terminal Header with Mac / Linux Traffic Lights */}
+        <div className="bg-[#040711] border-b border-slate-800 px-4 py-3 flex items-center justify-between select-none">
+          <div className="flex items-center space-x-2.5 min-w-0">
+            <div className="flex items-center space-x-1.5">
+              <button 
+                onClick={() => { sound.playKeypress(); onClose(); }}
+                className="w-3 h-3 rounded-full bg-rose-500 hover:bg-rose-600 transition-colors cursor-pointer block"
+                title="Close (Esc)"
+              />
+              <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+              <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+            </div>
+
+            <div className="h-4 w-[1px] bg-slate-800 mx-1" />
+
+            <div className="flex items-center space-x-2 text-emerald-400 font-bold">
+              <Sliders className="w-4 h-4" />
+              <span>TERMINAL_SETTINGS</span>
+            </div>
           </div>
-          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-100 hover:bg-slate-800 rounded">
-            <X className="w-4 h-4" />
-          </button>
         </div>
 
         {/* Options */}

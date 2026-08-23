@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PROJECTS_DATA } from '../../data/portfolioData';
+import { PROJECTS_DATA } from '../../data/projectsData';
 import { Project, ProjectStatus, NavPath } from '../../types';
 import { FileCode, Terminal, AlertCircle, RefreshCw, Cpu, ExternalLink, Github, CheckCircle2, Clock, Globe } from 'lucide-react';
 import { sound } from '../../lib/sound';
@@ -26,14 +26,16 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  const filteredProjects = PROJECTS_DATA.filter((p) => {
-    return (
-      !searchQuery ||
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.tech.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  });
+  const filteredProjects = [...PROJECTS_DATA]
+    .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    .filter((p) => {
+      return (
+        !searchQuery ||
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.tech.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    });
 
   const getStatusBadge = (status: ProjectStatus) => {
     switch (status) {

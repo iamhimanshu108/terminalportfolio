@@ -41,7 +41,7 @@ export const EducationView: React.FC<EducationViewProps> = ({
 
       {/* Main Education Grid / Cards */}
       <div className="space-y-5">
-        {EDUCATION_DATA.map((item, idx) => {
+        {[...EDUCATION_DATA].sort((a, b) => (a.order ?? 999) - (b.order ?? 999)).map((item, idx) => {
           const isPursuing = item.status === 'PURSUING';
           return (
             <div

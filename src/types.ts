@@ -11,6 +11,7 @@ export type ProjectStatus = 'DEPLOYED' | 'RUNNING' | 'ARCHIVED' | 'FAILED' | 'BU
 export interface Project {
   id: string;
   name: string;
+  order?: number;
   status: ProjectStatus;
   description: string;
   tech: string[];
@@ -51,6 +52,7 @@ export interface ResumeData {
     location: string;
     summary: string;
   };
+  drivePdfUrl?: string;
   skills: Record<string, string[]>;
   metrics: Record<string, string>;
   experience: Array<{
