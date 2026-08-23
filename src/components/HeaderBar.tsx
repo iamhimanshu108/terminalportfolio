@@ -35,45 +35,8 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
 }) => {
   return (
     <header className="h-11 bg-[#070A12]/95 backdrop-blur border-b border-slate-800/90 px-3.5 flex items-center justify-between font-mono text-xs select-none z-10 shrink-0 shadow-sm">
-      {/* Left: macOS Traffic Lights + Mobile Hamburger */}
+      {/* Left: Mobile Hamburger & Terminal Info */}
       <div className="flex items-center space-x-3">
-        {/* macOS Window Traffic Lights */}
-        <div className="flex items-center space-x-2 mr-1">
-          <button
-            onClick={() => {
-              sound.playKeypress();
-              onTriggerReboot();
-            }}
-            title="Close / Reboot (Red)"
-            className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:brightness-110 active:scale-95 transition-transform flex items-center justify-center group cursor-pointer"
-          >
-            <span className="text-[7px] text-black/70 font-black opacity-0 group-hover:opacity-100 transition-opacity">✕</span>
-          </button>
-          <button
-            onClick={() => {
-              sound.playKeypress();
-              onSearchChange('');
-            }}
-            title="Minimize / Reset (Yellow)"
-            className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123] hover:brightness-110 active:scale-95 transition-transform flex items-center justify-center group cursor-pointer"
-          >
-            <span className="text-[7px] text-black/70 font-black opacity-0 group-hover:opacity-100 transition-opacity">−</span>
-          </button>
-          <button
-            onClick={() => {
-              sound.playKeypress();
-              if (document.fullscreenElement) {
-                document.exitFullscreen();
-              } else {
-                document.documentElement.requestFullscreen?.();
-              }
-            }}
-            title="Toggle Fullscreen (Green)"
-            className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29] hover:brightness-110 active:scale-95 transition-transform flex items-center justify-center group cursor-pointer"
-          >
-            <span className="text-[7px] text-black/70 font-black opacity-0 group-hover:opacity-100 transition-opacity">+</span>
-          </button>
-        </div>
 
         {/* Hamburger Menu Toggle for Mobile/Tablet */}
         <button
