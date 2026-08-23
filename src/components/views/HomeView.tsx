@@ -287,23 +287,27 @@ export const HomeView: React.FC<HomeViewProps> = ({
                       </div>
 
                       <div className="flex items-center justify-between border-t border-slate-900 pt-2 text-[10px]">
-                        <button
-                          onClick={() => {
-                            sound.playKeypress();
-                            onSelectProject(p);
-                          }}
-                          className="text-slate-400 hover:text-white flex items-center space-x-1"
-                        >
-                          <Terminal className="w-3 h-3" />
-                          <span>Console Info</span>
-                        </button>
+                        {p.repoUrl ? (
+                          <a
+                            href={p.repoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => sound.playKeypress()}
+                            className="text-slate-400 hover:text-white flex items-center space-x-1"
+                          >
+                            <Github className="w-3 h-3" />
+                            <span>GitHub</span>
+                          </a>
+                        ) : (
+                          <div />
+                        )}
                         {p.liveUrl && (
                           <a
                             href={p.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => sound.playKeypress()}
-                            className="text-emerald-400 hover:text-emerald-300 flex items-center space-x-1 font-bold"
+                            className="text-emerald-400 hover:text-emerald-300 flex items-center space-x-1 font-bold ml-auto"
                           >
                             <Play className="w-3 h-3 fill-current" />
                             <span>Launch</span>
