@@ -6,7 +6,7 @@ import { renderSkillIcon } from './StackView';
 import { NavPath, Project } from '../../types';
 import { GitHubHeatmap } from '../GitHubHeatmap';
 import { Typewriter } from '../Typewriter';
-import { ArrowRight, Server, Terminal, Linkedin, Github, Database, Cpu, Bot, ExternalLink, Code2, Layers, Zap } from 'lucide-react';
+import { ArrowRight, Server, Terminal, Linkedin, Github, Database, Cpu, Bot, ExternalLink, Play, Code2, Layers, Zap } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import myAvatar from '../../assets/My.png';
 
