@@ -334,19 +334,17 @@ export default function App() {
                 ONLINE
               </span>
               <span className="text-slate-600">|</span>
-              <span className="text-slate-300 font-bold hidden sm:inline">⚡ zsh</span>
-              <span className="text-slate-600 hidden sm:inline">|</span>
               <span className="text-cyan-400 font-bold">{SYSTEM_INFO.version}</span>
               <span className="text-slate-600 hidden md:inline">|</span>
               <span className="text-slate-400 hidden md:inline">{currentPath}</span>
             </div>
 
-            <div className="flex items-center space-x-3 text-[10px]">
-              <span className="hidden lg:inline text-slate-400">UTF-8</span>
-              <span className="text-slate-600 hidden lg:inline">|</span>
-              <span className="text-slate-400 hidden sm:inline">45.8k LOC</span>
-              <span className="text-slate-600 hidden sm:inline">|</span>
-              <span className="text-emerald-400 font-bold">24ms LATENCY</span>
+            <div className="flex items-center space-x-2.5 text-[10px]">
+              <span className="text-slate-400">
+                © {new Date().getFullYear()} {SYSTEM_INFO.author}. <span className="hidden sm:inline">All Rights Reserved.</span>
+              </span>
+              <span className="text-slate-600 hidden md:inline">|</span>
+              <span className="text-emerald-400 font-bold hidden md:inline">24ms LATENCY</span>
             </div>
           </footer>
         </div>

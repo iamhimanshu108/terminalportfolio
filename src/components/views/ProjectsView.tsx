@@ -195,9 +195,9 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                           e.stopPropagation();
                           sound.playKeypress();
                         }}
-                        className="px-2.5 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50 hover:bg-emerald-500 hover:text-black font-bold text-[11px] flex items-center gap-1 transition-colors shadow-[0_0_8px_rgba(16,185,129,0.2)]"
+                        className="px-3 py-1.5 rounded-md bg-emerald-950/90 text-emerald-400 border border-emerald-500/50 hover:bg-emerald-500 hover:text-black hover:border-emerald-400 font-bold text-[11px] flex items-center gap-1.5 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_16px_rgba(16,185,129,0.5)] active:scale-95 cursor-pointer"
                       >
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="w-3.5 h-3.5" />
                         <span>Live Demo</span>
                       </a>
                     )}
@@ -210,9 +210,9 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                           e.stopPropagation();
                           sound.playKeypress();
                         }}
-                        className="px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 hover:text-white font-bold text-[11px] flex items-center gap-1 transition-colors"
+                        className="px-3 py-1.5 rounded-md bg-slate-900/90 text-slate-300 border border-slate-700 hover:border-slate-400 hover:bg-slate-800 hover:text-white font-bold text-[11px] flex items-center gap-1.5 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_14px_rgba(148,163,184,0.3)] active:scale-95 cursor-pointer"
                       >
-                        <Github className="w-3 h-3" />
+                        <Github className="w-3.5 h-3.5" />
                         <span>GitHub</span>
                       </a>
                     )}
@@ -223,9 +223,9 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                       sound.playKeypress();
                       onSelectProject(project);
                     }}
-                    className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-emerald-400 border border-slate-800 text-[11px] font-bold flex items-center gap-1 transition-colors"
+                    className="px-3 py-1.5 rounded-md bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 border border-slate-800 hover:border-cyan-500/50 text-[11px] font-bold flex items-center gap-1.5 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_14px_rgba(6,182,212,0.3)] active:scale-95 cursor-pointer"
                   >
-                    <Terminal className="w-3 h-3" />
+                    <Terminal className="w-3.5 h-3.5" />
                     <span>Details</span>
                   </button>
                 </div>

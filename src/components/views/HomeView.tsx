@@ -293,10 +293,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => sound.playKeypress()}
-                            className="text-slate-400 hover:text-white flex items-center space-x-1"
+                            className="text-slate-400 hover:text-white flex items-center space-x-1.5 transition-all duration-150 hover:scale-105 cursor-pointer"
                           >
-                            <Github className="w-3 h-3" />
-                            <span>GitHub</span>
+                            <Github className="w-3.5 h-3.5" />
+                            <span className="hover:underline">GitHub</span>
                           </a>
                         ) : (
                           <div />
@@ -307,7 +307,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => sound.playKeypress()}
-                            className="text-emerald-400 hover:text-emerald-300 flex items-center space-x-1 font-bold ml-auto"
+                            className="text-emerald-400 hover:text-emerald-300 flex items-center space-x-1.5 font-bold ml-auto transition-all duration-150 hover:scale-105 hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.7)] active:scale-95 cursor-pointer"
                           >
                             <Play className="w-3 h-3 fill-current" />
                             <span>Launch</span>

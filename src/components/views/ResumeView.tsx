@@ -63,7 +63,7 @@ export const ResumeView: React.FC<ResumeViewProps> = ({ onOpenSsh: _onOpenSsh })
           <div className="flex items-center space-x-2">
             <button
               onClick={handleOpenPreview}
-              className="px-3 py-1 text-xs font-bold rounded-lg transition-all border flex items-center gap-1.5 bg-[#0B1120] text-emerald-400 border-emerald-500/40 hover:bg-emerald-500 hover:text-black shadow-[0_0_12px_rgba(16,185,129,0.2)]"
+              className="px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 border flex items-center gap-1.5 bg-[#0B1120] text-emerald-400 border-emerald-500/40 hover:bg-emerald-500 hover:text-black hover:border-emerald-400 hover:scale-105 hover:shadow-[0_0_16px_rgba(16,185,129,0.5)] active:scale-95 cursor-pointer"
               title="Open Live PDF Preview in macOS Box"
             >
               <Eye className="w-3.5 h-3.5" />
@@ -71,7 +71,7 @@ export const ResumeView: React.FC<ResumeViewProps> = ({ onOpenSsh: _onOpenSsh })
             </button>
             <button
               onClick={handleDownload}
-              className="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs flex items-center space-x-1.5 transition-all shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+              className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs flex items-center space-x-1.5 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] active:scale-95 cursor-pointer"
               title="Download Resume PDF"
             >
               <Download className="w-3.5 h-3.5" />

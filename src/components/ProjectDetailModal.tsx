@@ -72,7 +72,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playKeypress()}
-                className="px-3 py-1.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/50 hover:bg-emerald-500 hover:text-black font-bold text-xs flex items-center gap-1.5 transition-colors shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+                className="px-3 py-1.5 rounded-md bg-emerald-950/90 text-emerald-400 border border-emerald-500/50 hover:bg-emerald-500 hover:text-black hover:border-emerald-400 font-bold text-xs flex items-center gap-1.5 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_16px_rgba(16,185,129,0.5)] active:scale-95 cursor-pointer"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>Launch Live Demo</span>
@@ -84,7 +84,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playKeypress()}
-                className="px-3 py-1.5 rounded bg-slate-900 text-slate-200 border border-slate-700 hover:border-slate-500 hover:text-white font-bold text-xs flex items-center gap-1.5 transition-colors"
+                className="px-3 py-1.5 rounded-md bg-slate-900/90 text-slate-200 border border-slate-700 hover:border-slate-400 hover:bg-slate-800 hover:text-white font-bold text-xs flex items-center gap-1.5 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_14px_rgba(148,163,184,0.3)] active:scale-95 cursor-pointer"
               >
                 <Github className="w-3.5 h-3.5" />
                 <span>View GitHub Repository</span>

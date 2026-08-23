@@ -60,9 +60,6 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
             <Folder className="w-3 h-3 text-cyan-400 inline" />
             {currentPath}
           </span>
-          <span className="text-[10px] text-slate-500 font-mono hidden md:inline">
-            (zsh)
-          </span>
         </div>
       </div>
 

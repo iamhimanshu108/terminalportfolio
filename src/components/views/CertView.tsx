@@ -183,7 +183,7 @@ export const CertView: React.FC<CertViewProps> = ({
                         sound.playKeypress();
                         onOpenDriveModal(cert, cert.drivePdfUrl ? 'pdf' : 'image');
                       }}
-                      className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg transition-all flex items-center space-x-1.5 shadow-sm text-xs"
+                      className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg transition-all duration-200 flex items-center space-x-1.5 text-xs shadow-sm hover:scale-105 hover:shadow-[0_0_18px_rgba(16,185,129,0.55)] active:scale-95 cursor-pointer"
                       title="Preview Certificate Document"
                     >
                       <FileText className="w-3.5 h-3.5" />
