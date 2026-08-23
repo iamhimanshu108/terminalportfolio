@@ -6,6 +6,8 @@ import {
   FolderGit2, 
   Layers, 
   Briefcase, 
+  GraduationCap,
+  Award,
   FileCode2,
   Mail, 
   Terminal, 
@@ -43,6 +45,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { path: '~/projects', label: '~/projects', icon: <FolderGit2 className="w-4 h-4" /> },
     { path: '~/skills', label: '~/skills', icon: <Layers className="w-4 h-4" /> },
     { path: '~/experience', label: '~/experience', icon: <Briefcase className="w-4 h-4" /> },
+    { path: '~/education', label: '~/education', icon: <GraduationCap className="w-4 h-4" /> },
+    { path: '~/cert', label: '~/cert', icon: <Award className="w-4 h-4" /> },
     { path: '~/resume', label: '~/resume', icon: <FileCode2 className="w-4 h-4" /> },
     { path: '~/contact', label: '~/contact', icon: <Mail className="w-4 h-4" /> },
   ];

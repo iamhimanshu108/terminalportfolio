@@ -7,7 +7,7 @@ const getTodayVersion = (): string => {
 
 const getTodayKernel = (): string => {
   const d = new Date();
-  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} DEVSYS.KERNEL (x86_64)`;
+  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} KERNEL (x86_64)`;
 };
 
 export const SYSTEM_INFO = {

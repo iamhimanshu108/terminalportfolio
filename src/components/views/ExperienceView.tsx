@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavPath } from '../../types';
-import { CheckCircle2, GraduationCap, Briefcase, ExternalLink } from 'lucide-react';
+import { CheckCircle2, Briefcase, ExternalLink } from 'lucide-react';
 import { Typewriter } from '../Typewriter';
 
 interface ExperienceViewProps {
@@ -101,29 +101,6 @@ export const ExperienceView: React.FC<ExperienceViewProps> = () => {
     }
   ];
 
-  const educationData = [
-    {
-      degree: 'Master of Computer Applications (MCA)',
-      institution: 'Sikkim Manipal University',
-      duration: '2026 - 2028',
-      status: 'IN_PROGRESS',
-      highlights: [
-        'Advanced study of Cloud Architectures, Distributed Systems, Software Engineering, and Enterprise Java Web Frameworks.',
-        'Developing high-performance microservice backends, REST API routers, and AI automation systems.'
-      ]
-    },
-    {
-      degree: 'Bachelor of Computer Applications (BCA)',
-      institution: 'IGNOU',
-      duration: '2021 - 2024',
-      status: 'COMPLETED',
-      highlights: [
-        'Specialized in Data Structures & Algorithms, Object-Oriented Programming (Java), and Database Management Systems (SQL).',
-        'Developed multiple production capstone projects integrating RESTful web architectures and cloud databases.'
-      ]
-    }
-  ];
-
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200">
       {/* Top Command Line */}
@@ -205,58 +182,6 @@ export const ExperienceView: React.FC<ExperienceViewProps> = () => {
                       {tech}
                     </span>
                   ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Education Background */}
-      <div className="space-y-4">
-        <div className="flex items-center space-x-2">
-          <GraduationCap className="w-4 h-4 text-emerald-400" />
-          <span className="font-bold text-slate-200 text-sm tracking-wide">ACADEMIC_BACKGROUND</span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {educationData.map((edu, idx) => (
-            <div key={idx} className="bg-[#0A0E1A] border border-slate-800 p-5 rounded-lg space-y-3 shadow-xl flex flex-col justify-between">
-              <div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 shrink-0">
-                      <GraduationCap className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-100 text-xs sm:text-sm">{edu.degree}</h3>
-                      <p className="text-slate-400 text-[10px] sm:text-xs">{edu.institution}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2 text-[10px] sm:text-[11px] self-start sm:self-auto">
-                    <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 font-bold">
-                      {edu.duration}
-                    </span>
-                    <span className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded border font-bold ${
-                      edu.status === 'COMPLETED'
-                        ? 'bg-emerald-950 text-emerald-400 border-emerald-500/40'
-                        : 'bg-cyan-950 text-cyan-400 border-cyan-500/40'
-                    }`}>
-                      [{edu.status}]
-                    </span>
-                  </div>
-                </div>
-
-                <div className="bg-[#050810] border border-slate-800/80 p-3 rounded space-y-2 mt-3">
-                  <ul className="space-y-1.5 text-slate-300 text-xs pl-2">
-                    {edu.highlights.map((item, idxx) => (
-                      <li key={idxx} className="flex items-start space-x-2">
-                        <span className="text-emerald-400 font-bold">&gt;</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
             </div>

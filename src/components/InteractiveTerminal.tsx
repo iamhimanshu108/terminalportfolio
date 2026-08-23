@@ -71,6 +71,8 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
             <div><span className="text-cyan-400 font-bold">cat &lt;file&gt;</span> - View file content</div>
             <div><span className="text-cyan-400 font-bold">projects</span> - View microservices grid</div>
             <div><span className="text-cyan-400 font-bold">experience</span> - View career & role timeline</div>
+            <div><span className="text-cyan-400 font-bold">education</span> - View MCA/BCA degrees</div>
+            <div><span className="text-cyan-400 font-bold">cert / certificates</span> - View certificates</div>
             <div><span className="text-cyan-400 font-bold">resume</span> - Display resume YAML</div>
             <div><span className="text-cyan-400 font-bold">contact</span> - Open contact dispatch</div>
             <div><span className="text-cyan-400 font-bold">ssh</span> - Connect via SSH session</div>
@@ -87,8 +89,12 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
           <div>drwxr-xr-x ~/projects</div>
           <div>drwxr-xr-x ~/skills</div>
           <div>drwxr-xr-x ~/experience</div>
+          <div>drwxr-xr-x ~/education</div>
+          <div>drwxr-xr-x ~/cert</div>
           <div>drwxr-xr-x ~/resume</div>
           <div>drwxr-xr-x ~/contact</div>
+          <div className="text-cyan-400">-rw-r--r-- education.json</div>
+          <div className="text-cyan-400">-rw-r--r-- certificates.json</div>
           <div className="text-cyan-400">-rw-r--r-- experience.json</div>
           <div className="text-cyan-400">-rw-r--r-- resume.yml</div>
           <div className="text-cyan-400">-rwxr-xr-x contact.sh</div>
@@ -103,6 +109,12 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
     } else if (mainCmd === 'experience' || mainCmd === 'logs' || trimmed === 'cd ~/experience' || trimmed === 'cd ~/logs') {
       onNavigate('~/experience');
       outputNode = <span className="text-emerald-400">Navigated to ~/experience</span>;
+    } else if (mainCmd === 'education' || trimmed === 'cd ~/education') {
+      onNavigate('~/education');
+      outputNode = <span className="text-emerald-400">Navigated to ~/education</span>;
+    } else if (mainCmd === 'cert' || mainCmd === 'certificates' || trimmed === 'cd ~/cert' || trimmed === 'cd ~/certificates') {
+      onNavigate('~/cert');
+      outputNode = <span className="text-emerald-400">Navigated to ~/cert</span>;
     } else if (mainCmd === 'resume' || trimmed === 'cd ~/resume') {
       onNavigate('~/resume');
       outputNode = <span className="text-emerald-400">Navigated to ~/resume</span>;
@@ -113,30 +125,36 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
       onOpenSsh();
       outputNode = <span className="text-emerald-400">Opening SSH connection session to contact@dev.local...</span>;
     } else if (mainCmd === 'whoami') {
-      outputNode = <span className="text-emerald-400">root@iamhimanshu108 [Himanshu Yadav - Full Stack Web Developer & Automation Specialist {SYSTEM_INFO.version}]</span>;
+      outputNode = <span className="text-emerald-400">root@iamhimanshu108 [Himanshu Yadav - Software Engineer {SYSTEM_INFO.version}]</span>;
     } else if (mainCmd === 'ping') {
       outputNode = (
         <div className="text-slate-300 space-y-0.5">
-          <p>PING devsys.local (127.0.0.1) 56(84) bytes of data.</p>
+          <p>PING local (127.0.0.1) 56(84) bytes of data.</p>
           <p>64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.24 ms</p>
           <p>64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.18 ms</p>
-          <p className="text-emerald-400">--- devsys.local ping statistics --- 0% packet loss, min/avg/max = 0.18/0.21/0.24 ms</p>
+          <p className="text-emerald-400">--- local ping statistics --- 0% packet loss, min/avg/max = 0.18/0.21/0.24 ms</p>
         </div>
       );
     } else if (mainCmd === 'uptime') {
-      outputNode = <span className="text-emerald-400">UPTIME: 99.999% | KERNEL: {SYSTEM_INFO.version} DEVSYS root@iamhimanshu108 | LOAD: 0.08, 0.04, 0.01</span>;
+      outputNode = <span className="text-emerald-400">UPTIME: 99.999% | KERNEL: {SYSTEM_INFO.version} root@iamhimanshu108 | LOAD: 0.08, 0.04, 0.01</span>;
     } else if (mainCmd === 'cat') {
       if (args.includes('resume')) {
         onNavigate('~/resume');
         outputNode = <span className="text-emerald-400">Displaying ~/resume/resume.yml</span>;
       } else if (args.includes('log') || args.includes('experience')) {
-        onNavigate('~/logs');
-        outputNode = <span className="text-emerald-400">Displaying ~/logs/experience.log</span>;
+        onNavigate('~/experience');
+        outputNode = <span className="text-emerald-400">Displaying ~/experience/experience.json</span>;
+      } else if (args.includes('education') || args.includes('edu') || args.includes('degree')) {
+        onNavigate('~/education');
+        outputNode = <span className="text-emerald-400">Displaying ~/education/education.json</span>;
+      } else if (args.includes('cert') || args.includes('credentials')) {
+        onNavigate('~/cert');
+        outputNode = <span className="text-emerald-400">Displaying ~/cert/certificates.json</span>;
       } else if (args.includes('skill') || args.includes('stack')) {
         onNavigate('~/skills');
         outputNode = <span className="text-emerald-400">Displaying ~/skills/skills.json</span>;
       } else {
-        outputNode = <span className="text-amber-400">cat: {args || 'file'}: No such file. Try 'cat resume.yml' or 'ls'</span>;
+        outputNode = <span className="text-amber-400">cat: {args || 'file'}: No such file. Try 'cat education.json' or 'cat certificates.json' or 'ls'</span>;
       }
     } else if (mainCmd === 'ai' || mainCmd === 'ask') {
       if (!args) {

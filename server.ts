@@ -41,7 +41,7 @@ async function startServer() {
   }
 
   app.listen(PORT, () => {
-    console.log(`[DEVSYS_KERNEL] Server running on http://localhost:${PORT}`);
+    console.log(`[KERNEL] Server running on http://localhost:${PORT}`);
   });
 }
 

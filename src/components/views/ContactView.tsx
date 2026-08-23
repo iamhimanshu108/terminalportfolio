@@ -113,183 +113,190 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
         <span className="text-[10px] text-slate-500">INBOX_PORT: 443 (TLS_1.3)</span>
       </div>
 
-      {/* Social Network Channels Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {socialChannels.map((c) => (
-          <a
-            key={c.name}
-            href={c.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => sound.playKeypress()}
-            className={`p-3.5 rounded-lg border transition-all duration-200 flex flex-col justify-between space-y-3 group shadow-sm ${c.color}`}
-          >
-            <div className="flex items-center justify-between">
-              {c.icon}
-              <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors" />
+      {/* 2-Column Grid Layout: Message Form on one side, Links on the other side */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        {/* Left Side (Column 1-7): Contact Message Form (contact.sh) */}
+        <div className="lg:col-span-7 bg-[#050810] border border-slate-800 rounded-lg overflow-hidden shadow-2xl">
+          <div className="bg-[#080C16] border-b border-slate-800 px-4 py-2 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
+              <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
+              <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
+              <span className="text-slate-300 font-bold text-xs pl-2 flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-emerald-400" />
+                contact.sh
+              </span>
             </div>
-            <div>
-              <div className="font-bold text-white text-sm group-hover:text-emerald-300 transition-colors">
-                {c.name}
-              </div>
-              <div className="text-[11px] text-slate-400 font-mono">
-                {c.handle}
-              </div>
-            </div>
-            <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider border-t border-slate-800/80 pt-2">
-              {c.badge}
-            </div>
-          </a>
-        ))}
-      </div>
-
-      {/* Terminal Window Frame */}
-      <div className="bg-[#050810] border border-slate-800 rounded-lg overflow-hidden shadow-2xl">
-        <div className="bg-[#080C16] border-b border-slate-800 px-4 py-2 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
-            <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
-            <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
-            <span className="text-slate-300 font-bold text-xs pl-2 flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5 text-emerald-400" />
-              contact.sh
-            </span>
-          </div>
-          <span className="text-[10px] text-emerald-400 font-bold">[ READY ]</span>
-        </div>
-
-        <div className="p-5 space-y-6">
-          <div className="space-y-1">
-            <p className="text-emerald-400 font-bold text-sm">
-              # Send a message to Himanshu Yadav
-            </p>
+            <span className="text-[10px] text-emerald-400 font-bold">[ READY ]</span>
           </div>
 
-          {status === 'SUCCESS' && (
-            <div className="bg-emerald-950/60 border border-emerald-500/50 p-4 rounded-lg space-y-2 animate-fadeIn">
-              <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span>[200 OK] Message Sent Successfully!</span>
-              </div>
-              <p className="text-slate-300 text-xs">
-                Your message has been sent to Himanshu's primary inbox.
+          <div className="p-5 space-y-6">
+            <div className="space-y-1">
+              <p className="text-emerald-400 font-bold text-sm">
+                # Send a message to Himanshu Yadav
               </p>
-              <div className="text-[11px] text-slate-400 space-y-0.5 pt-1 border-t border-emerald-900/50">
-                <p>MESSAGE_ID: <span className="text-cyan-400 font-bold">{packetDetails.packetId}</span></p>
-                <p>SENT_AT: <span className="text-slate-300">{packetDetails.timestamp}</span></p>
-              </div>
-              <button
-                onClick={() => setStatus('IDLE')}
-                className="mt-2 text-emerald-400 hover:underline font-bold text-xs"
-              >
-                &gt; Send another message
-              </button>
             </div>
-          )}
 
-          {status !== 'SUCCESS' && (
-            <div className="space-y-4">
-              {status === 'ERROR' && errorMessage && (
-                <div className="bg-rose-950/60 border border-rose-500/50 p-3.5 rounded-lg text-rose-400 font-bold space-y-1 animate-fadeIn">
-                  <p>[500 Internal Server Error] Submission Failed</p>
-                  <p className="text-slate-300 font-normal text-[11px] leading-relaxed">
-                    {errorMessage}
-                  </p>
+            {status === 'SUCCESS' && (
+              <div className="bg-emerald-950/60 border border-emerald-500/50 p-4 rounded-lg space-y-2 animate-fadeIn">
+                <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <span>[200 OK] Message Sent Successfully!</span>
                 </div>
-              )}
-              <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-slate-400 text-[11px] font-bold block">
-                    NAME <span className="text-rose-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. Alex Mercer"
-                    className="w-full bg-[#090E1A] border border-slate-800 rounded p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs"
-                  />
+                <p className="text-slate-300 text-xs">
+                  Your message has been sent to Himanshu's primary inbox.
+                </p>
+                <div className="text-[11px] text-slate-400 space-y-0.5 pt-1 border-t border-emerald-900/50">
+                  <p>MESSAGE_ID: <span className="text-cyan-400 font-bold">{packetDetails.packetId}</span></p>
+                  <p>SENT_AT: <span className="text-slate-300">{packetDetails.timestamp}</span></p>
                 </div>
-
-                <div className="space-y-1">
-                  <label className="text-slate-400 text-[11px] font-bold block">
-                    EMAIL <span className="text-rose-400">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="e.g. alex@company.com"
-                    className="w-full bg-[#090E1A] border border-slate-800 rounded p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-slate-400 text-[11px] font-bold block">
-                  SUBJECT
-                </label>
-                <input
-                  type="text"
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  placeholder="e.g. Full Stack Role / Automation System Request"
-                  className="w-full bg-[#090E1A] border border-slate-800 rounded p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-slate-400 text-[11px] font-bold block">
-                  MESSAGE <span className="text-rose-400">*</span>
-                </label>
-                <textarea
-                  required
-                  rows={5}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Enter your message details..."
-                  className="w-full bg-[#090E1A] border border-slate-800 rounded p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs resize-none"
-                />
-              </div>
-
-              <div className="flex items-center justify-between pt-2">
                 <button
-                  type="button"
-                  onClick={() => {
-                    sound.playSshConnect();
-                    onOpenSsh();
-                  }}
-                  className="text-slate-400 hover:text-emerald-400 text-xs flex items-center space-x-1 hover:underline"
+                  onClick={() => setStatus('IDLE')}
+                  className="mt-2 text-emerald-400 hover:underline font-bold text-xs"
                 >
-                  <Terminal className="w-3.5 h-3.5" />
-                  <span>Or connect via SSH session</span>
-                </button>
-
-                <button
-                  type="submit"
-                  disabled={status === 'SENDING'}
-                  className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded flex items-center space-x-2 transition-all shadow-[0_0_12px_rgba(16,185,129,0.3)] disabled:opacity-50"
-                >
-                  {status === 'SENDING' ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin text-black" />
-                      <span>SENDING...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 text-black" />
-                      <span>SEND MESSAGE</span>
-                    </>
-                  )}
+                  &gt; Send another message
                 </button>
               </div>
-            </form>
+            )}
+
+            {status !== 'SUCCESS' && (
+              <div className="space-y-4">
+                {status === 'ERROR' && errorMessage && (
+                  <div className="bg-rose-950/60 border border-rose-500/50 p-3.5 rounded-lg text-rose-400 font-bold space-y-1 animate-fadeIn">
+                    <p>[500 Internal Server Error] Submission Failed</p>
+                    <p className="text-slate-300 font-normal text-[11px] leading-relaxed">
+                      {errorMessage}
+                    </p>
+                  </div>
+                )}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-slate-400 text-[11px] font-bold block">
+                        NAME <span className="text-rose-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="e.g. Alex Mercer"
+                        className="w-full bg-[#090E1A] border border-slate-800 rounded p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-slate-400 text-[11px] font-bold block">
+                        EMAIL <span className="text-rose-400">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="e.g. alex@company.com"
+                        className="w-full bg-[#090E1A] border border-slate-800 rounded p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-slate-400 text-[11px] font-bold block">
+                      SUBJECT
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      placeholder="e.g. Full Stack Role / Automation System Request"
+                      className="w-full bg-[#090E1A] border border-slate-800 rounded p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-slate-400 text-[11px] font-bold block">
+                      MESSAGE <span className="text-rose-400">*</span>
+                    </label>
+                    <textarea
+                      required
+                      rows={5}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Enter your message details..."
+                      className="w-full bg-[#090E1A] border border-slate-800 rounded p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500/60 font-mono text-xs resize-none"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-end pt-2">
+                    <button
+                      type="submit"
+                      disabled={status === 'SENDING'}
+                      className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded flex items-center space-x-2 transition-all shadow-[0_0_12px_rgba(16,185,129,0.3)] disabled:opacity-50"
+                    >
+                      {status === 'SENDING' ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-black" />
+                          <span>SENDING...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4 text-black" />
+                          <span>SEND MESSAGE</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
-        )}
         </div>
+
+        {/* Right Side (Column 8-12): Links / Social Channels Grid */}
+        <div className="lg:col-span-5 space-y-4">
+          <div className="flex items-center justify-between text-slate-400 px-1">
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-cyan-400" />
+              DIRECT_CHANNELS
+            </span>
+            <span className="text-[10px] text-slate-500">4 CHANNELS</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+            {socialChannels.map((c) => (
+              <a
+                key={c.name}
+                href={c.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => sound.playKeypress()}
+                className={`p-4 rounded-lg border transition-all duration-200 flex flex-col justify-between space-y-3 group shadow-md ${c.color}`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 rounded bg-black/40 border border-slate-800 shrink-0">
+                      {c.icon}
+                    </div>
+                    <div>
+                      <div className="font-bold text-white text-sm group-hover:text-emerald-300 transition-colors">
+                        {c.name}
+                      </div>
+                      <div className="text-[11px] text-slate-400 font-mono">
+                        {c.handle}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-emerald-400 font-bold text-[11px] group-hover:underline">
+                    <span>CONNECT</span>
+                    <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 import https from 'https';
+import { EDUCATION_DATA, CERTIFICATES_DATA } from './src/data/educationCertData.js';
 
 dotenv.config();
 
@@ -91,7 +92,7 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
   if (pathname === '/api/health') {
     const d = new Date();
     const verStr = `v${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
-    const kerStr = `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}.DEVSYS.KERNEL`;
+    const kerStr = `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}.KERNEL`;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({
       status: "ONLINE",
@@ -102,6 +103,36 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
       latency: "24ms",
       timestamp: d.toISOString(),
       patch: "v2-native-http"
+    }));
+    return true;
+  }
+
+  if (pathname === '/api/education') {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({
+      success: true,
+      count: EDUCATION_DATA.length,
+      data: EDUCATION_DATA
+    }));
+    return true;
+  }
+
+  if (pathname === '/api/certificates' || pathname === '/api/cert') {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({
+      success: true,
+      count: CERTIFICATES_DATA.length,
+      data: CERTIFICATES_DATA
+    }));
+    return true;
+  }
+
+  if (pathname === '/api/education-cert') {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({
+      success: true,
+      education: EDUCATION_DATA,
+      certificates: CERTIFICATES_DATA
     }));
     return true;
   }

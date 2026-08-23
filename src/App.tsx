@@ -6,10 +6,13 @@ import { HomeView } from './components/views/HomeView';
 import { ProjectsView } from './components/views/ProjectsView';
 import { StackView } from './components/views/StackView';
 import { ExperienceView } from './components/views/ExperienceView';
+import { EducationView } from './components/views/EducationView';
+import { CertView } from './components/views/CertView';
 import { ResumeView } from './components/views/ResumeView';
 import { ContactView } from './components/views/ContactView';
 import { SSHModal } from './components/SSHModal';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
+import { CertDriveModal } from './components/CertDriveModal';
 import { SettingsModal } from './components/SettingsModal';
 import { RebootAnimationModal } from './components/RebootAnimationModal';
 import { sound } from './lib/sound';
@@ -35,13 +38,14 @@ export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isRebooting, setIsRebooting] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedDriveItem, setSelectedDriveItem] = useState<{ item: any; type: 'pdf' | 'image' } | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Execute Mode Quick Command State
   const [execCmd, setExecCmd] = useState('');
   const [execLogs, setExecLogs] = useState<string[]>([
     'EXECUTE_ENGINE: Interactive shell mounted.',
-    'Type commands (e.g., "projects", "stack", "contact", "clear", "help") or click quick triggers.'
+    'Type commands (e.g., "projects", "education", "cert", "skills", "experience", "clear", "help") or click quick triggers.'
   ]);
 
   // Debug Mode State
@@ -69,10 +73,16 @@ export default function App() {
       setExecCmd('');
       return;
     } else if (trimmed === 'help') {
-      output = 'AVAILABLE COMMANDS: projects, skills, experience, resume, contact, clear, status, ssh';
+      output = 'AVAILABLE COMMANDS: projects, education, cert, skills, experience, resume, contact, clear, status, ssh';
     } else if (trimmed === 'experience') {
       setCurrentPath('~/experience');
       output = 'Navigated to ~/experience. Professional experience timeline loaded.';
+    } else if (trimmed === 'education') {
+      setCurrentPath('~/education');
+      output = 'Navigated to ~/education. MCA/BCA academic history loaded.';
+    } else if (trimmed === 'cert' || trimmed === 'certificates') {
+      setCurrentPath('~/cert');
+      output = 'Navigated to ~/cert. Professional certifications & Google Drive credentials loaded.';
     } else if (trimmed === 'projects') {
       setCurrentPath('~/projects');
       output = 'Navigated to ~/projects. 7 Microservices active.';
@@ -292,6 +302,23 @@ export default function App() {
               />
             )}
 
+            {currentPath === '~/education' && (
+              <EducationView
+                onNavigate={(path) => setCurrentPath(path)}
+                onOpenSsh={() => setIsSshOpen(true)}
+                onOpenDriveModal={(item, type) => setSelectedDriveItem({ item, type })}
+              />
+            )}
+
+            {currentPath === '~/cert' && (
+              <CertView
+                onNavigate={(path) => setCurrentPath(path)}
+                onOpenSsh={() => setIsSshOpen(true)}
+                onOpenDriveModal={(item, type) => setSelectedDriveItem({ item, type })}
+                searchQuery={searchQuery}
+              />
+            )}
+
             {currentPath === '~/resume' && <ResumeView onOpenSsh={() => setIsSshOpen(true)} />}
 
             {currentPath === '~/contact' && (
@@ -337,6 +364,12 @@ export default function App() {
       <ProjectDetailModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
+      />
+
+      <CertDriveModal
+        item={selectedDriveItem?.item || null}
+        initialType={selectedDriveItem?.type || 'pdf'}
+        onClose={() => setSelectedDriveItem(null)}
       />
 
       <SettingsModal

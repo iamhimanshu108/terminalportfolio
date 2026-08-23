@@ -1,6 +1,8 @@
 import React from 'react';
 
-export type NavPath = '~/home' | '~/projects' | '~/skills' | '~/experience' | '~/resume' | '~/contact';
+export type NavPath = '~/home' | '~/projects' | '~/skills' | '~/experience' | '~/education' | '~/cert' | '~/resume' | '~/contact';
+
+export type { EducationItem, CertificateItem, CertCategory } from './data/educationCertData';
 
 export type HeaderTab = 'SESSION' | 'EXECUTE' | 'DEBUG';
 
