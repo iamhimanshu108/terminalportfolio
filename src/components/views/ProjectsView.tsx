@@ -94,16 +94,6 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
 
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200">
-      {/* Command prompt header with Typewriter effect */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span className="hidden sm:inline">root@portfolio:~$</span>
-          <span className="sm:hidden">~$</span>
-          <Typewriter text="ls -la ~/projects" className="text-slate-100 font-semibold" speed={35} />
-        </div>
-        <span className="text-[10px] text-slate-500">TOTAL: {filteredProjects.length} MICROSERVICES</span>
-      </div>
-
       {/* Grid of Microservices Cards with Project Photos & Direct Links */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredProjects.map((project) => {

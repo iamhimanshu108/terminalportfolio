@@ -82,21 +82,7 @@ export const LogsView: React.FC<LogsViewProps> = ({
   });
 
   return (
-    <div className="space-y-5 font-mono text-xs text-slate-200">
-      {/* Top Header Command with Typewriter effect */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span>root@Himanshu:~$</span>
-          <Typewriter text="cat /var/log/experience.log" className="text-slate-100 font-semibold" speed={35} />
-        </div>
-        <div className="flex items-center space-x-2">
-          <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-bold text-[10px] flex items-center gap-1">
-            <CheckCircle2 className="w-3 h-3" />
-            [ SYSTEM_LOGS_ONLINE ]
-          </span>
-        </div>
-      </div>
-
+    <div className="space-y-6 font-mono text-xs text-slate-200">
       {/* Filter Controls Bar (Clean & Static, No Stream) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#080C16] p-3 rounded-lg border border-slate-800">
         <div className="flex items-center space-x-2">

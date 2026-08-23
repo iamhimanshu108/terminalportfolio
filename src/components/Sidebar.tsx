@@ -102,8 +102,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <X className="w-4 h-4" />
             </button>
           </div>
-          <div className="p-4 pt-1 pb-2 border-b border-slate-800/80 bg-[#060911]/50 text-[11px] text-slate-500 font-mono flex items-center justify-between">
-            <span className="text-emerald-400 font-bold">{SYSTEM_INFO.version}</span>
+          <div className="px-4 py-2 border-b border-slate-800/80 bg-[#060911]/50 text-[11px] text-slate-400 font-mono flex items-center justify-between">
+            <span className="text-emerald-400 font-bold">● ONLINE</span>
             <span className="text-slate-400">iamhimanshu.in</span>
           </div>
 

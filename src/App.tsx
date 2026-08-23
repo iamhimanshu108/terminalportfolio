@@ -326,23 +326,27 @@ export default function App() {
             )}
           </main>
 
-          {/* Bottom Terminal Status Footer */}
-          <footer className="h-7 bg-[#060911] border-t border-slate-800/80 px-4 flex items-center justify-between text-[11px] text-slate-500 font-mono select-none shrink-0">
-            <div className="flex items-center space-x-3">
-              <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          {/* Bottom macOS / Terminal Status Footer */}
+          <footer className="h-7 bg-[#050811] border-t border-slate-800/90 px-3.5 flex items-center justify-between text-[11px] text-slate-400 font-mono select-none shrink-0 shadow-inner">
+            <div className="flex items-center space-x-2.5">
+              <span className="text-emerald-400 font-bold flex items-center gap-1.5 bg-emerald-950/70 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 ONLINE
               </span>
-              <span className="text-slate-600">//</span>
-              <span className="text-slate-300 font-bold">root@iamhimanshu108</span>
-              <span className="text-slate-600">//</span>
+              <span className="text-slate-600">|</span>
+              <span className="text-slate-300 font-bold hidden sm:inline">⚡ zsh</span>
+              <span className="text-slate-600 hidden sm:inline">|</span>
               <span className="text-cyan-400 font-bold">{SYSTEM_INFO.version}</span>
+              <span className="text-slate-600 hidden md:inline">|</span>
+              <span className="text-slate-400 hidden md:inline">{currentPath}</span>
             </div>
 
-            <div className="flex items-center space-x-4">
-              <span className="hidden md:inline text-slate-400">UTF-8</span>
-              <span className="text-slate-400 hidden sm:inline">UPTIME: 99.99%</span>
-              <span className="text-emerald-400 font-bold">LATENCY: 24ms</span>
+            <div className="flex items-center space-x-3 text-[10px]">
+              <span className="hidden lg:inline text-slate-400">UTF-8</span>
+              <span className="text-slate-600 hidden lg:inline">|</span>
+              <span className="text-slate-400 hidden sm:inline">45.8k LOC</span>
+              <span className="text-slate-600 hidden sm:inline">|</span>
+              <span className="text-emerald-400 font-bold">24ms LATENCY</span>
             </div>
           </footer>
         </div>

@@ -49,43 +49,34 @@ export const ResumeView: React.FC<ResumeViewProps> = ({ onOpenSsh: _onOpenSsh })
 
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200 animate-fadeIn">
-      {/* Top Header Command */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span className="hidden sm:inline">root@iamhimanshu108:~$</span>
-          <span className="sm:hidden">~$</span>
-          <Typewriter text="cat ~/resume.yml" className="text-slate-100 font-semibold" speed={35} />
-        </div>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={handleOpenPreview}
-            className="px-3 py-1.5 text-xs font-bold rounded-lg transition-all border flex items-center gap-1.5 bg-[#0B1120] text-emerald-400 border-emerald-500/40 hover:bg-emerald-500 hover:text-black shadow-[0_0_12px_rgba(16,185,129,0.2)]"
-            title="Open Live PDF Preview in macOS Box"
-          >
-            <Eye className="w-3.5 h-3.5" />
-            <span>PREVIEW</span>
-          </button>
-          <button
-            onClick={handleDownload}
-            className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs flex items-center space-x-1.5 transition-all shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-            title="Download Resume PDF"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Hire Me</span>
-          </button>
-        </div>
-      </div>
-
       {/* Main Resume Box */}
       <div className="bg-[#050810] border border-slate-800 rounded-xl p-4 sm:p-5 font-mono shadow-2xl space-y-4">
         {/* Title Bar */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
           <div className="flex items-center space-x-2 text-slate-300 font-bold">
             <FileText className="w-4 h-4 text-emerald-400" />
             <span>resume.yml</span>
+            <span className="text-[10px] text-slate-500 font-mono hidden sm:inline ml-2">
+              UTF-8 // YAML_SOURCE
+            </span>
           </div>
-          <div className="text-[10px] text-slate-500 font-mono">
-            UTF-8 // YAML_SOURCE
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleOpenPreview}
+              className="px-3 py-1 text-xs font-bold rounded-lg transition-all border flex items-center gap-1.5 bg-[#0B1120] text-emerald-400 border-emerald-500/40 hover:bg-emerald-500 hover:text-black shadow-[0_0_12px_rgba(16,185,129,0.2)]"
+              title="Open Live PDF Preview in macOS Box"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>PREVIEW</span>
+            </button>
+            <button
+              onClick={handleDownload}
+              className="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs flex items-center space-x-1.5 transition-all shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+              title="Download Resume PDF"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Hire Me</span>
+            </button>
           </div>
         </div>
 

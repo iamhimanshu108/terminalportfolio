@@ -76,21 +76,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200">
-      {/* Primary Terminal Prompt Line */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span className="hidden sm:inline">root@iamhimanshu108:~$</span>
-          <span className="sm:hidden">~$</span>
-          <Typewriter text="cat ~/profile.md" className="text-slate-300 font-semibold" speed={35} />
-        </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded font-mono font-bold">
-            {SYSTEM_INFO.version}
-          </span>
-          <span className="text-[10px] text-slate-500">TTY: /dev/pts/0</span>
-        </div>
-      </div>
-
       {/* Himanshu Yadav Profile Card with Photo */}
       <div className="space-y-4 bg-[#0A0E17] border border-slate-800 p-5 rounded-lg relative overflow-hidden shadow-lg">
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />

@@ -30,15 +30,6 @@ export const EducationView: React.FC<EducationViewProps> = ({
 }) => {
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200 animate-fadeIn">
-      {/* Minimal Top Header Command */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span className="hidden sm:inline">root@iamhimanshu108:~$</span>
-          <span className="sm:hidden">~$</span>
-          <Typewriter text="cat ~/education.json" className="text-slate-100 font-semibold" speed={35} />
-        </div>
-      </div>
-
       {/* Main Education Grid / Cards */}
       <div className="space-y-5">
         {[...EDUCATION_DATA].sort((a, b) => (a.order ?? 999) - (b.order ?? 999)).map((item, idx) => {

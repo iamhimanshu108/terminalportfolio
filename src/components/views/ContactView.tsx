@@ -103,15 +103,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
 
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200">
-      {/* Top Header Command */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span className="hidden sm:inline">visitor@local:~$</span>
-          <span className="sm:hidden">~$</span>
-          <Typewriter text="./contact.sh" className="text-slate-100 font-semibold" speed={35} />
-        </div>
-        <span className="text-[10px] text-slate-500">INBOX_PORT: 443 (TLS_1.3)</span>
-      </div>
+      {/* Contact Grid layout */}
 
       {/* 2-Column Grid Layout: Message Form on one side, Links on the other side */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

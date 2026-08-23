@@ -84,21 +84,6 @@ export const CertView: React.FC<CertViewProps> = ({
 
   return (
     <div className="space-y-6 font-mono text-xs text-slate-200 animate-fadeIn">
-      {/* Minimal Top Header Command */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-          <span className="hidden sm:inline">root@iamhimanshu108:~$</span>
-          <span className="sm:hidden">~$</span>
-          <Typewriter text="cat ~/certificates.json" className="text-slate-100 font-semibold" speed={35} />
-        </div>
-        <div className="flex items-center space-x-2">
-          <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-bold text-[10px] flex items-center gap-1">
-            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-            [ {CERTIFICATES_DATA.length} VERIFIED ]
-          </span>
-        </div>
-      </div>
-
       {/* Category Filter Chips */}
       <div className="flex flex-wrap gap-1.5 pb-1">
         {categories.map((cat) => (
