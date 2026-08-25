@@ -9,6 +9,8 @@ interface InteractiveTerminalProps {
   onNavigate: (path: NavPath) => void;
   onOpenSsh: () => void;
   promptUser?: string;
+  theme?: string;
+  onChangeTheme?: (t: string) => void;
 }
 
 interface CommandLog {
@@ -22,7 +24,9 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
   currentPath,
   onNavigate,
   onOpenSsh,
-  promptUser = 'root@iamhimanshu108:~$'
+  promptUser = 'root@iamhimanshu108:~$',
+  theme,
+  onChangeTheme
 }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<CommandLog[]>([]);
@@ -77,11 +81,39 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
             <div><span className="text-cyan-400 font-bold">contact</span> - Open contact dispatch</div>
             <div><span className="text-cyan-400 font-bold">ssh</span> - Connect via SSH session</div>
             <div><span className="text-cyan-400 font-bold">ai &lt;query&gt;</span> - Ask Gemini AI Assistant</div>
+            <div><span className="text-cyan-400 font-bold">theme &lt;name&gt;</span> - Switch color palette (ubuntu, kali, parrot, mac, windows, etc.)</div>
             <div><span className="text-cyan-400 font-bold">uptime / ping</span> - System status check</div>
             <div><span className="text-cyan-400 font-bold">clear</span> - Clear output buffer</div>
           </div>
         </div>
       );
+    } else if (mainCmd === 'theme' || mainCmd === 'palette') {
+      const validThemes = ['jetbrains', 'ubuntu', 'kali', 'parrot', 'mac', 'windows', 'matrix', 'cyber', 'amber', 'dracula', 'nord', 'gruvbox', 'monokai', 'rose-pine'];
+      const targetTheme = args.trim().toLowerCase();
+      if (!targetTheme || targetTheme === 'list') {
+        outputNode = (
+          <div className="space-y-1 text-xs">
+            <span className="text-emerald-400 font-bold">AVAILABLE THEMES / PALETTES:</span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 text-slate-300">
+              {validThemes.map((t) => (
+                <span key={t} className={t === theme ? 'text-emerald-400 font-bold' : 'text-slate-400'}>
+                  • {t} {t === theme ? '(active)' : ''}
+                </span>
+              ))}
+            </div>
+            <p className="text-slate-500 pt-1">Usage: theme &lt;name&gt; (e.g. 'theme ubuntu', 'theme kali', 'theme mac')</p>
+          </div>
+        );
+      } else if (validThemes.includes(targetTheme)) {
+        if (onChangeTheme) onChangeTheme(targetTheme);
+        outputNode = <span className="text-emerald-400 font-bold">Terminal palette switched to: [{targetTheme.toUpperCase()}]</span>;
+      } else {
+        outputNode = (
+          <span className="text-rose-400">
+            Unknown theme '{targetTheme}'. Available: {validThemes.join(', ')}
+          </span>
+        );
+      }
     } else if (mainCmd === 'ls') {
       outputNode = (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-emerald-400 font-mono text-xs">

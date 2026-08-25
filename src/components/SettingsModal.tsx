@@ -37,9 +37,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
   const themes = [
     { id: 'jetbrains', name: 'JetBrains Dark Navy (Default)', preview: 'bg-[#0B0F19] border-emerald-500' },
-    { id: 'matrix', name: 'Matrix Phosphor Green', preview: 'bg-[#001100] border-emerald-400' },
-    { id: 'cyber', name: 'Cyber Neon Cyan', preview: 'bg-[#050D1A] border-cyan-400' },
-    { id: 'amber', name: 'Amber Vintage Monospaced', preview: 'bg-[#140A00] border-amber-500' },
+    { id: 'ubuntu', name: 'Ubuntu Linux Aubergine & Orange', preview: 'bg-[#1d0b1a] border-[#E95420]' },
+    { id: 'kali', name: 'Kali Linux Dragon Cyan', preview: 'bg-[#080d16] border-[#00E5FF]' },
+    { id: 'parrot', name: 'Parrot Security Cyber Mint', preview: 'bg-[#051114] border-[#05D69E]' },
+    { id: 'mac', name: 'macOS Dark Graphite & Apple Blue', preview: 'bg-[#141416] border-[#0A84FF]' },
+    { id: 'windows', name: 'Windows Terminal Azure Blue', preview: 'bg-[#0b0f14] border-[#0078D4]' },
+    { id: 'matrix', name: 'Matrix Phosphor Green', preview: 'bg-[#020B04] border-emerald-400' },
+    { id: 'cyber', name: 'Cyber Neon Cyan', preview: 'bg-[#030914] border-cyan-400' },
+    { id: 'amber', name: 'Amber Vintage Monospaced', preview: 'bg-[#0E0700] border-amber-500' },
     { id: 'dracula', name: 'Dracula Purple & Pink', preview: 'bg-[#0F0E17] border-purple-400' },
     { id: 'nord', name: 'Nordic Polar Ice', preview: 'bg-[#0E141D] border-sky-400' },
     { id: 'gruvbox', name: 'Gruvbox Retro Gold', preview: 'bg-[#1d2021] border-[#fabd2f]' },

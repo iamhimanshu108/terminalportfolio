@@ -95,6 +95,15 @@ export default function App() {
     } else if (trimmed === 'ssh') {
       setIsSshOpen(true);
       output = 'Opened interactive SSH Terminal Session.';
+    } else if (trimmed.startsWith('theme ') || trimmed.startsWith('palette ')) {
+      const validThemes = ['jetbrains', 'ubuntu', 'kali', 'parrot', 'mac', 'windows', 'matrix', 'cyber', 'amber', 'dracula', 'nord', 'gruvbox', 'monokai', 'rose-pine'];
+      const target = trimmed.replace(/^(theme|palette)\s+/, '').trim();
+      if (validThemes.includes(target)) {
+        setTheme(target);
+        output = `Terminal color theme set to [${target.toUpperCase()}].`;
+      } else {
+        output = `Unknown theme '${target}'. Options: ${validThemes.join(', ')}`;
+      }
     } else {
       output = `Command executed: "${cmdStr}". Result: [200 OK] Task completed successfully.`;
     }

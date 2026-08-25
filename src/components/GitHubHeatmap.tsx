@@ -127,19 +127,23 @@ export const GitHubHeatmap: React.FC = () => {
 
   const monthLabelMap = getMonthLabelMap();
 
-  const getLevelBg = (level: number, hasDate: boolean) => {
-    if (!hasDate) return 'opacity-0 pointer-events-none';
+  const getLevelStyle = (level: number, hasDate: boolean): React.CSSProperties => {
+    if (!hasDate) return { opacity: 0, pointerEvents: 'none' };
     switch (level) {
       case 1:
-        return 'bg-[#0e4429] border-[#0e4429] hover:border-emerald-400 hover:scale-125';
+        return { backgroundColor: 'var(--heatmap-l1)', borderColor: 'var(--heatmap-l1)' };
       case 2:
-        return 'bg-[#006d32] border-[#006d32] hover:border-emerald-300 hover:scale-125';
+        return { backgroundColor: 'var(--heatmap-l2)', borderColor: 'var(--heatmap-l2)' };
       case 3:
-        return 'bg-[#26a641] border-[#26a641] hover:border-emerald-200 hover:scale-125';
+        return { backgroundColor: 'var(--heatmap-l3)', borderColor: 'var(--heatmap-l3)' };
       case 4:
-        return 'bg-[#39d353] border-[#39d353] shadow-[0_0_8px_rgba(57,211,83,0.8)] hover:scale-125';
+        return {
+          backgroundColor: 'var(--heatmap-l4)',
+          borderColor: 'var(--heatmap-l4)',
+          boxShadow: '0 0 8px var(--heatmap-l4-glow)'
+        };
       default:
-        return 'bg-[#161b22] border-[#161b22] hover:border-slate-500 hover:scale-125';
+        return { backgroundColor: 'var(--heatmap-l0)', borderColor: 'var(--heatmap-l0)' };
     }
   };
 
@@ -198,7 +202,7 @@ export const GitHubHeatmap: React.FC = () => {
                 {weeks.map((_, wIdx) => (
                   <div key={wIdx} className="w-3 text-[10px] text-slate-400 relative shrink-0 font-mono">
                     {monthLabelMap[wIdx] && (
-                      <span className="absolute left-0 top-0 whitespace-nowrap font-bold text-emerald-400/90">
+                      <span className="absolute left-0 top-0 whitespace-nowrap font-bold text-emerald-400">
                         {monthLabelMap[wIdx]}
                       </span>
                     )}
@@ -226,10 +230,8 @@ export const GitHubHeatmap: React.FC = () => {
                           key={dIdx}
                           onMouseEnter={() => day.date && setHoveredDay(day)}
                           onMouseLeave={() => setHoveredDay(null)}
-                          className={`w-3 h-3 rounded-[3px] border transition-all duration-150 cursor-pointer ${getLevelBg(
-                            day.level,
-                            !!day.date
-                          )}`}
+                          style={getLevelStyle(day.level, !!day.date)}
+                          className="w-3 h-3 rounded-[3px] border heatmap-cell cursor-pointer relative"
                         />
                       ))}
                     </div>
@@ -253,11 +255,11 @@ export const GitHubHeatmap: React.FC = () => {
 
               <div className="flex items-center space-x-1.5 self-end sm:self-auto font-mono text-[10px]">
                 <span className="text-slate-500 font-semibold">Less</span>
-                <div className="w-3 h-3 rounded-[3px] bg-[#161b22] border border-[#161b22]" title="0 contributions" />
-                <div className="w-3 h-3 rounded-[3px] bg-[#0e4429] border border-[#0e4429]" title="1-3 contributions" />
-                <div className="w-3 h-3 rounded-[3px] bg-[#006d32] border border-[#006d32]" title="4-6 contributions" />
-                <div className="w-3 h-3 rounded-[3px] bg-[#26a641] border border-[#26a641]" title="7-9 contributions" />
-                <div className="w-3 h-3 rounded-[3px] bg-[#39d353] border border-[#39d353]" title="10+ contributions" />
+                <div className="w-3 h-3 rounded-[3px] border" style={{ backgroundColor: 'var(--heatmap-l0)', borderColor: 'var(--heatmap-l0)' }} title="0 contributions" />
+                <div className="w-3 h-3 rounded-[3px] border" style={{ backgroundColor: 'var(--heatmap-l1)', borderColor: 'var(--heatmap-l1)' }} title="1-3 contributions" />
+                <div className="w-3 h-3 rounded-[3px] border" style={{ backgroundColor: 'var(--heatmap-l2)', borderColor: 'var(--heatmap-l2)' }} title="4-6 contributions" />
+                <div className="w-3 h-3 rounded-[3px] border" style={{ backgroundColor: 'var(--heatmap-l3)', borderColor: 'var(--heatmap-l3)' }} title="7-9 contributions" />
+                <div className="w-3 h-3 rounded-[3px] border" style={{ backgroundColor: 'var(--heatmap-l4)', borderColor: 'var(--heatmap-l4)', boxShadow: '0 0 6px var(--heatmap-l4-glow)' }} title="10+ contributions" />
                 <span className="text-slate-500 font-semibold">More</span>
               </div>
             </div>

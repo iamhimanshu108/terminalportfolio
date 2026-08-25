@@ -14,6 +14,13 @@
   --text-accent-hover: #34D399;
   --bg-accent-tag: rgba(16, 185, 129, 0.15);
   --secondary-accent: #06B6D4;
+  --heatmap-l0: #161b22;
+  --heatmap-l1: #0e4429;
+  --heatmap-l2: #006d32;
+  --heatmap-l3: #26a641;
+  --heatmap-l4: #39d353;
+  --heatmap-l4-glow: rgba(57, 211, 83, 0.6);
+  --heatmap-hover: #34d399;
 }
 
 [data-theme="matrix"] {
@@ -28,6 +35,13 @@
   --text-accent-hover: #4ADE80;
   --bg-accent-tag: rgba(34, 197, 94, 0.2);
   --secondary-accent: #86EFAC;
+  --heatmap-l0: #061a0a;
+  --heatmap-l1: #093d14;
+  --heatmap-l2: #0f6e24;
+  --heatmap-l3: #18a83b;
+  --heatmap-l4: #22c55e;
+  --heatmap-l4-glow: rgba(34, 197, 94, 0.7);
+  --heatmap-hover: #4ade80;
 }
 
 [data-theme="cyber"] {
@@ -42,6 +56,13 @@
   --text-accent-hover: #38BDF8;
   --bg-accent-tag: rgba(6, 182, 212, 0.2);
   --secondary-accent: #60A5FA;
+  --heatmap-l0: #081726;
+  --heatmap-l1: #0c3652;
+  --heatmap-l2: #095b8a;
+  --heatmap-l3: #0284c7;
+  --heatmap-l4: #06b6d4;
+  --heatmap-l4-glow: rgba(6, 182, 212, 0.7);
+  --heatmap-hover: #38bdf8;
 }
 
 [data-theme="amber"] {
@@ -56,6 +77,13 @@
   --text-accent-hover: #FBBF24;
   --bg-accent-tag: rgba(245, 158, 11, 0.2);
   --secondary-accent: #FCD34D;
+  --heatmap-l0: #1c1004;
+  --heatmap-l1: #452203;
+  --heatmap-l2: #7c3e06;
+  --heatmap-l3: #b45309;
+  --heatmap-l4: #f59e0b;
+  --heatmap-l4-glow: rgba(245, 158, 11, 0.7);
+  --heatmap-hover: #fbbf24;
 }
 
 [data-theme="gruvbox"] {
@@ -70,6 +98,13 @@
   --text-accent-hover: #fe8019;
   --bg-accent-tag: rgba(215, 153, 33, 0.15);
   --secondary-accent: #b8bb26;
+  --heatmap-l0: #282828;
+  --heatmap-l1: #504945;
+  --heatmap-l2: #7c6f64;
+  --heatmap-l3: #d79921;
+  --heatmap-l4: #fabd2f;
+  --heatmap-l4-glow: rgba(250, 189, 47, 0.7);
+  --heatmap-hover: #fe8019;
 }
 
 [data-theme="monokai"] {
@@ -84,6 +119,13 @@
   --text-accent-hover: #A6E22E;
   --bg-accent-tag: rgba(249, 38, 114, 0.15);
   --secondary-accent: #66D9EF;
+  --heatmap-l0: #2f3129;
+  --heatmap-l1: #59273c;
+  --heatmap-l2: #8c254e;
+  --heatmap-l3: #c92161;
+  --heatmap-l4: #f92672;
+  --heatmap-l4-glow: rgba(249, 38, 114, 0.7);
+  --heatmap-hover: #a6e22e;
 }
 
 [data-theme="rose-pine"] {
@@ -98,6 +140,13 @@
   --text-accent-hover: #f6c177;
   --bg-accent-tag: rgba(235, 188, 186, 0.15);
   --secondary-accent: #9ccfd8;
+  --heatmap-l0: #26233a;
+  --heatmap-l1: #4a3854;
+  --heatmap-l2: #7a526e;
+  --heatmap-l3: #b5758a;
+  --heatmap-l4: #ebbcba;
+  --heatmap-l4-glow: rgba(235, 188, 186, 0.7);
+  --heatmap-hover: #f6c177;
 }
 
 [data-theme="dracula"] {
@@ -112,6 +161,13 @@
   --text-accent-hover: #D6BCFA;
   --bg-accent-tag: rgba(189, 147, 249, 0.2);
   --secondary-accent: #FF79C6;
+  --heatmap-l0: #1f1a2e;
+  --heatmap-l1: #442966;
+  --heatmap-l2: #6d3b9e;
+  --heatmap-l3: #9d65d4;
+  --heatmap-l4: #bd93f9;
+  --heatmap-l4-glow: rgba(189, 147, 249, 0.7);
+  --heatmap-hover: #ff79c6;
 }
 
 [data-theme="nord"] {
@@ -126,6 +182,123 @@
   --text-accent-hover: #A3E0F0;
   --bg-accent-tag: rgba(136, 192, 208, 0.2);
   --secondary-accent: #81A1C1;
+  --heatmap-l0: #192130;
+  --heatmap-l1: #2e435e;
+  --heatmap-l2: #3b5e82;
+  --heatmap-l3: #5e81ac;
+  --heatmap-l4: #88c0d0;
+  --heatmap-l4-glow: rgba(136, 192, 208, 0.7);
+  --heatmap-hover: #a3e0f0;
+}
+
+/* Ubuntu Linux - Canonical Aubergine & Warm Orange */
+[data-theme="ubuntu"] {
+  --bg-primary: #1d0b1a;
+  --bg-sidebar: #140712;
+  --bg-header: #180916;
+  --bg-card: #291225;
+  --bg-inner: #120610;
+  --border-main: rgba(119, 33, 111, 0.6);
+  --border-accent: rgba(233, 84, 32, 0.7);
+  --text-accent: #E95420;
+  --text-accent-hover: #FF7F50;
+  --bg-accent-tag: rgba(233, 84, 32, 0.2);
+  --secondary-accent: #77216F;
+  --heatmap-l0: #291526;
+  --heatmap-l1: #4e1939;
+  --heatmap-l2: #7c225a;
+  --heatmap-l3: #b83a22;
+  --heatmap-l4: #e95420;
+  --heatmap-l4-glow: rgba(233, 84, 32, 0.8);
+  --heatmap-hover: #ff7f50;
+}
+
+/* Kali Linux - Offensive Security Dragon Cyan & Midnight Blue */
+[data-theme="kali"] {
+  --bg-primary: #080d16;
+  --bg-sidebar: #04080e;
+  --bg-header: #060a12;
+  --bg-card: #0d1624;
+  --bg-inner: #03060a;
+  --border-main: rgba(39, 139, 245, 0.4);
+  --border-accent: rgba(0, 229, 255, 0.7);
+  --text-accent: #00E5FF;
+  --text-accent-hover: #38BDF8;
+  --bg-accent-tag: rgba(0, 229, 255, 0.2);
+  --secondary-accent: #278BF5;
+  --heatmap-l0: #0e1826;
+  --heatmap-l1: #0a3158;
+  --heatmap-l2: #12569e;
+  --heatmap-l3: #278bf5;
+  --heatmap-l4: #00e5ff;
+  --heatmap-l4-glow: rgba(0, 229, 255, 0.8);
+  --heatmap-hover: #ffffff;
+}
+
+/* Parrot OS - Cyber Security Turquoise & Mint Green */
+[data-theme="parrot"] {
+  --bg-primary: #051114;
+  --bg-sidebar: #030c0e;
+  --bg-header: #040f12;
+  --bg-card: #081a1f;
+  --bg-inner: #02090b;
+  --border-main: rgba(5, 214, 158, 0.35);
+  --border-accent: rgba(5, 214, 158, 0.7);
+  --text-accent: #05D69E;
+  --text-accent-hover: #38EFBD;
+  --bg-accent-tag: rgba(5, 214, 158, 0.2);
+  --secondary-accent: #00B4D8;
+  --heatmap-l0: #0a1c22;
+  --heatmap-l1: #043d35;
+  --heatmap-l2: #056e5c;
+  --heatmap-l3: #04a87e;
+  --heatmap-l4: #05d69e;
+  --heatmap-l4-glow: rgba(5, 214, 158, 0.8);
+  --heatmap-hover: #38efbd;
+}
+
+/* Mac - macOS Dark Graphite & Apple System Blue */
+[data-theme="mac"] {
+  --bg-primary: #141416;
+  --bg-sidebar: #0f0f11;
+  --bg-header: #121214;
+  --bg-card: #1c1c1f;
+  --bg-inner: #0b0b0d;
+  --border-main: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(10, 132, 255, 0.7);
+  --text-accent: #0A84FF;
+  --text-accent-hover: #5AC8FA;
+  --bg-accent-tag: rgba(10, 132, 255, 0.2);
+  --secondary-accent: #5E5CE6;
+  --heatmap-l0: #1e1e22;
+  --heatmap-l1: #0f3563;
+  --heatmap-l2: #0b57a8;
+  --heatmap-l3: #0a84ff;
+  --heatmap-l4: #5ac8fa;
+  --heatmap-l4-glow: rgba(90, 200, 250, 0.8);
+  --heatmap-hover: #ffffff;
+}
+
+/* Windows - Windows Terminal Azure Blue & Fluent Teal */
+[data-theme="windows"] {
+  --bg-primary: #0b0f14;
+  --bg-sidebar: #070a0e;
+  --bg-header: #090d12;
+  --bg-card: #101721;
+  --bg-inner: #05080c;
+  --border-main: rgba(0, 120, 212, 0.35);
+  --border-accent: rgba(0, 120, 212, 0.7);
+  --text-accent: #0078D4;
+  --text-accent-hover: #60CDFF;
+  --bg-accent-tag: rgba(0, 120, 212, 0.2);
+  --secondary-accent: #00CC6A;
+  --heatmap-l0: #131b26;
+  --heatmap-l1: #003865;
+  --heatmap-l2: #005a9e;
+  --heatmap-l3: #0078d4;
+  --heatmap-l4: #60cdff;
+  --heatmap-l4-glow: rgba(96, 205, 255, 0.8);
+  --heatmap-hover: #9be0ff;
 }
 
 /* Global Theme Override Rules */
@@ -174,38 +347,39 @@
   background-color: var(--bg-inner) !important;
 }
 
-/* Dynamic Accent Text for Non-Default Themes */
-[data-theme="matrix"] .text-emerald-400,
-[data-theme="cyber"] .text-emerald-400,
-[data-theme="amber"] .text-emerald-400,
-[data-theme="dracula"] .text-emerald-400,
-[data-theme="nord"] .text-emerald-400,
-[data-theme="gruvbox"] .text-emerald-400,
-[data-theme="monokai"] .text-emerald-400,
-[data-theme="rose-pine"] .text-emerald-400 {
+/* Dynamic Accent Overrides for Non-Default Themes */
+[data-theme]:not([data-theme="jetbrains"]) .text-emerald-400,
+[data-theme]:not([data-theme="jetbrains"]) .text-emerald-300 {
   color: var(--text-accent) !important;
 }
 
-[data-theme="matrix"] .border-emerald-500\/60,
-[data-theme="cyber"] .border-emerald-500\/60,
-[data-theme="amber"] .border-emerald-500\/60,
-[data-theme="dracula"] .border-emerald-500\/60,
-[data-theme="nord"] .border-emerald-500\/60,
-[data-theme="gruvbox"] .border-emerald-500\/60,
-[data-theme="monokai"] .border-emerald-500\/60,
-[data-theme="rose-pine"] .border-emerald-500\/60 {
+[data-theme]:not([data-theme="jetbrains"]) .border-emerald-500\/60,
+[data-theme]:not([data-theme="jetbrains"]) .border-emerald-500\/50,
+[data-theme]:not([data-theme="jetbrains"]) .border-emerald-500\/40,
+[data-theme]:not([data-theme="jetbrains"]) .border-emerald-500 {
   border-color: var(--border-accent) !important;
 }
 
-[data-theme="matrix"] .bg-\[\#10B981\],
-[data-theme="cyber"] .bg-\[\#10B981\],
-[data-theme="amber"] .bg-\[\#10B981\],
-[data-theme="dracula"] .bg-\[\#10B981\],
-[data-theme="nord"] .bg-\[\#10B981\],
-[data-theme="gruvbox"] .bg-\[\#10B981\],
-[data-theme="monokai"] .bg-\[\#10B981\],
-[data-theme="rose-pine"] .bg-\[\#10B981\] {
+[data-theme]:not([data-theme="jetbrains"]) .bg-\[\#10B981\] {
   background-color: var(--text-accent) !important;
+}
+
+[data-theme]:not([data-theme="jetbrains"]) .bg-emerald-950,
+[data-theme]:not([data-theme="jetbrains"]) .bg-emerald-950\/90,
+[data-theme]:not([data-theme="jetbrains"]) .bg-emerald-950\/80,
+[data-theme]:not([data-theme="jetbrains"]) .bg-emerald-950\/40 {
+  background-color: var(--bg-accent-tag) !important;
+}
+
+/* Dynamic Heatmap Cell Styling */
+.heatmap-cell {
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.heatmap-cell:hover {
+  border-color: var(--heatmap-hover) !important;
+  transform: scale(1.35);
+  z-index: 20;
 }
 
 /* CRT Scanline Overlay */
