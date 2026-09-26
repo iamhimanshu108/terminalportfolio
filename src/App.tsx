@@ -10,6 +10,7 @@ import { EducationView } from './components/views/EducationView';
 import { CertView } from './components/views/CertView';
 import { ResumeView } from './components/views/ResumeView';
 import { ContactView } from './components/views/ContactView';
+import { AboutView } from './components/views/AboutView';
 import { SSHModal } from './components/SSHModal';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { CertDriveModal } from './components/CertDriveModal';
@@ -169,6 +170,7 @@ export default function App() {
             onOpenSettings={() => setIsSettingsOpen(true)}
             onTriggerReboot={() => setIsRebooting(true)}
             onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+            onNavigate={(path) => setCurrentPath(path)}
           />
 
           {/* Active Mode Banner for EXECUTE Tab */}
@@ -289,6 +291,15 @@ export default function App() {
               />
             )}
 
+            {currentPath === '~/about' && (
+              <AboutView
+                onNavigate={(path) => setCurrentPath(path)}
+                onOpenSsh={() => setIsSshOpen(true)}
+                onOpenDriveModal={(item, type) => setSelectedDriveItem({ item, type })}
+                searchQuery={searchQuery}
+              />
+            )}
+
             {currentPath === '~/projects' && (
               <ProjectsView
                 onSelectProject={(p) => setSelectedProject(p)}
@@ -353,7 +364,6 @@ export default function App() {
                 © {new Date().getFullYear()} {SYSTEM_INFO.author}. <span className="hidden sm:inline">All Rights Reserved.</span>
               </span>
               <span className="text-slate-600 hidden md:inline">|</span>
-              <span className="text-emerald-400 font-bold hidden md:inline">24ms LATENCY</span>
             </div>
           </footer>
         </div>

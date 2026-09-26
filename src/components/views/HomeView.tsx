@@ -6,9 +6,10 @@ import { renderSkillIcon } from './StackView';
 import { NavPath, Project } from '../../types';
 import { GitHubHeatmap } from '../GitHubHeatmap';
 import { Typewriter } from '../Typewriter';
-import { ArrowRight, Server, Terminal, Linkedin, Github, Database, Cpu, Bot, ExternalLink, Play, Code2, Layers, Zap } from 'lucide-react';
+import { ArrowRight, Server, Terminal, Linkedin, Github, Database, Cpu, Bot, ExternalLink, Play, Code2, Layers, Zap, Download } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import myAvatar from '../../assets/My.png';
+import resumePdfFallback from '../../assets/Himanshu_Resume-CbhZoejc.pdf';
 
 interface HomeViewProps {
   onNavigate: (path: NavPath) => void;
@@ -46,6 +47,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
   searchQuery,
   onSearchChange
 }) => {
+  const handleResumeDownload = () => {
+    sound.playExecute();
+    const link = document.createElement('a');
+    link.href = resumePdfFallback;
+    link.download = 'Himanshu_Yadav_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const featuredProjects = [...PROJECTS_DATA]
     .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
     .slice(0, 4);
@@ -80,14 +91,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <div className="space-y-4 bg-[#0A0E17] border border-slate-800 p-5 rounded-lg relative overflow-hidden shadow-lg">
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
         
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
           {/* Himanshu Photo Avatar Frame */}
-          <div className="relative group shrink-0">
-            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-xl border-2 border-emerald-500/60 p-1 bg-[#050810] shadow-[0_0_20px_rgba(16,185,129,0.2)] overflow-hidden transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-[0_0_28px_rgba(16,185,129,0.4)]">
+          <div className="relative shrink-0 order-1 sm:order-2 [perspective:900px]">
+            <div className="profile-photo-3d w-[11.5rem] h-[11.5rem] sm:w-[14.5rem] sm:h-[14.5rem] overflow-hidden rounded-xl shadow-[14px_18px_28px_rgba(0,0,0,0.45)] [transform:rotateY(-5deg)_rotateX(2deg)]">
               <img
                 src={myAvatar}
                 alt="Himanshu Yadav"
-                className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-cover rounded-xl"
               />
             </div>
             <span className="absolute -bottom-1.5 -right-1.5 px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/60 text-emerald-400 text-[9px] font-bold shadow-md flex items-center gap-1">
@@ -96,20 +107,43 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </span>
           </div>
 
-          <div className="flex-1 space-y-3.5 text-center sm:text-left">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="w-full max-w-3xl space-y-3.5 text-center sm:text-left order-2 sm:order-1">
+            <div className="flex flex-col items-center sm:items-start justify-between gap-3">
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-emerald-400 tracking-tight font-mono mb-0.5">
-                  {SYSTEM_INFO.author}
-                </h1>
+                <div className="flex items-center justify-between gap-3">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-emerald-400 tracking-tight font-mono mb-0.5">
+                    {SYSTEM_INFO.author}
+                  </h1>
+                </div>
                 <p className="text-slate-300 font-semibold text-xs">
                   // {SYSTEM_INFO.title}
+                </p>
+                <p className="mt-3 max-w-xl text-slate-300 text-xs leading-relaxed">
+                  I build reliable backend systems, AI/RAG integrations, and automation workflows.
                 </p>
               </div>
             </div>
 
+            <div className="hidden">
+              <button
+                onClick={() => { sound.playKeypress(); onNavigate('~/projects'); }}
+                className="inline-flex items-center gap-1.5 rounded border border-emerald-500/60 bg-emerald-500 px-3 py-1.5 text-xs font-bold text-black transition-colors hover:bg-emerald-400"
+              >
+                <Terminal className="w-3.5 h-3.5" />
+                View Projects
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={handleResumeDownload}
+                className="inline-flex items-center gap-1.5 rounded border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs font-bold text-slate-200 transition-colors hover:border-emerald-500/50 hover:text-emerald-400"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download Resume
+              </button>
+            </div>
+
             {/* Social Link Quick Badges */}
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2.5 border-t border-slate-800/80">
+            <div className="hidden">
               {socialButtons.map((s) => (
                 <a
                   key={s.name}
@@ -125,16 +159,39 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </a>
               ))}
             </div>
+
+            <div className="mt-4 space-y-2 text-slate-300 text-xs text-left">
+              {SYSTEM_INFO.bio.map((line, idx) => (
+                <p key={idx} className="font-semibold text-emerald-400/90 leading-relaxed font-mono">
+                  {line}
+                </p>
+              ))}
+              <button
+                onClick={handleResumeDownload}
+                className="mt-2 inline-flex items-center gap-1.5 rounded border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs font-bold text-slate-200 transition-colors hover:border-emerald-500/60 hover:text-emerald-400"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download Resume
+              </button>
+            </div>
           </div>
         </div>
 
+
         {/* Bio paragraphs */}
-        <div className="border-t border-slate-800/80 pt-4 space-y-2 text-slate-300 text-xs text-left">
+        <div className="hidden">
           {SYSTEM_INFO.bio.map((line, idx) => (
             <p key={idx} className="font-semibold text-emerald-400/90 leading-relaxed font-mono">
               {line}
             </p>
           ))}
+          <button
+            onClick={handleResumeDownload}
+            className="mt-2 inline-flex items-center gap-1.5 rounded border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs font-bold text-slate-200 transition-colors hover:border-emerald-500/60 hover:text-emerald-400"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Download Resume
+          </button>
         </div>
       </div>
 
@@ -151,8 +208,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       )}
 
+      <div className="space-y-1 rounded-lg border border-slate-800/80 bg-[#050810] p-4 text-xs shadow-inner">
+        <div className="text-emerald-400 font-bold">&gt; Currently building...</div>
+        <div className="text-slate-300">&gt; MERN / Python / FastAPI / Next.js / React</div>
+        <div className="text-slate-400">&gt; Gen AI / RAG / DevOps / System Design</div>
+      </div>
+
       {/* Technical Skills Section on Home Page */}
-      <div className="space-y-3">
+      <div className="hidden">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Cpu className="w-4 h-4 text-emerald-400" />
@@ -207,7 +270,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         )}
       </div>
       {/* Featured Projects Grid */}
-      <div className="space-y-3">
+      <div className="hidden">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Server className="w-4 h-4 text-emerald-400" />

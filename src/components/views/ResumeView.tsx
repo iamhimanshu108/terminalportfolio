@@ -171,7 +171,7 @@ export const ResumeView: React.FC<ResumeViewProps> = ({ onOpenSsh: _onOpenSsh })
                   <Award className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span className="text-emerald-400">DRIVE_VIEWER</span>
                   <span className="text-slate-600">//</span>
-                  <span className="text-slate-100 truncate">Himanshu_Yadav_Resume.pdf</span>
+                  <span className="text-slate-100 truncate">PDF_PREVIEW</span>
                 </span>
               </div>
 

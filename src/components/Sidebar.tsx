@@ -3,14 +3,11 @@ import { NavPath } from '../types';
 import { sound } from '../lib/sound';
 import { 
   Home, 
-  FolderGit2, 
   Layers, 
+  FolderGit2,
   Briefcase, 
-  GraduationCap,
-  Award,
-  FileCode2,
   Mail, 
-  Terminal, 
+  Terminal,
   Settings, 
   Power,
   X
@@ -42,12 +39,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const navItems: { path: NavPath; label: string; icon: React.ReactNode }[] = [
     { path: '~/home', label: '~/home', icon: <Home className="w-4 h-4" /> },
-    { path: '~/projects', label: '~/projects', icon: <FolderGit2 className="w-4 h-4" /> },
+    { path: '~/about', label: '~/about', icon: <Terminal className="w-4 h-4" /> },
     { path: '~/skills', label: '~/skills', icon: <Layers className="w-4 h-4" /> },
+    { path: '~/projects', label: '~/projects', icon: <FolderGit2 className="w-4 h-4" /> },
     { path: '~/experience', label: '~/experience', icon: <Briefcase className="w-4 h-4" /> },
-    { path: '~/education', label: '~/education', icon: <GraduationCap className="w-4 h-4" /> },
-    { path: '~/cert', label: '~/cert', icon: <Award className="w-4 h-4" /> },
-    { path: '~/resume', label: '~/resume', icon: <FileCode2 className="w-4 h-4" /> },
     { path: '~/contact', label: '~/contact', icon: <Mail className="w-4 h-4" /> },
   ];
 
@@ -56,6 +51,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onNavigate(path);
   };
 
+  return null;
+
+  /* Legacy sidebar retained for responsive fallback. */
   return (
     <>
       {/* Mobile/Tablet Backdrop Overlay */}
@@ -67,13 +65,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 w-64 bg-[#080C16] border-r border-slate-800/80 flex flex-col justify-between select-none font-mono text-sm z-40 transition-transform duration-300 transform lg:translate-x-0 lg:static lg:flex ${
+        className={`hidden fixed inset-y-0 left-0 w-64 bg-[#080C16] border-r border-slate-800/80 flex-col justify-between select-none font-mono text-sm z-40 transition-transform duration-300 transform lg:translate-x-0 lg:static lg:flex ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div>
           {/* Header Branding */}
-          <div className="p-4 border-b border-slate-800/80 bg-[#060911] flex items-start justify-between gap-2">
+          <div className="hidden">
             <div className="flex items-center space-x-3">
               <div className="relative">
                 <img
@@ -108,7 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
         {/* Directory Navigation List */}
-        <nav className="p-3 space-y-1">
+        <nav className="hidden">
           <div className="px-2 py-1 text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-1">
             DIRECTORY
           </div>

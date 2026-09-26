@@ -158,10 +158,10 @@ export const GitHubHeatmap: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#080C16] border border-slate-800/90 p-4 sm:p-5 rounded-xl space-y-4 shadow-xl font-mono text-xs">
+    <div className="bg-[#080C16] border border-slate-800/90 p-4 sm:p-5 rounded-xl grid grid-cols-1 lg:grid-cols-[72%_28%] lg:justify-between gap-4 shadow-xl font-mono text-xs">
 
       {/* Heatmap Header Metrics */}
-      <div className="grid grid-cols-3 gap-3 pb-2 border-b border-slate-800/60 text-center sm:text-left">
+      <div className="grid grid-cols-1 gap-3 pb-2 border-b border-slate-800/60 text-center sm:text-left lg:col-start-2 lg:row-start-1">
         <div className="bg-[#03060E] border border-slate-800/80 p-2.5 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
           <span className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Total Commits</span>
           <span className="text-xs font-extrabold text-emerald-400">{data?.totalContributions || 0}</span>
@@ -177,7 +177,7 @@ export const GitHubHeatmap: React.FC = () => {
       </div>
 
       {/* Main Heatmap Canvas */}
-      <div className="bg-[#03060E] border border-slate-800/90 p-4 rounded-xl overflow-x-auto scrollbar-thin relative min-h-[170px] flex flex-col justify-between">
+      <div className="bg-[#03060E] border border-slate-800/90 p-4 rounded-xl overflow-x-auto scrollbar-thin relative min-h-[170px] flex flex-col justify-between lg:col-start-1 lg:row-start-1">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-10 space-y-3 text-slate-400 text-xs">
             <RefreshCw className="w-6 h-6 text-emerald-400 animate-spin" />
@@ -198,11 +198,11 @@ export const GitHubHeatmap: React.FC = () => {
             {/* Heatmap Grid Track */}
             <div className="min-w-[850px] pb-2">
               {/* Aligned Month Headers Row */}
-              <div className="flex gap-1 pl-[32px] mb-2 select-none">
+              <div className="flex h-5 gap-1 pl-[32px] mb-1 select-none">
                 {weeks.map((_, wIdx) => (
                   <div key={wIdx} className="w-3 text-[10px] text-slate-400 relative shrink-0 font-mono">
                     {monthLabelMap[wIdx] && (
-                      <span className="absolute left-0 top-0 whitespace-nowrap font-bold text-emerald-400">
+                      <span className="absolute left-0 top-0 whitespace-nowrap font-bold text-emerald-300 drop-shadow-[0_0_4px_rgba(52,211,153,0.45)]">
                         {monthLabelMap[wIdx]}
                       </span>
                     )}

@@ -12,14 +12,14 @@ profile:
   drive_url: "https://drive.google.com/file/d/1KOeUEkU3p2jdlHc8vNT_i3xOJifZ_dnT/view?usp=sharing"
   summary: |
     Results-driven Full Stack Web Developer and Automation Specialist transforming complex business challenges into efficient solutions.
-    Expertise in Backend AI (Gemini API), Java Spring Boot, MERN Stack, System Design, DevOps (Docker, Git), and custom multi-channel automations (WhatsApp, Telegram, Email, AppSheet, Google Apps Script).
+    Expertise in MERN, Python, FastAPI, Gen AI, RAG, System Design, DevOps (Docker, Git), and custom multi-channel automations.
 skills:
-  languages: ["Java", "Python", "TypeScript", "JavaScript", "C++", "SQL", "HTML/CSS"]
-  backend_frameworks: ["Spring Boot", "Spring Security", "FastAPI", "Node.js", "Express"]
+  languages: ["Python", "TypeScript", "JavaScript", "SQL", "HTML/CSS"]
+  backend_frameworks: ["FastAPI", "Node.js", "Express", "REST APIs"]
   frontend_frameworks: ["React.js", "Next.js", "TailwindCSS", "MaterialUI"]
   databases: ["MySQL", "MongoDB", "PostgreSQL"]
-  tools_devops: ["Docker", "Git", "GitHub Actions", "Google Apps Script", "AppSheet", "Postman", "Maven", "JWT"]
-  ai_integrations: ["Backend AI", "Gemini API", "LangChain", "REST APIs"]
+  tools_devops: ["Docker", "Git", "GitHub Actions", "Linux", "CI/CD"]
+  ai_integrations: ["Gen AI", "RAG", "LLMs", "AI Integrations"]
 experience:
   - role: "Web Developer"
     company: "BizSkill"
@@ -56,13 +56,13 @@ export const RESUME_PARSED: ResumeData = {
     name: "Himanshu Yadav",
     status: "[ RUNNING ]",
     location: "India // Global Remote",
-    summary: "Results-driven Full Stack Web Developer and Automation Specialist transforming complex business challenges into efficient solutions with expertise in Backend AI (Gemini API), Java Spring Boot, MERN Stack, System Design, and Docker automations."
+    summary: "Results-driven developer building reliable MERN and Python backend systems, AI/RAG integrations, scalable APIs, and DevOps automations."
   },
   drivePdfUrl: "https://drive.google.com/file/d/1KOeUEkU3p2jdlHc8vNT_i3xOJifZ_dnT/view?usp=sharing",
   skills: {
-    languages: ["Java", "Python", "TypeScript", "JavaScript", "C++", "SQL"],
-    infrastructure: ["Docker", "Git", "Google Apps Script", "AppSheet", "Maven"],
-    databases: ["MySQL", "MongoDB", "PostgreSQL"]
+    languages: ["Python", "TypeScript", "JavaScript", "SQL"],
+    infrastructure: ["Docker", "Git", "CI/CD", "Linux"],
+    databases: ["MongoDB", "PostgreSQL"]
   },
   metrics: {
     uptime: "99.99%",

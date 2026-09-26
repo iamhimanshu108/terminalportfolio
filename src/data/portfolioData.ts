@@ -14,7 +14,7 @@ export const SYSTEM_INFO = {
   host: 'root@iamhimanshu108',
   version: getTodayVersion(),
   kernel: getTodayKernel(),
-  builtWith: 'BUILT_WITH_SPRING_BOOT_REACT',
+  builtWith: 'BUILT_WITH_MERN_PYTHON_AI',
   status: 'ONLINE',
   avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop',
   lastLogin: 'Tue Aug 11 11:42:00 2026 from 192.168.1.108',
@@ -23,7 +23,7 @@ export const SYSTEM_INFO = {
   loc: '45.8k',
   location: 'IN-WEST-1',
   author: 'Himanshu Yadav',
-  title: 'Full Stack Web Developer & Automation Specialist',
+  title: 'Backend Engineer & Automation Specialist',
   socials: {
     github: 'https://github.com/iamhimanshu108',
     linkedin: 'https://www.linkedin.com/in/iamhimanshu108',
@@ -31,15 +31,17 @@ export const SYSTEM_INFO = {
     website: 'https://www.iamhimanshu.in'
   },
   bio: [
-    '> Backend Engineer & Automation Specialist crafting high-performance microservices and resilient APIs.',
-    '> Core Focus: Java Spring Boot, Node.js, FastAPI, PostgreSQL, Redis & Docker containerization.',
-    '> Architecting backend AI integrations (Gemini API) and multi-channel system automation pipelines.'
+    '> I build reliable backend systems, AI/RAG integrations, and automation workflows.',
+    '> Currently building with MERN, Python, FastAPI, and Gen AI.',
+    '> Focus: Microservices • AI Integrations • Automation'
+    
+    
   ],
   stackOverview: {
-    languages: ["Java", "Python", "TypeScript", "JavaScript", "C++", "SQL", "Bash"],
-    infrastructure: ["Spring Boot", "React.js", "FastAPI", "Docker", "Node.js"],
-    databases: ["MySQL", "MongoDB", "PostgreSQL", "Redis"],
-    methodologies: ["Backend AI (Gemini API)", "LangChain", "WhatsApp/Telegram Automation", "Google Apps Script", "AppSheet"]
+    languages: ["Python", "TypeScript", "JavaScript"],
+    infrastructure: ["MERN", "FastAPI", "Next.js", "Docker", "Node.js"],
+    databases: ["MongoDB", "PostgreSQL"],
+    methodologies: ["Gen AI", "RAG", "System Design", "DevOps", "API Design", "Automation"]
   }
 };
 

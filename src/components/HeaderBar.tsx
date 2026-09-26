@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HeaderTab, NavPath } from '../types';
 import { SYSTEM_INFO } from '../data/portfolioData';
 import { sound } from '../lib/sound';
-import { Search, Terminal, Menu, Folder } from 'lucide-react';
+import { Search, Terminal, Menu, Folder, Settings, Power } from 'lucide-react';
 
 interface HeaderBarProps {
   currentPath: NavPath;
@@ -17,6 +17,7 @@ interface HeaderBarProps {
   onOpenSettings: () => void;
   onTriggerReboot: () => void;
   onToggleSidebar: () => void;
+  onNavigate: (path: NavPath) => void;
 }
 
 export const HeaderBar: React.FC<HeaderBarProps> = ({
@@ -31,10 +32,13 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   onToggleCrt,
   onOpenSettings,
   onTriggerReboot,
-  onToggleSidebar
+  onToggleSidebar,
+  onNavigate
 }) => {
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const navItems: NavPath[] = ['~/home', '~/about', '~/skills', '~/projects', '~/experience', '~/contact'];
   return (
-    <header className="h-11 bg-[#070A12]/95 backdrop-blur border-b border-slate-800/90 px-3.5 flex items-center justify-between font-mono text-xs select-none z-10 shrink-0 shadow-sm">
+    <header className="relative h-11 bg-[#070A12]/95 backdrop-blur border-b border-slate-800/90 px-3.5 flex items-center justify-between font-mono text-xs select-none z-10 shrink-0 shadow-sm">
       {/* Left: Mobile Hamburger & Terminal Info */}
       <div className="flex items-center space-x-3">
 
@@ -42,7 +46,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
         <button
           onClick={() => {
             sound.playKeypress();
-            onToggleSidebar();
+            setIsMobileNavOpen((open) => !open);
           }}
           className="lg:hidden p-1 rounded hover:bg-slate-800/80 text-slate-300 hover:text-emerald-400 transition-colors cursor-pointer"
           title="Toggle Navigation Menu"
@@ -64,7 +68,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
       </div>
 
       {/* Center/Right: Fast Search Input with macOS Badge */}
-      <div className="flex items-center space-x-2.5">
+      <div className="hidden">
         <div className="relative">
           <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" />
           <input
@@ -89,6 +93,41 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
           )}
         </div>
       </div>
+
+      <nav className="ml-auto mr-8 hidden items-center gap-2 lg:flex" aria-label="Directory">
+        {navItems.map((path) => (
+          <button key={path} onClick={() => { sound.playKeypress(); onNavigate(path); }} className={`rounded px-2.5 py-1 text-[11px] transition-colors ${currentPath === path ? 'bg-emerald-500 text-black font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-emerald-400'}`}>
+            {path.replace('~/', '')}
+          </button>
+        ))}
+        <span className="mx-1 h-4 w-px bg-slate-800" />
+        <button onClick={onOpenSettings} title="Settings" className="rounded p-1.5 text-slate-400 transition-colors hover:bg-slate-800 hover:text-emerald-400">
+          <Settings className="h-3.5 w-3.5" />
+        </button>
+        <button onClick={onTriggerReboot} title="Reboot" className="rounded p-1.5 text-rose-400 transition-colors hover:bg-rose-950/40 hover:text-rose-300">
+          <Power className="h-3.5 w-3.5" />
+        </button>
+      </nav>
+
+      {isMobileNavOpen && (
+        <nav className="absolute left-2 right-2 top-10 z-50 rounded-lg border border-slate-800 bg-[#070A12] p-2 shadow-2xl lg:hidden" aria-label="Mobile directory">
+          <div className="grid grid-cols-2 gap-1">
+            {navItems.map((path) => (
+              <button
+                key={path}
+                onClick={() => { sound.playKeypress(); onNavigate(path); setIsMobileNavOpen(false); }}
+                className={`rounded px-3 py-2 text-left text-xs transition-colors ${currentPath === path ? 'bg-emerald-500 text-black font-bold' : 'text-slate-300 hover:bg-slate-800 hover:text-emerald-400'}`}
+              >
+                ~/ {path.replace('~/', '')}
+              </button>
+            ))}
+          </div>
+          <div className="mt-2 flex items-center justify-end gap-2 border-t border-slate-800 pt-2">
+            <button onClick={() => { onOpenSettings(); setIsMobileNavOpen(false); }} className="rounded px-3 py-2 text-xs text-slate-300 hover:bg-slate-800 hover:text-emerald-400">SETTINGS</button>
+            <button onClick={() => { onTriggerReboot(); setIsMobileNavOpen(false); }} className="rounded px-3 py-2 text-xs text-rose-400 hover:bg-rose-950/40">REBOOT</button>
+          </div>
+        </nav>
+      )}
     </header>
   );
 };

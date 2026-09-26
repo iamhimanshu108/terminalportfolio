@@ -96,20 +96,20 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
     <div className="space-y-6 font-mono text-xs text-slate-200">
       {/* Grid of Microservices Cards with Project Photos & Direct Links */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filteredProjects.map((project) => {
+        {filteredProjects.map((project, index) => {
           const isBuild = project.status === 'BUILD';
           const isFailed = project.status === 'FAILED';
 
           return (
             <div
               key={project.id}
-              className={`border rounded-lg overflow-hidden transition-all hover:scale-[1.01] flex flex-col justify-between shadow-md ${getCardBorderStyle(
+              className={`${index === 0 ? 'md:col-span-2 lg:col-span-2' : ''} border rounded-lg overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(16,185,129,0.12)] flex flex-col justify-between shadow-md ${getCardBorderStyle(
                 project.status
               )}`}
             >
               {/* Project Image Preview Banner */}
               {project.imageUrl && (
-                <div className="relative h-36 w-full overflow-hidden bg-slate-900 border-b border-slate-800/80 group">
+                <div className="relative h-40 w-full overflow-hidden bg-slate-900 border-b border-slate-800/80 group">
                   <img
                     src={project.imageUrl}
                     alt={project.name}
