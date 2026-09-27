@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Mail, Send, Terminal, ShieldCheck, CheckCircle2, Loader2, Sparkles, Linkedin, Github, Globe, ExternalLink } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import { Typewriter } from '../Typewriter';
+import { NeuralBackground } from '../NeuralNetworkBackground';
+import { NeuralCore } from '../NeuralCore';
 
 interface ContactViewProps {
   onOpenSsh: () => void;
@@ -102,14 +104,16 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
   };
 
   return (
-    <div className="space-y-6 font-mono text-xs text-slate-200">
+    <div className="premium-view contact-view relative space-y-6 font-mono text-xs text-slate-200">
+      <NeuralBackground nodeCount={24} connectionDistance={135} speed={0.1} particleCount={3} className="opacity-20" />
       {/* Contact Grid layout */}
 
       {/* 2-Column Grid Layout: Message Form on one side, Links on the other side */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Left Side (Column 1-7): Contact Message Form (contact.sh) */}
-        <div className="lg:col-span-7 bg-[#050810] border border-slate-800 rounded-lg overflow-hidden shadow-2xl">
+        <div className="neural-core-host relative lg:col-span-7 bg-[#050810] border border-slate-800 rounded-lg overflow-hidden shadow-2xl">
+          <NeuralCore variant="section" label />
           <div className="bg-[#080C16] border-b border-slate-800 px-4 py-2 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
@@ -123,7 +127,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onOpenSsh }) => {
             <span className="text-[10px] text-emerald-400 font-bold">[ READY ]</span>
           </div>
 
-          <div className="p-5 space-y-6">
+          <div className="relative z-10 p-5 space-y-6">
             <div className="space-y-1">
               <p className="text-emerald-400 font-bold text-sm">
                 # Send a message to Himanshu Yadav

@@ -8,6 +8,9 @@ import { GitHubHeatmap } from '../GitHubHeatmap';
 import { Typewriter } from '../Typewriter';
 import { ArrowRight, Server, Terminal, Linkedin, Github, Database, Cpu, Bot, ExternalLink, Play, Code2, Layers, Zap, Download } from 'lucide-react';
 import { sound } from '../../lib/sound';
+import NeuralNetworkBackground from '../NeuralNetworkBackground';
+import { ProfilePhotoCard } from '../ProfilePhotoCard';
+import { NeuralCore } from '../NeuralCore';
 import myAvatar from '../../assets/My.png';
 import resumePdfFallback from '../../assets/Himanshu_Resume-CbhZoejc.pdf';
 
@@ -86,42 +89,64 @@ export const HomeView: React.FC<HomeViewProps> = ({
   );
 
   return (
-    <div className="space-y-6 font-mono text-xs text-slate-200">
+    <div className="space-y-6 font-sans text-base text-slate-200">
       {/* Himanshu Yadav Profile Card with Photo */}
       <div className="space-y-4 bg-[#0A0E17] border border-slate-800 p-5 rounded-lg relative overflow-hidden shadow-lg">
+        <NeuralNetworkBackground className="opacity-30" nodeCount={28} connectionDistance={150} speed={0.12} particleCount={3} />
+        <NeuralCore variant="hero" label className="opacity-70" />
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
         
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
           {/* Himanshu Photo Avatar Frame */}
-          <div className="relative shrink-0 order-1 sm:order-2 [perspective:900px]">
-            <div className="profile-photo-3d w-[11.5rem] h-[11.5rem] sm:w-[14.5rem] sm:h-[14.5rem] overflow-hidden rounded-xl shadow-[14px_18px_28px_rgba(0,0,0,0.45)] [transform:rotateY(-5deg)_rotateX(2deg)]">
-              <img
-                src={myAvatar}
-                alt="Himanshu Yadav"
-                className="w-full h-full object-cover rounded-xl"
-              />
-            </div>
-            <span className="absolute -bottom-1.5 -right-1.5 px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/60 text-emerald-400 text-[9px] font-bold shadow-md flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              ONLINE
-            </span>
-          </div>
+          <ProfilePhotoCard src={myAvatar} alt="Himanshu Yadav" />
 
-          <div className="w-full max-w-3xl space-y-3.5 text-center sm:text-left order-2 sm:order-1">
-            <div className="flex flex-col items-center sm:items-start justify-between gap-3">
+          <div className="relative z-10 w-full max-w-3xl space-y-4 text-center sm:text-left order-1 sm:order-1">
+            <div className="flex flex-col items-start justify-between gap-3">
               <div>
-                <div className="flex items-center justify-between gap-3">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-emerald-400 tracking-tight font-mono mb-0.5">
-                    {SYSTEM_INFO.author}
-                  </h1>
+                <div className="mb-5 flex items-center gap-2 text-xs font-medium tracking-[0.08em] text-[#A1A1AA]">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
+                  AVAILABLE FOR OPPORTUNITIES
                 </div>
-                <p className="text-slate-300 font-semibold text-xs">
-                  // {SYSTEM_INFO.title}
-                </p>
-                <p className="mt-3 max-w-xl text-slate-300 text-xs leading-relaxed">
-                  I build reliable backend systems, AI/RAG integrations, and automation workflows.
-                </p>
+                <h1 className="max-w-3xl text-[clamp(2.75rem,7vw,5.25rem)] font-bold leading-[.95] tracking-[-0.045em] text-[#FAFAFA] font-sans">
+                  {SYSTEM_INFO.author}
+                </h1>
+                <h2 className="mt-3 max-w-2xl text-[clamp(2rem,4vw,3.25rem)] font-bold leading-[1.05] tracking-[-0.035em] bg-gradient-to-r from-[#8B5CF6] to-[#22D3EE] bg-clip-text text-transparent">
+                  AI &amp; Full Stack Developer
+                </h2>
               </div>
+            </div>
+
+            <p className="max-w-2xl text-base leading-relaxed text-[#A1A1AA] sm:text-lg">
+              I build intelligent, scalable web applications that combine modern full-stack engineering with Generative AI.
+            </p>
+            <p className="max-w-xl text-sm leading-relaxed text-[#71717A]">
+              Focused on MERN, Python, FastAPI, RAG pipelines, AI integrations, and automation.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-1 font-mono text-[11px] font-semibold tracking-[0.06em] text-[#A78BFA] sm:justify-start">
+              {['MERN', 'PYTHON', 'FASTAPI', 'GEN AI', 'RAG'].map((tech) => (
+                <React.Fragment key={tech}>
+                  <span className="transition-colors duration-200 hover:text-[#A78BFA]">{tech}</span>
+                  {tech !== 'RAG' && <span className="text-[#27272A]">·</span>}
+                </React.Fragment>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3 pt-3 sm:justify-start">
+              <button
+                onClick={() => { sound.playKeypress(); onNavigate('~/projects'); }}
+                className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-950/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-violet-500/20"
+              >
+                <Terminal className="w-3.5 h-3.5" />
+                View Projects <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={handleResumeDownload}
+                className="inline-flex items-center gap-2 rounded-lg border border-[#27272A] bg-transparent px-4 py-2.5 text-sm font-semibold text-[#FAFAFA] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#8B5CF6]/70 hover:bg-white/[0.03]"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download Resume
+              </button>
             </div>
 
             <div className="hidden">
@@ -160,20 +185,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
               ))}
             </div>
 
-            <div className="mt-4 space-y-2 text-slate-300 text-xs text-left">
-              {SYSTEM_INFO.bio.map((line, idx) => (
-                <p key={idx} className="font-semibold text-emerald-400/90 leading-relaxed font-mono">
-                  {line}
-                </p>
-              ))}
-              <button
-                onClick={handleResumeDownload}
-                className="mt-2 inline-flex items-center gap-1.5 rounded border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-xs font-bold text-slate-200 transition-colors hover:border-emerald-500/60 hover:text-emerald-400"
-              >
-                <Download className="w-3.5 h-3.5" />
-                Download Resume
-              </button>
-            </div>
           </div>
         </div>
 
@@ -210,8 +221,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       <div className="space-y-1 rounded-lg border border-slate-800/80 bg-[#050810] p-4 text-xs shadow-inner">
         <div className="text-emerald-400 font-bold">&gt; Currently building...</div>
-        <div className="text-slate-300">&gt; MERN / Python / FastAPI / Next.js / React</div>
-        <div className="text-slate-400">&gt; Gen AI / RAG / DevOps / System Design</div>
+        <div className="text-slate-300">&gt; MERN / Full Stack / Python / FastAPI / React / Next.js</div>
+        <div className="text-slate-400">&gt; AI / GenAI / RAG / DevOps / Automation</div>
       </div>
 
       {/* Technical Skills Section on Home Page */}

@@ -23,7 +23,7 @@ export const SYSTEM_INFO = {
   loc: '45.8k',
   location: 'IN-WEST-1',
   author: 'Himanshu Yadav',
-  title: 'Backend Engineer & Automation Specialist',
+  title: 'AI Full Stack Developer',
   socials: {
     github: 'https://github.com/iamhimanshu108',
     linkedin: 'https://www.linkedin.com/in/iamhimanshu108',
@@ -31,8 +31,8 @@ export const SYSTEM_INFO = {
     website: 'https://www.iamhimanshu.in'
   },
   bio: [
-    '> I build reliable backend systems, AI/RAG integrations, and automation workflows.',
-    '> Currently building with MERN, Python, FastAPI, and Gen AI.',
+    '> I build intelligent full-stack products with MERN, Python, FastAPI, and modern AI.',
+    '> Specializing in GenAI, RAG pipelines, automation, and scalable web systems.',
     '> Focus: Microservices • AI Integrations • Automation'
     
     

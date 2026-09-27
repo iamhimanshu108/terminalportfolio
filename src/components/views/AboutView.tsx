@@ -3,6 +3,7 @@ import { ArrowRight, Code2, Heart, Target } from 'lucide-react';
 import { NavPath } from '../../types';
 import { EducationView } from './EducationView';
 import { CertView } from './CertView';
+import { NeuralBackground } from '../NeuralNetworkBackground';
 
 interface AboutViewProps {
   onNavigate: (path: NavPath) => void;
@@ -12,7 +13,8 @@ interface AboutViewProps {
 }
 
 export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenSsh, onOpenDriveModal, searchQuery = '' }) => (
-  <div className="space-y-6 font-mono text-xs text-slate-200 animate-fadeIn">
+  <div className="premium-view about-view relative space-y-6 font-mono text-xs text-slate-200 animate-fadeIn">
+    <NeuralBackground nodeCount={22} connectionDistance={130} speed={0.1} particleCount={2} className="opacity-15" />
     <section className="space-y-4 rounded-lg border border-slate-800 bg-[#0A0E17] p-5 shadow-lg">
       <div className="space-y-1">
         <p className="font-bold text-emerald-400">~/about // profile</p>

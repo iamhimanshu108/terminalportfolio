@@ -2,6 +2,8 @@ import React from 'react';
 import { NavPath } from '../../types';
 import { SYSTEM_INFO } from '../../data/portfolioData';
 import { SKILLS_DATA, SkillCategoryGroup } from '../../data/skillsData';
+import { NeuralBackground } from '../NeuralNetworkBackground';
+import { NeuralCore } from '../NeuralCore';
 import { 
   Code2, 
   Server, 
@@ -165,7 +167,8 @@ export const StackView: React.FC<StackViewProps> = () => {
   const sortedCategories = [...SKILLS_DATA].sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 
   return (
-    <div className="space-y-5 font-mono text-xs text-slate-200">
+    <div className="premium-view skills-view relative space-y-5 font-mono text-xs text-slate-200">
+      <NeuralBackground nodeCount={20} connectionDistance={120} speed={0.1} particleCount={2} className="opacity-10" />
       {/* Skills Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {sortedCategories.map((cat) => {
@@ -173,10 +176,11 @@ export const StackView: React.FC<StackViewProps> = () => {
           return (
             <div
               key={cat.id || cat.title}
-              className={`p-4 sm:p-5 rounded-xl border bg-[#080C16] ${cat.borderColor || 'border-slate-800'} transition-all duration-200 space-y-3.5 shadow-lg`}
+              className={`neural-core-host relative p-4 sm:p-5 rounded-xl border bg-[#080C16] ${cat.borderColor || 'border-slate-800'} transition-all duration-200 space-y-3.5 shadow-lg`}
             >
+              <NeuralCore variant="small" />
               {/* Category Header */}
-              <div className="flex items-center space-x-2 border-b border-slate-800/80 pb-2.5">
+              <div className="relative z-10 flex items-center space-x-2 border-b border-slate-800/80 pb-2.5">
                 {renderCategoryIcon(cat.iconName)}
                 <h3 className="font-bold text-slate-100 text-xs sm:text-sm tracking-tight font-sans">
                   {cat.title}
@@ -184,7 +188,7 @@ export const StackView: React.FC<StackViewProps> = () => {
               </div>
 
               {/* Skills Pills Container */}
-              <div className="flex flex-wrap gap-2 pt-0.5">
+              <div className="relative z-10 flex flex-wrap gap-2 pt-0.5">
                 {sortedSkills.map((pill) => (
                   <div
                     key={pill.id || pill.name}

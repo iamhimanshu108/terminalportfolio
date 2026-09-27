@@ -2,6 +2,8 @@ import React from 'react';
 import { NavPath } from '../../types';
 import { CheckCircle2, Briefcase, ExternalLink } from 'lucide-react';
 import { Typewriter } from '../Typewriter';
+import { NeuralBackground } from '../NeuralNetworkBackground';
+import { NeuralCore } from '../NeuralCore';
 
 interface ExperienceViewProps {
   onNavigate: (path: NavPath) => void;
@@ -102,7 +104,8 @@ export const ExperienceView: React.FC<ExperienceViewProps> = () => {
   ];
 
   return (
-    <div className="space-y-6 font-mono text-xs text-slate-200">
+    <div className="premium-view experience-view relative space-y-6 font-mono text-xs text-slate-200">
+      <NeuralBackground nodeCount={20} connectionDistance={120} speed={0.1} particleCount={2} className="opacity-10" />
       {/* Work Experience section */}
       <div className="space-y-4">
         <div className="flex items-center space-x-2">
@@ -119,9 +122,10 @@ export const ExperienceView: React.FC<ExperienceViewProps> = () => {
                 <div className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-emerald-400" />
               </div>
 
-              <div className="bg-[#0A0E1A] border border-slate-800/95 hover:border-emerald-500/50 p-4 sm:p-5 rounded-lg space-y-3 shadow-xl transition-all">
+              <div className="neural-core-host relative bg-[#0A0E1A] border border-slate-800/95 hover:border-emerald-500/50 p-4 sm:p-5 rounded-lg space-y-3 shadow-xl transition-all overflow-hidden">
+                <NeuralCore variant="small" />
                 {/* Role Header */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-800/80 pb-2.5">
+                <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-800/80 pb-2.5">
                   <div>
                     <h3 className="text-sm font-bold text-slate-100 flex items-center gap-1.5 group-hover:text-emerald-400 transition-colors">
                       {exp.role}

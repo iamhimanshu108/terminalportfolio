@@ -4,6 +4,8 @@ import { Project, ProjectStatus, NavPath } from '../../types';
 import { FileCode, Terminal, AlertCircle, RefreshCw, Cpu, ExternalLink, Github, CheckCircle2, Clock, Globe } from 'lucide-react';
 import { sound } from '../../lib/sound';
 import { Typewriter } from '../Typewriter';
+import { NeuralBackground } from '../NeuralNetworkBackground';
+import { NeuralCore } from '../NeuralCore';
 
 interface ProjectsViewProps {
   onSelectProject: (p: Project) => void;
@@ -93,7 +95,8 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 font-mono text-xs text-slate-200">
+    <div className="premium-view projects-view relative space-y-6 font-mono text-xs text-slate-200">
+      <NeuralBackground nodeCount={22} connectionDistance={130} speed={0.1} particleCount={2} className="opacity-10" />
       {/* Grid of Microservices Cards with Project Photos & Direct Links */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredProjects.map((project, index) => {
@@ -103,13 +106,14 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
           return (
             <div
               key={project.id}
-              className={`${index === 0 ? 'md:col-span-2 lg:col-span-2' : ''} border rounded-lg overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(16,185,129,0.12)] flex flex-col justify-between shadow-md ${getCardBorderStyle(
+              className={`neural-core-host relative ${index === 0 ? 'md:col-span-2 lg:col-span-2' : ''} border rounded-lg overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(16,185,129,0.12)] flex flex-col justify-between shadow-md ${getCardBorderStyle(
                 project.status
               )}`}
             >
+              <NeuralCore variant="card" />
               {/* Project Image Preview Banner */}
               {project.imageUrl && (
-                <div className="relative h-40 w-full overflow-hidden bg-slate-900 border-b border-slate-800/80 group">
+                <div className="relative z-10 h-40 w-full overflow-hidden bg-slate-900 border-b border-slate-800/80 group">
                   <img
                     src={project.imageUrl}
                     alt={project.name}
@@ -127,7 +131,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                 </div>
               )}
 
-              <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+              <div className="relative z-10 p-4 space-y-3 flex-1 flex flex-col justify-between">
                 {!project.imageUrl && (
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center space-x-2">
