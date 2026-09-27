@@ -10,7 +10,6 @@ import { ArrowRight, Server, Terminal, Linkedin, Github, Database, Cpu, Bot, Ext
 import { sound } from '../../lib/sound';
 import NeuralNetworkBackground from '../NeuralNetworkBackground';
 import { ProfilePhotoCard } from '../ProfilePhotoCard';
-import { NeuralCore } from '../NeuralCore';
 import myAvatar from '../../assets/My.png';
 import resumePdfFallback from '../../assets/Himanshu_Resume-CbhZoejc.pdf';
 
@@ -93,7 +92,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* Himanshu Yadav Profile Card with Photo */}
       <div className="space-y-4 bg-[#0A0E17] border border-slate-800 p-5 rounded-lg relative overflow-hidden shadow-lg">
         <NeuralNetworkBackground className="opacity-30" nodeCount={28} connectionDistance={150} speed={0.12} particleCount={3} />
-        <NeuralCore variant="hero" label className="opacity-70" />
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
         
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
