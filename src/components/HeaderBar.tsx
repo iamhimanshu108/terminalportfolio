@@ -36,7 +36,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   onNavigate
 }) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const navItems: NavPath[] = ['~/home', '~/about', '~/skills', '~/projects', '~/experience', '~/contact'];
+  const navItems: NavPath[] = ['~/home', '~/about', '~/skills', '~/projects', '~/experience', '~/education', '~/cert', '~/resume', '~/contact'];
   return (
     <header className="relative h-11 bg-[#070A12]/95 backdrop-blur border-b border-slate-800/90 px-3.5 flex items-center justify-between font-mono text-xs select-none z-10 shrink-0 shadow-sm">
       {/* Left: Mobile Hamburger & Terminal Info */}

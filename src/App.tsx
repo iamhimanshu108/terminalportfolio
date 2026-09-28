@@ -63,6 +63,30 @@ export default function App() {
     return () => clearInterval(interval);
   }, [debugPaused]);
 
+  const navigateToSection = (path: NavPath) => {
+    setCurrentPath(path);
+    document.getElementById(path.slice(2))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-section-path]'));
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        const path = visible?.target.getAttribute('data-section-path') as NavPath | null;
+        if (path) setCurrentPath(path);
+      },
+      { rootMargin: '-18% 0px -62% 0px', threshold: [0.1, 0.35, 0.6] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   const handleRunCommand = (cmdStr: string) => {
     const trimmed = cmdStr.trim().toLowerCase();
     if (!trimmed) return;
@@ -76,22 +100,25 @@ export default function App() {
     } else if (trimmed === 'help') {
       output = 'AVAILABLE COMMANDS: projects, education, cert, skills, experience, resume, contact, clear, status, ssh';
     } else if (trimmed === 'experience') {
-      setCurrentPath('~/experience');
+      navigateToSection('~/experience');
       output = 'Navigated to ~/experience. Professional experience timeline loaded.';
     } else if (trimmed === 'education') {
-      setCurrentPath('~/education');
+      navigateToSection('~/education');
       output = 'Navigated to ~/education. MCA/BCA academic history loaded.';
     } else if (trimmed === 'cert' || trimmed === 'certificates') {
-      setCurrentPath('~/cert');
+      navigateToSection('~/cert');
       output = 'Navigated to ~/cert. Professional certifications & Google Drive credentials loaded.';
     } else if (trimmed === 'projects') {
-      setCurrentPath('~/projects');
+      navigateToSection('~/projects');
       output = 'Navigated to ~/projects. 7 Microservices active.';
     } else if (trimmed === 'skills' || trimmed === 'stack') {
-      setCurrentPath('~/skills');
+      navigateToSection('~/skills');
       output = 'Navigated to ~/skills. Technical skills & backend architecture modules loaded.';
+    } else if (trimmed === 'resume') {
+      navigateToSection('~/resume');
+      output = 'Navigated to ~/resume. Resume viewer loaded.';
     } else if (trimmed === 'contact') {
-      setCurrentPath('~/contact');
+      navigateToSection('~/contact');
       output = 'Navigated to ~/contact. Direct dispatch pipeline ready.';
     } else if (trimmed === 'ssh') {
       setIsSshOpen(true);
@@ -134,7 +161,7 @@ export default function App() {
         <Sidebar
           currentPath={currentPath}
           onNavigate={(path) => {
-            setCurrentPath(path);
+            navigateToSection(path);
             setIsSidebarOpen(false); // Close sidebar on navigate (for mobile)
           }}
           onOpenSsh={() => {
@@ -170,7 +197,7 @@ export default function App() {
             onOpenSettings={() => setIsSettingsOpen(true)}
             onTriggerReboot={() => setIsRebooting(true)}
             onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-            onNavigate={(path) => setCurrentPath(path)}
+            onNavigate={navigateToSection}
           />
 
           {/* Active Mode Banner for EXECUTE Tab */}
@@ -280,70 +307,67 @@ export default function App() {
           )}
 
           {/* Dynamic Scrollable Content View */}
-          <main className="p-4 sm:p-6 space-y-6">
-            {currentPath === '~/home' && (
+          <main className="p-4 sm:p-6 space-y-12">
+            <section id="home" data-section-path="~/home" className="scroll-mt-4">
               <HomeView
-                onNavigate={(path) => setCurrentPath(path)}
+                onNavigate={navigateToSection}
                 onOpenSsh={() => setIsSshOpen(true)}
                 onSelectProject={(p) => setSelectedProject(p)}
                 searchQuery={searchQuery}
                 onSearchChange={(q) => setSearchQuery(q)}
               />
-            )}
+            </section>
 
-            {currentPath === '~/about' && (
+            <section id="about" data-section-path="~/about" className="scroll-mt-4">
               <AboutView
-                onNavigate={(path) => setCurrentPath(path)}
+                onNavigate={navigateToSection}
                 onOpenSsh={() => setIsSshOpen(true)}
-                onOpenDriveModal={(item, type) => setSelectedDriveItem({ item, type })}
-                searchQuery={searchQuery}
               />
-            )}
+            </section>
 
-            {currentPath === '~/projects' && (
+            <section id="skills" data-section-path="~/skills" className="scroll-mt-4">
+              <StackView onNavigate={navigateToSection} onOpenSsh={() => setIsSshOpen(true)} />
+            </section>
+
+            <section id="projects" data-section-path="~/projects" className="scroll-mt-4">
               <ProjectsView
                 onSelectProject={(p) => setSelectedProject(p)}
                 searchQuery={searchQuery}
-                onNavigate={(path) => setCurrentPath(path)}
+                onNavigate={navigateToSection}
               />
-            )}
+            </section>
 
-            {currentPath === '~/skills' && (
-              <StackView
-                onNavigate={(path) => setCurrentPath(path)}
-                onOpenSsh={() => setIsSshOpen(true)}
-              />
-            )}
-
-            {currentPath === '~/experience' && (
+            <section id="experience" data-section-path="~/experience" className="scroll-mt-4">
               <ExperienceView
-                onNavigate={(path) => setCurrentPath(path)}
+                onNavigate={navigateToSection}
                 onOpenSsh={() => setIsSshOpen(true)}
               />
-            )}
+            </section>
 
-            {currentPath === '~/education' && (
+            <section id="education" data-section-path="~/education" className="scroll-mt-4">
               <EducationView
-                onNavigate={(path) => setCurrentPath(path)}
+                onNavigate={navigateToSection}
                 onOpenSsh={() => setIsSshOpen(true)}
                 onOpenDriveModal={(item, type) => setSelectedDriveItem({ item, type })}
               />
-            )}
+            </section>
 
-            {currentPath === '~/cert' && (
+            <section id="cert" data-section-path="~/cert" className="scroll-mt-4">
               <CertView
-                onNavigate={(path) => setCurrentPath(path)}
+                onNavigate={navigateToSection}
                 onOpenSsh={() => setIsSshOpen(true)}
                 onOpenDriveModal={(item, type) => setSelectedDriveItem({ item, type })}
                 searchQuery={searchQuery}
               />
-            )}
+            </section>
 
-            {currentPath === '~/resume' && <ResumeView onOpenSsh={() => setIsSshOpen(true)} />}
+            <section id="resume" data-section-path="~/resume" className="scroll-mt-4">
+              <ResumeView onOpenSsh={() => setIsSshOpen(true)} />
+            </section>
 
-            {currentPath === '~/contact' && (
+            <section id="contact" data-section-path="~/contact" className="scroll-mt-4">
               <ContactView onOpenSsh={() => setIsSshOpen(true)} />
-            )}
+            </section>
           </main>
 
           {/* Bottom macOS / Terminal Status Footer */}
